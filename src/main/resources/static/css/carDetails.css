@@ -1,0 +1,182 @@
+/* General styles for the main container */
+main {
+    padding: 30px;
+    background-color: #f8f9fa; /* Light background for contrast */
+    padding-top: 100px
+
+}
+
+body, main {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-text {
+    color: #f8d7da; /* Change this to your desired color */
+    font-size: 1.25rem; /* Optional: Change font size */
+    font-weight: bold; /* Optional: Make it bold */
+}
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    padding: 1rem 2rem;
+    position: fixed; /* Keep the navbar fixed at the top */
+    width: 100%; /* Ensure it spans the full width */
+    z-index: 1; /* Make sure it stays above the video */
+}
+
+.navbar .nav-link {
+    color: white;
+    padding: 0.5rem 1rem;
+    text-transform: uppercase;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Hover effect with transparency */
+    text-decoration: none;
+}
+
+/* Styles for the card */
+.card {
+    margin-left: 20px;
+    margin-right: 20px;
+    transition: transform 0.2s;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+    border-radius: 8px;
+    backdrop-filter: blur(10px); /* Optional: blur the background behind the card */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Optional: shadow for depth */
+
+}
+
+/* Hover effect for the card */
+.card:hover {
+    transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+/* Card body styles */
+.card-body {
+    padding: 40px; /* Add some padding */
+}
+
+/* Card title styles */
+.card-title {
+    font-size: 1.5rem; /* Larger font for the title */
+    font-weight: bold; /* Make title bold */
+    color: #343a40; /* Darker text for contrast */
+}
+
+/* Card text styles */
+.card-text {
+    font-size: 1.1rem; /* Slightly larger font for readability */
+    color: #495057; /* Gray text color */
+}
+
+/* Styles for the image */
+.card-img-top {
+    border-top-left-radius: 10px; /* Round top left corner */
+    border-top-right-radius: 10px; /* Round top right corner */
+    height: 400px; /* Fixed height for uniformity */
+    object-fit: cover; /* Cover the image area */
+}
+
+/* Inline custom CSS */
+.card {
+    min-height: 500px; /* Increases the card height */
+    font-size: 1.2rem; /* Makes the font larger */
+}
+.card img {
+    max-height: 300px; /* Ensures larger images */
+    object-fit: cover;
+}
+.container .row .col-md-4 {
+    max-width: 35%; /* Ensures the cards occupy more space */
+}
+@media (max-width: 768px) {
+    .container .row .col-md-4 {
+        max-width: 100%; /* Makes cards stack on smaller screens */
+    }
+}
+
+/* Footer Styles */
+footer {
+    position: relative ; /* Needed to position footer content properly */
+    bottom: 0; /* Place the footer at the bottom */
+    text-align: center; /* Center align footer content */
+    padding: 1rem 0; /* Add some top and bottom padding */
+    line-height: 1.5; /* Adjust line-height as needed */
+    font-size: 1rem; /* Adjust font size as needed */
+    left: 0;
+    right: 0;
+    width: 100%;
+    /*height: 140px; !* Adjust height as necessary *!*/
+    color: white;
+    background: rgba(0, 0, 0, 0.3); /* Semi-transparent black background */
+    z-index: 1; /* Ensures the footer content appears above the video */
+}
+
+.footer-content {
+    padding: 2rem 0;
+    text-align: center;
+}
+
+/* Footer Links */
+footer a {
+    color: #f8d7da;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Social Icons */
+.social-icons {
+    margin-top: 1rem; /* Adds space between text and icons */
+}
+
+.social-icons a {
+    display: inline-block;
+    margin: 0 10px;
+    color: #f8d7da; /* Icon color */
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #ffffff; /* Hover color for icons */
+}
+
+.social-icons svg {
+    width: 24px; /* Size of the icons */
+    height: 24px;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .card {
+        margin-bottom: 20px; /* Add some space between cards on small screens */
+    }
+}
+
+@media (min-width: 576px) {
+    .row-cols-sm-2 .col {
+        margin-bottom: 20px; /* Space between columns on small screens */
+    }
+}
+
+@media (min-width: 768px) {
+    .row-cols-lg-4 .col {
+        margin-bottom: 30px; /* Space between columns on larger screens */
+    }
+}
+
+@media (max-width: 768px) {
+    footer .text-center {
+        font-size: 0.9rem;
+        padding: 1rem;
+    }
+}

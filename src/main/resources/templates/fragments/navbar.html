@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nav Bar Fragment</title>
+</head>
+<body>
+<!-- Thymeleaf Fragment Definition -->
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a href="/home" th:href="@{/}" style="color: white; text-decoration: none;">
+                <h1>RaceRadar</h1>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="/cars" th:href="@{/cars}" th:utext="#{nav.allCars}">All Cars</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="/addCar" th:href="@{/addCar}" th:utext="#{nav.addCar}">Add Car</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="/races" th:href="@{/races}" th:utext="#{nav.allRaces}">All Races</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="/addRace" th:href="@{/addRace}" th:utext="#{nav.addRace}">Add Race</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="/sponsors" th:href="@{/sponsors}" th:utext="#{nav.sponsors}">Sponsors</a>
+                    </li>
+                </ul>
+                <!-- Language switcher -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{page.language}"></a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+                            <li><a class="dropdown-item" href="?lang=en" th:text="#{language.english}">English</a></li>
+                            <li><a class="dropdown-item" href="?lang=be" th:text="#{language.Netherlands}">Netherlands</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

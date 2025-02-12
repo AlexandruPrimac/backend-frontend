@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{page.addrace}"></title>
+    <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
+    <link rel="stylesheet" th:href="@{/css/addRace.css}">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+
+<main>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <form th:action="@{/addRace}" method="post" th:object="${raceViewModel}" class="container mt-4">
+        <div class="row mb-3">
+            <!-- Race Name -->
+            <label for="name" class="form-label col-12 col-md-4" th:utext="#{addRace.name}">Race Name:</label>
+            <div class="col-12 col-md-8">
+                <input type="text" id="name" name="name" th:field="*{name}" class="form-control" required/>
+                <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <!-- Date -->
+            <label for="date" class="form-label col-12 col-md-4" th:utext="#{race.date}">Date:</label>
+            <div class="col-12 col-md-8">
+                <input type="date" id="date" name="date" th:field="*{date}" class="form-control" required/>
+                <div class="text-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <!-- Track -->
+            <label for="track" class="form-label col-12 col-md-4" th:utext="#{race.track}">Track:</label>
+            <div class="col-12 col-md-8">
+                <input type="text" id="track" name="track" th:field="*{track}" class="form-control" required/>
+                <div class="text-danger" th:if="${#fields.hasErrors('track')}" th:errors="*{track}"></div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <!-- Location -->
+            <label for="location" class="form-label col-12 col-md-4" th:utext="#{race.location}">Location:</label>
+            <div class="col-12 col-md-8">
+                <input type="text" id="location" name="location" th:field="*{location}" class="form-control" required/>
+                <div class="text-danger" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <!-- Distance -->
+            <label for="distance" class="form-label col-12 col-md-4" th:utext="#{race.distance}">Distance (km):</label>
+            <div class="col-12 col-md-8">
+                <input type="number" id="distance" name="distance" th:field="*{distance}" class="form-control" step="0.01" required/>
+                <div class="text-danger" th:if="${#fields.hasErrors('distance')}" th:errors="*{distance}"></div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-lg btn-block w-100" th:utext="#{button.addRace}">
+                    <i class="bi bi-plus"></i> Add Race
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,55 @@
+plugins {
+    id("java")
+    id("application") // Apply the application plugin
+    id ("org.springframework.boot") version "3.3.4"
+    id("io.spring.dependency-management") version "1.1.7"
+}
+
+group = "org.example"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation ("org.springframework.boot:spring-boot-starter")
+    developmentOnly ("org.springframework.boot:spring-boot-devtools")
+    testImplementation ("org.springframework.boot:spring-boot-starter-test")
+    testRuntimeOnly ("org.junit.platform:junit-platform-launcher")
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation("org.webjars:bootstrap:5.3.2")
+    implementation("org.webjars:webjars-locator-core:0.48")
+    implementation ("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation ("org.postgresql:postgresql:42.7.5")
+    testImplementation ("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    compileOnly("org.projectlombok:lombok")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    annotationProcessor("org.projectlombok:lombok")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    runtimeOnly("org.postgresql:postgresql")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    implementation("com.google.code.gson:gson:2.10.1")
+}
+
+application {
+    // Specify the main class of your application
+    mainClass.set("org.example.Runner")
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}

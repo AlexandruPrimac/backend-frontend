@@ -1,0 +1,163 @@
+/* General body styles */
+body, main {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-text {
+    color: #f8d7da; /* Change this to your desired color */
+    font-size: 1.25rem; /* Optional: Change font size */
+    font-weight: bold; /* Optional: Make it bold */
+}
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    padding: 1rem 2rem;
+    position: fixed; /* Keep the navbar fixed at the top */
+    width: 100%; /* Ensure it spans the full width */
+    z-index: 2; /* Make sure it stays above the video */
+}
+
+.navbar .nav-link {
+    color: white;
+    padding: 0.5rem 1rem;
+    text-transform: uppercase;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Hover effect with transparency */
+    text-decoration: none;
+}
+
+/* Form container */
+form {
+    justify-content: center;
+    align-items: center;
+    position: absolute; /* Position the form absolutely */
+    top: 40%; /* Move it down 50% from the top */
+    left: 50%; /* Move it right 50% from the left */
+    transform: translate(-50%, -50%); /* Center it */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Form elements alignment */
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+
+/* Add race button styling */
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Optional: add some hover effects */
+input:hover,
+input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Adjust padding for the form to make it more compact */
+form input,
+form label {
+    margin-bottom: 10px;
+}
+
+/* Footer Styles */
+footer {
+    position: fixed ; /* Needed to position footer content properly */
+    bottom: 0; /* Place the footer at the bottom */
+    text-align: center; /* Center align footer content */
+    padding: 1rem 0; /* Add some top and bottom padding */
+    line-height: 1.5; /* Adjust line-height as needed */
+    font-size: 1rem; /* Adjust font size as needed */
+    left: 0;
+    right: 0;
+    width: 100%;
+    /*height: 140px; !* Adjust height as necessary *!*/
+    color: white;
+    background: rgba(0, 0, 0, 0.3); /* Semi-transparent black background */
+    z-index: 1; /* Ensures the footer content appears above the video */
+}
+
+.footer-content {
+    padding: 2rem 0;
+    text-align: center;
+}
+
+/* Footer Links */
+footer a {
+    color: #f8d7da;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Social Icons */
+.social-icons {
+    margin-top: 1rem; /* Adds space between text and icons */
+}
+
+.social-icons a {
+    display: inline-block;
+    margin: 0 10px;
+    color: #f8d7da; /* Icon color */
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #ffffff; /* Hover color for icons */
+}
+
+.social-icons svg {
+    width: 24px; /* Size of the icons */
+    height: 24px;
+}
+
+/* Responsive Footer for Smaller Devices */
+@media (max-width: 768px) {
+    footer .text-center {
+        font-size: 0.9rem;
+        padding: 1rem;
+    }
+}
