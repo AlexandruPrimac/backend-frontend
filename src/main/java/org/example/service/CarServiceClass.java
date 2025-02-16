@@ -8,7 +8,6 @@ import org.example.exception.CustomApplicationException;
 
 import org.example.presentation.CarViewModel;
 import org.example.repository.CarJpaRepo;
-import org.example.service.Interfaces.CarService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,9 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class CarServiceJpa implements CarService {
+public class CarServiceClass implements org.example.service.Interfaces.CarService {
 
-    private final static Logger logger = LoggerFactory.getLogger(CarServiceJpa.class);
+    private final static Logger logger = LoggerFactory.getLogger(CarServiceClass.class);
 
     private final CarJpaRepo carRepository;
 
@@ -30,7 +29,7 @@ public class CarServiceJpa implements CarService {
     private EntityManager entityManager;
 
     @Autowired
-    public CarServiceJpa(CarJpaRepo carRepository) {
+    public CarServiceClass(CarJpaRepo carRepository) {
         this.carRepository = carRepository;
     }
 
@@ -64,6 +63,11 @@ public class CarServiceJpa implements CarService {
                 .collect(Collectors.toList());
         logger.info("Found {} cars with brand: {}", cars.size(), brand);
         return cars;
+    }
+
+    @Override
+    public List<Car> filterCarsDynamically(String brand) {
+        return carRepository.findCarByBrand(brand);
     }
 
 

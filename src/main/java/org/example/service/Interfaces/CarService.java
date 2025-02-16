@@ -13,6 +13,8 @@ public interface CarService {
 
     List<Car> filterCars(String brand);
 
+    List<Car> filterCarsDynamically(String brand);
+
     Car getCarById(int id);
 
     void deleteCar(int id);

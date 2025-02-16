@@ -5,11 +5,9 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.example.domain.Sponsor;
 import org.example.repository.SponsorJpaRepo;
-import org.example.service.Interfaces.SponsorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +15,8 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class SponsorServiceJpa implements SponsorService {
-    private final static Logger logger = LoggerFactory.getLogger(SponsorServiceJpa.class);
+public class SponsorServiceClass implements org.example.service.Interfaces.SponsorService {
+    private final static Logger logger = LoggerFactory.getLogger(SponsorServiceClass.class);
 
     private final SponsorJpaRepo sponsorRepository;
 
@@ -26,7 +24,7 @@ public class SponsorServiceJpa implements SponsorService {
     private EntityManager entityManager;
 
     @Autowired
-    public SponsorServiceJpa(SponsorJpaRepo sponsorRepository) {
+    public SponsorServiceClass(SponsorJpaRepo sponsorRepository) {
         this.sponsorRepository = sponsorRepository;
     }
 
@@ -44,6 +42,11 @@ public class SponsorServiceJpa implements SponsorService {
                 .collect(Collectors.toList());
         logger.info("Found {} sponsors with name: {}", sponsors.size(), name);
         return sponsors;
+    }
+
+    @Override
+    public List<Sponsor> filterSponsorsDynamically(String name) {
+        return sponsorRepository.filterSponsorsByName(name);
     }
 
     @Override

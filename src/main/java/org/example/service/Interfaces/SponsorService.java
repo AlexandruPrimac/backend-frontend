@@ -11,5 +11,7 @@ public interface SponsorService {
 
     List<Sponsor> filterSponsors(String name);
 
+    List<Sponsor> filterSponsorsDynamically(String name);
+
     void deleteSponsor(int id);
 }

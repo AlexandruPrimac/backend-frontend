@@ -1,0 +1,12 @@
+GET http://localhost:8080/api/cars?brand=ferrari
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/races?location=germany
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/sponsors?name=castrol
+Accept: application/json

@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/cars.css}">
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script src="/js/filterCars.js" defer></script>
 </head>
 <body>
 
@@ -18,14 +19,20 @@
         <button type="submit">Filter</button>
     </form>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+
+    <div id="search-results"></div>
+
+
+    <div id="all-cars" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
         <div class="col" th:each="car : ${cars}">
             <div class="card mb-4">
                 <img th:src="@{/images/{image}(image=${car.image})}"
                      class="card-img-top" alt="Car Image">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${car.brand}"></h5>
-                    <p class="card-text" th:text="${car.model}"></p>
+                    <p class="card-text"><strong th:utext="#{car.model}">Model:</strong> <span
+                        th:text="${car.model}"></span>
+                    </p>
                     <div class="card-footer text-center mt-auto">
                         <a th:href="@{/car/{id}(id=${car.id})}" class="btn btn-primary" th:utext="#{car.details}">View
                             Details</a>

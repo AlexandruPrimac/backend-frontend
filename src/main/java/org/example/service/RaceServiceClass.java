@@ -9,7 +9,6 @@ import org.example.domain.Race;
 import org.example.exception.CustomApplicationException;
 import org.example.presentation.RaceViewModel;
 import org.example.repository.RaceJpaRepo;
-import org.example.service.Interfaces.RaceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,8 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class RaceServiceJpa implements RaceService {
-    private final static Logger logger = LoggerFactory.getLogger(RaceServiceJpa.class);
+public class RaceServiceClass implements org.example.service.Interfaces.RaceService {
+    private final static Logger logger = LoggerFactory.getLogger(RaceServiceClass.class);
 
     private final RaceJpaRepo raceRepository;
 
@@ -31,7 +30,7 @@ public class RaceServiceJpa implements RaceService {
     private EntityManager entityManager;
 
     @Autowired
-    public RaceServiceJpa(RaceJpaRepo raceRepository) {
+    public RaceServiceClass(RaceJpaRepo raceRepository) {
         this.raceRepository = raceRepository;
     }
 
@@ -60,12 +59,17 @@ public class RaceServiceJpa implements RaceService {
     }
 
     @Override
-    public List<Race> filterRaces(String location, LocalDate date) {
+    public List<Race> filterRaces(String location) {
         List<Race> races = raceRepository.findAll().stream()
-                .filter(race -> race.getLocation().equalsIgnoreCase(location) && race.getDate().isEqual(date))
+                .filter(race -> race.getLocation().equalsIgnoreCase(location))
                 .collect(Collectors.toList());
-        logger.info("Found {} races with location: {} and date: {}", races.size(), location, date);
+        logger.info("Found {} races with location: {}", races.size(), location);
         return races;
+    }
+
+    @Override
+    public List<Race> filterRacesDinamically(String location) {
+        return raceRepository.filterRacesByLocation(location);
     }
 
     @Override

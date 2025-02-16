@@ -73,14 +73,14 @@ public class RaceController {
     }
 
     @GetMapping("/filter/races")
-    public String filterRaces(@RequestParam(value = "location", required = false) String location, @RequestParam(value = "date", required = false) LocalDate date, Model model) {
+    public String filterRaces(@RequestParam(value = "location", required = false) String location, Model model) {
 
         try {
-            if ((location == null || location.isEmpty()) && date == null) {
+            if ((location == null || location.isEmpty())) {
                 throw new CustomApplicationException("Please provide at least one filter criterion");
             }
 
-            List<Race> allRaces = raceService.filterRaces(location, date);
+            List<Race> allRaces = raceService.filterRaces(location);
             logger.info("Filtered races: {}", allRaces);
             model.addAttribute("races", allRaces);
         } catch (CustomApplicationException ex) {

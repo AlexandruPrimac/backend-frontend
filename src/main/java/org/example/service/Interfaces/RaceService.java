@@ -14,7 +14,9 @@ public interface RaceService {
 
     Race addRace(RaceViewModel raceViewModel);
 
-    List<Race> filterRaces(String location, LocalDate date);
+    List<Race> filterRaces(String location);
+
+    List<Race> filterRacesDinamically(String location);
 
     void deleteRace(int id);
 
