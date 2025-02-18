@@ -21,7 +21,7 @@ document.querySelector("#brand").addEventListener("keyup", async (e) => {
         allCarsContainer.style.display = "none"; // Hide all cars
 
         if (cars.length === 0) {
-            results.innerHTML = '<p>No results found!</p>';
+            results.innerHTML = '<p class="d-flex justify-content-center align-items-center vh-80">No results found!</p>';
         } else {
             let cardContainer = document.createElement("div");
             cardContainer.classList.add("row", "row-cols-1", "row-cols-sm-2", "row-cols-lg-4");

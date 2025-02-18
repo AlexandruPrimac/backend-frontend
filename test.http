@@ -10,3 +10,27 @@ Accept: application/json
 
 GET http://localhost:8080/api/sponsors?name=castrol
 Accept: application/json
+
+###
+
+DELETE http://localhost:8080/api/cars/1
+
+###
+
+DELETE http://localhost:8080/api/cars/999
+
+###
+
+DELETE http://localhost:8080/api/races/1
+
+###
+
+DELETE http://localhost:8080/api/races/999
+
+###
+
+DELETE http://localhost:8080/api/sponsors/1
+
+###
+
+DELETE http://localhost:8080/api/sponsors/999

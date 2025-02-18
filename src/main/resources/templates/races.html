@@ -13,12 +13,11 @@
 <main>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <form action="/filter/races" method="get">
+    <form onsubmit="return false;">
         <div>
             <label for="location">Filter:</label>
             <input type="text" id="location" name="location" placeholder="Enter location" required>
         </div>
-        <button type="submit">Filter</button>
     </form>
 
     <div id="search-results"></div>

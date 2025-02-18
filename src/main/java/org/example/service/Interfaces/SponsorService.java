@@ -9,8 +9,6 @@ public interface SponsorService {
 
     List<Sponsor> getAllSponsors();
 
-    List<Sponsor> filterSponsors(String name);
-
     List<Sponsor> filterSponsorsDynamically(String name);
 
     void deleteSponsor(int id);

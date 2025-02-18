@@ -5,7 +5,6 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.example.domain.*;
 import org.example.exception.CustomApplicationException;
-
 import org.example.presentation.CarViewModel;
 import org.example.repository.CarJpaRepo;
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -56,14 +54,6 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
         return car;
     }
 
-    @Override
-    public List<Car> filterCars(String brand) {
-        List<Car> cars = carRepository.findAll().stream()
-                .filter(car -> car.getBrand().equalsIgnoreCase(brand))
-                .collect(Collectors.toList());
-        logger.info("Found {} cars with brand: {}", cars.size(), brand);
-        return cars;
-    }
 
     @Override
     public List<Car> filterCarsDynamically(String brand) {
@@ -85,26 +75,29 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
 
     @Override
     public void deleteCar(int id) {
-        if (carRepository.existsById(id)) {
-            Car car = carRepository.findById(id)
-                    .orElseThrow(() -> new CustomApplicationException("Car not found with ID: " + id));
-
-            // Remove race associations
-            entityManager.createQuery("DELETE FROM CarRaces cr WHERE cr.car = :car")
-                    .setParameter("car", car)
-                    .executeUpdate();
-
-            // Remove sponsor associations
-            entityManager.createQuery("DELETE FROM CarSponsors cs WHERE cs.car = :car")
-                    .setParameter("car", car)
-                    .executeUpdate();
-
-            entityManager.flush(); // Ensure the changes are committed
-
-            // Now delete the car
-            carRepository.deleteById(id);
+        // Check if the car exists
+        if (!carRepository.existsById(id)) {
+            throw new CustomApplicationException("Car not found with ID: " + id);
         }
+
+        // Proceed with deletion if the car exists
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new CustomApplicationException("Car not found with ID: " + id));
+
+        // Remove associated relationships (races and sponsors)
+        entityManager.createQuery("DELETE FROM CarRaces cr WHERE cr.car = :car")
+                .setParameter("car", car)
+                .executeUpdate();
+
+        entityManager.createQuery("DELETE FROM CarSponsors cs WHERE cs.car = :car")
+                .setParameter("car", car)
+                .executeUpdate();
+
+
+        // Finally, delete the car
+        carRepository.delete(car);
     }
+
 
     @Override
     public List<Race> getRacesByCarId(int carId) {
@@ -133,4 +126,5 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
                         .toList())
                 .orElse(List.of());
     }
+
 }

@@ -14,10 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -59,36 +57,28 @@ public class RaceServiceClass implements org.example.service.Interfaces.RaceServ
     }
 
     @Override
-    public List<Race> filterRaces(String location) {
-        List<Race> races = raceRepository.findAll().stream()
-                .filter(race -> race.getLocation().equalsIgnoreCase(location))
-                .collect(Collectors.toList());
-        logger.info("Found {} races with location: {}", races.size(), location);
-        return races;
-    }
-
-    @Override
     public List<Race> filterRacesDinamically(String location) {
         return raceRepository.filterRacesByLocation(location);
     }
 
     @Override
     public void deleteRace(int id) {
-        if (raceRepository.existsById(id)) {
-            Race race = raceRepository.findById(id)
-                    .orElseThrow(() -> new CustomApplicationException("Race not found with ID: " + id));
 
-            // Remove car associations using JPQL
-            entityManager.createQuery("DELETE FROM CarRaces cr WHERE cr.race = :race")
-                    .setParameter("race", race)
-                    .executeUpdate();
-
-            entityManager.flush();
-
-            // Now delete the race
-            raceRepository.deleteById(id);
+        if (!raceRepository.existsById(id)) {
+            throw new CustomApplicationException("Race not found with ID: " + id);
         }
+
+        Race race = raceRepository.findById(id)
+                .orElseThrow(() -> new CustomApplicationException("Race not found with ID: " + id));
+
+        entityManager.createQuery("DELETE FROM CarRaces cr WHERE cr.race = :race")
+                .setParameter("race", race)
+                .executeUpdate();
+
+        // Now delete the race
+        raceRepository.deleteById(id);
     }
+
 
     @Override
     public Race getRaceById(int id) {
@@ -118,23 +108,4 @@ public class RaceServiceClass implements org.example.service.Interfaces.RaceServ
         }
     }
 
-
-//    @Override
-//    public List<CarRaces> getCarsByRaceId(int raceId) {
-//        Optional<Race> race = raceRepository.findById(raceId);
-//        if (race.isPresent()) {
-
-    /// /            List<CarViewModel> cars = race.get().getCars().stream()
-    /// /        .map(CarRaces::getCar) // Extract Car from CarRaces
-    /// /        .toList();
-//                List<CarRaces> cars = race.get().getCars();
-//        return cars;
-//
-//
-//        } else {
-//            logger.warn("Race with ID: {} not found", raceId);
-//            return List.of();
-//        }
-//
-//    }
 }

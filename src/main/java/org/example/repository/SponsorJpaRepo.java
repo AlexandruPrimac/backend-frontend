@@ -1,8 +1,6 @@
 package org.example.repository;
 
-import org.example.domain.Race;
 import org.example.domain.Sponsor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

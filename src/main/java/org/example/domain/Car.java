@@ -1,12 +1,14 @@
 package org.example.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "cars")
 public class Car {
@@ -40,9 +42,10 @@ public class Car {
 
     // Relationships
     @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
-    private List<CarRaces> races = new ArrayList<>();;
+    private List<CarRaces> races = new ArrayList<>();
+    ;
 
-    @OneToMany(mappedBy = "car" ,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
     private List<CarSponsors> sponsors = new ArrayList<>();
 
 
@@ -69,98 +72,6 @@ public class Car {
 
     }
 
-    //Getters and setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public double getEngine() {
-        return engine;
-    }
-
-    public void setEngine(double engine) {
-        this.engine = engine;
-    }
-
-    public int getHorsepower() {
-        return horsepower;
-    }
-
-    public void setHorsepower(int horsepower) {
-        this.horsepower = horsepower;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public CarCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(CarCategory category) {
-        this.category = category;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public List<CarRaces> getRaces() {
-        return races;
-    }
-
-    public void setRaces(List<CarRaces> races) {
-        this.races = races;
-    }
-
-    public List<CarSponsors> getSponsors() {
-        return sponsors;
-    }
-
-    public void setSponsors(List<CarSponsors> sponsors) {
-        this.sponsors = sponsors;
-    }
-
-//    @Override
-//    public String toString() {
-//        return "The car has the id " + id +
-//                ", the brand '" + brand + '\'' +
-//                ", the model is named '" + model + '\'' +
-//                ", the engine of the car has a capacity of " + engine + "L" +
-//                ", and it produces " + horsepower + " horsepower. " +
-//                "The production year of the car is " + year +
-//                ", and it belongs to the " + category + " category.";
-//    }
-
 
     @Override
     public String toString() {
@@ -174,8 +85,6 @@ public class Car {
                 this.getCategory()
         );
     }
-
-
 
 
 }

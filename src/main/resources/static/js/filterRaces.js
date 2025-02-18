@@ -20,7 +20,7 @@ document.querySelector("#location").addEventListener("keyup", async (e) => {
         results.innerHTML = '';
         allRaces.style.display = "none";
         if (races.length === 0) {
-            results.innerHTML = '<p>No results found!</p>';
+            results.innerHTML = '<p class="d-flex justify-content-center align-items-center vh-80" >No results found!</p>';
         } else {
             let cardContainer = document.createElement("div");
             cardContainer.classList.add("row", "row-cols-1", "row-cols-sm-2", "row-cols-lg-4");

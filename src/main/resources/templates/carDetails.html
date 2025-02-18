@@ -5,6 +5,7 @@
     <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
     <link rel="stylesheet" th:href="@{/css/carDetails.css}">
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css"/>
+    <script src="/js/cars.js" defer></script>
 </head>
 <body>
 <main>
@@ -44,12 +45,10 @@
                         <p class="card-text"><strong>Category:</strong> <span th:text="${car.category}"></span></p>
                     </div>
                     <div class="card-footer text-center">
-                        <form th:action="@{/cars/delete/{id}(id=${car.id})}" method="post"
-                              onsubmit="return confirm('Are you sure you want to delete this car?')">
-                            <button type="submit" class="btn btn-danger btn-lg" th:utext="#{button.delete}">
-                                <i class="bi bi-trash"></i> Delete
-                            </button>
-                        </form>
+                        <button id = "delete-button" class="delete-button btn btn-danger btn-lg"
+                                th:attr="data-car-id=${car.id}" th:utext="#{button.delete}">
+                            <i class="bi bi-trash"></i> Delete
+                        </button>
                     </div>
                 </div>
             </div>

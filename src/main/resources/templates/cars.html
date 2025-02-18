@@ -12,11 +12,9 @@
 
 <main>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <form action="/filter/cars" method="get">
+    <form onsubmit="return false;">
         <label for="brand">Filter:</label>
         <input type="text" id="brand" name="brand" placeholder="Enter brand name" required>
-
-        <button type="submit">Filter</button>
     </form>
 
 
@@ -31,7 +29,7 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${car.brand}"></h5>
                     <p class="card-text"><strong th:utext="#{car.model}">Model:</strong> <span
-                        th:text="${car.model}"></span>
+                            th:text="${car.model}"></span>
                     </p>
                     <div class="card-footer text-center mt-auto">
                         <a th:href="@{/car/{id}(id=${car.id})}" class="btn btn-primary" th:utext="#{car.details}">View

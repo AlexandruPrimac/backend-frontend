@@ -84,23 +84,6 @@ public class CarController {
         return "redirect:/cars"; // Redirect to all cars after adding
     }
 
-    @GetMapping("/filter/cars")
-    public String filterCars(@RequestParam(value = "brand", required = false) String brand, Model model) {
-        try {
-            List<Car> filteredCars = carService.filterCars(brand);
-
-            logger.info("Filtered cars by brand '{}': {}", brand, filteredCars);
-            model.addAttribute("cars", filteredCars);
-        } catch (DatabaseException ex) {
-            logger.error("Database error while filtering cars: {}", ex.getMessage());
-            throw ex;
-        } catch (Exception ex) {
-            logger.error("Unexpected error while filtering cars: {}", ex.getMessage());
-            throw new CustomApplicationException("Unable to filter cars due to an unexpected error.");
-        }
-        return "cars";  // cars.html
-    }
-
     @GetMapping("/car/{id}")
     public String getCarDetails(@PathVariable int id, Model model) {
         try {
@@ -127,20 +110,6 @@ public class CarController {
         return "carDetails";
     }
 
-    @PostMapping("/cars/delete/{id}")
-    public String deleteCar(@PathVariable int id) {
-        try {
-            logger.info("Attempting to delete car with ID {}", id);
-            carService.deleteCar(id);
-        } catch (DatabaseException ex) {
-            logger.error("Database exception while deleting car with ID {}: {}", id, ex.getMessage());
-            throw ex;
-        } catch (Exception ex) {
-            logger.error("Unexpected exception while deleting car with ID {}: {}", id, ex.getMessage());
-            throw new CustomApplicationException("Failed to delete car.");
-        }
-        return "redirect:/cars"; // Redirect to cars list page after deletion
-    }
 
     @GetMapping("/testDatabaseException")
     public String testException() {

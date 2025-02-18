@@ -10,9 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -42,41 +39,6 @@ public class SponsorController {
             throw new CustomApplicationException("Failed to fetch sponsors.");
         }
         return "sponsors";
-    }
-
-    @GetMapping("/filter/sponsors")
-    public String filterSponsors(@RequestParam(value = "name", required = false) String name, Model model) {
-
-        try {
-            List<Sponsor> allSponsors = sponsorService.filterSponsors(name);
-            logger.info("Searching for sponsors with name '{}'", name);
-            logger.info("Found {} sponsors", allSponsors.size());
-            model.addAttribute("sponsors", allSponsors);
-        } catch (DatabaseException ex) {
-            logger.error("Database exception while filtering sponsors: {}", ex.getMessage());
-            throw ex;
-        } catch (Exception ex) {
-            logger.error("Unexpected exception while filtering sponsors: {}", ex.getMessage());
-            throw new CustomApplicationException("Failed to filter sponsors.");
-        }
-        return "sponsors";
-    }
-
-    @PostMapping("/delete/sponsors/{id}")
-    public String deleteSponsor(@PathVariable int id) {
-
-        try {
-            logger.info("Attempting to delete sponsor with ID: {}", id);
-            sponsorService.deleteSponsor(id);
-            logger.info("Successfully deleted sponsor with ID: {}", id);
-        } catch (DatabaseException ex) {
-            logger.error("Database exception while deleting sponsor with ID {}: {}", id, ex.getMessage());
-            throw ex;
-        } catch (Exception ex) {
-            logger.error("Unexpected exception while deleting sponsor with ID {}: {}", id, ex.getMessage());
-            throw new CustomApplicationException("Failed to delete sponsor with ID: " + id);
-        }
-        return "redirect:/sponsors";
     }
 
 

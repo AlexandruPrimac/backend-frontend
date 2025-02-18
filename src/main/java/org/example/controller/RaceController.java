@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -72,29 +74,6 @@ public class RaceController {
         return "redirect:/races";
     }
 
-    @GetMapping("/filter/races")
-    public String filterRaces(@RequestParam(value = "location", required = false) String location, Model model) {
-
-        try {
-            if ((location == null || location.isEmpty())) {
-                throw new CustomApplicationException("Please provide at least one filter criterion");
-            }
-
-            List<Race> allRaces = raceService.filterRaces(location);
-            logger.info("Filtered races: {}", allRaces);
-            model.addAttribute("races", allRaces);
-        } catch (CustomApplicationException ex) {
-            logger.error("Application exception while filtering races: {}", ex.getMessage());
-            model.addAttribute("errorMessage", ex.getMessage());
-            return "errors/generalError"; // Show general error page
-        } catch (Exception ex) {
-            logger.error("Unexpected exception: {}", ex.getMessage());
-            throw new CustomApplicationException("Failed to filter races");
-        }
-
-        return "races";
-    }
-
     @GetMapping("/race/{id}")
     public String getRaceDetails(@PathVariable int id, Model model) {
 
@@ -117,21 +96,5 @@ public class RaceController {
         return "raceDetails";
     }
 
-    @PostMapping("/races/{id}")
-    public String deleteRace(@PathVariable int id) {
-
-        try {
-            logger.info("Deleting race with ID {}", id);
-            raceService.deleteRace(id);
-        } catch (DatabaseException ex) {
-            logger.error("Database exception while deleting race: {}", ex.getMessage());
-            throw ex;
-        } catch (Exception ex) {
-            logger.error("Unexpected exception: {}", ex.getMessage());
-            throw new CustomApplicationException("Failed to delete the race");
-        }
-
-        return "redirect:/races";
-    }
 
 }
