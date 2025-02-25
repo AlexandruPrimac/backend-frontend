@@ -1,7 +1,8 @@
 package org.example.controller;
 
-import jakarta.validation.Valid;
-import org.example.domain.*;
+import org.example.domain.Car;
+import org.example.domain.Race;
+import org.example.domain.Sponsor;
 import org.example.exception.CustomApplicationException;
 import org.example.exception.DatabaseException;
 import org.example.presentation.CarViewModel;
@@ -11,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class CarController {
 
     @GetMapping("/")
     public String home() {
-        return "index";  // Should point to the main page
+        return "index";
     }
 
     @GetMapping("/cars")
@@ -56,33 +57,9 @@ public class CarController {
             logger.error("Unexpected error while showing add car form: {}", ex.getMessage());
             throw new CustomApplicationException("Unable to display the add car form.");
         }
-        return "addCar"; // This corresponds to the "addCar"
+        return "addCar";
     }
 
-    @PostMapping("/addCar")
-    public String addCar(@Valid @ModelAttribute("car") CarViewModel carViewModel, BindingResult errors, Model model) {
-        if (carViewModel.getBrand().equalsIgnoreCase("error")) {
-            throw new DatabaseException("Simulated database error: Invalid brand provided.");
-        }
-
-        if (errors.hasErrors()) {
-            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-            return "addCar"; // Show the form again
-        }
-
-        try {
-            logger.info("Adding car: {} {}", carViewModel.getBrand(), carViewModel.getModel());
-            carService.addCar(carViewModel);
-        } catch (DatabaseException ex) {
-            logger.error("Database error while adding car: {}", ex.getMessage());
-            throw ex;
-        } catch (Exception ex) {
-            logger.error("Unexpected error while adding car: {}", ex.getMessage());
-            throw new CustomApplicationException("Unable to add the car due to an unexpected error.");
-        }
-
-        return "redirect:/cars"; // Redirect to all cars after adding
-    }
 
     @GetMapping("/car/{id}")
     public String getCarDetails(@PathVariable int id, Model model) {

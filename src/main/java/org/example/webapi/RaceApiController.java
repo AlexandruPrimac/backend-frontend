@@ -1,8 +1,12 @@
 package org.example.webapi;
 
+import jakarta.validation.Valid;
+import org.example.domain.Race;
 import org.example.exception.CustomApplicationException;
 import org.example.service.Interfaces.RaceService;
-import org.example.webapi.dto.RaceDto;
+import org.example.webapi.dto.request.AddRaceDto;
+import org.example.webapi.dto.response.RaceDto;
+import org.example.webapi.dto.response.RaceMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +18,17 @@ import java.util.List;
 public class RaceApiController {
 
     private final RaceService raceService;
+    private final RaceMapper raceMapper;
 
-    public RaceApiController(RaceService raceService) {
+    public RaceApiController(RaceService raceService, RaceMapper raceMapper) {
         this.raceService = raceService;
+        this.raceMapper = raceMapper;
     }
 
     //Filter races by location
     @GetMapping
     public ResponseEntity<List<RaceDto>> filter (@RequestParam("location") final String location) {
-        final List<RaceDto> race = raceService.filterRacesDinamically(location).stream().map(RaceDto::fromRace).toList();
+        final List<RaceDto> race = raceService.filterRacesDinamically(location).stream().map(raceMapper::toRaceDto).toList();
         return ResponseEntity.ok(race);
     }
 
@@ -34,6 +40,12 @@ public class RaceApiController {
         } catch (CustomApplicationException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // 404 response if not found
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<RaceDto> addRace(@Valid @RequestBody final AddRaceDto raceDto){
+        final Race race = raceService.add(raceDto.name(), raceDto.date(), raceDto.track(), raceDto.location(), raceDto.distance());
+        return ResponseEntity.status(HttpStatus.CREATED).body(raceMapper.toRaceDto(race));  // 201 response with created resource
     }
 
 }

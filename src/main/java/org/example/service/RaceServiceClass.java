@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,20 +41,6 @@ public class RaceServiceClass implements org.example.service.Interfaces.RaceServ
         logger.info("Races: {}", races);
 
         return races;
-    }
-
-    @Override
-    public Race addRace(RaceViewModel raceViewModel) {
-        Race race = new Race(
-                raceViewModel.getName(),
-                raceViewModel.getDate(),
-                raceViewModel.getTrack(),
-                raceViewModel.getLocation(),
-                raceViewModel.getDistance(),
-                raceViewModel.getImage()
-        );
-        logger.info("Adding race: {}", race);
-        return raceRepository.save(race);
     }
 
     @Override
@@ -106,6 +93,18 @@ public class RaceServiceClass implements org.example.service.Interfaces.RaceServ
             logger.warn("Race with ID: {} not found", raceId);
             return List.of();
         }
+    }
+
+    @Override
+    public Race add(String name, LocalDate date, String track, String location, double distance) {
+        Race race = new Race();
+        logger.info("Adding race: {}", race);
+        race.setName(name);
+        race.setDate(date);
+        race.setTrack(track);
+        race.setLocation(location);
+        race.setDistance(distance);
+        return raceRepository.save(race);
     }
 
 }

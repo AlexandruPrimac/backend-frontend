@@ -1,6 +1,5 @@
-package org.example.webapi.dto;
+package org.example.webapi.dto.response;
 
-import org.example.domain.Race;
 import org.example.domain.Sponsor;
 
 public record SponsorDto(int id, String name, String industry, int foundingYear, String image) {

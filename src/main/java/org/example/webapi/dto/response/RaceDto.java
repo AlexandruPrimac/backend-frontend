@@ -1,6 +1,5 @@
-package org.example.webapi.dto;
+package org.example.webapi.dto.response;
 
-import org.example.domain.Car;
 import org.example.domain.Race;
 
 public record RaceDto(int id, String name, String location, String image, String track) {

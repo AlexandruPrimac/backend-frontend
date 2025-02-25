@@ -39,6 +39,9 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     implementation("com.google.code.gson:gson:2.10.1")
+
+    implementation ("org.mapstruct:mapstruct:1.6.3")
+    annotationProcessor ("org.mapstruct:mapstruct-processor:1.6.3")
 }
 
 application {

@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "races")
 public class Race {
 
-    /// Attributes
+    // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generates ID
     private int id;

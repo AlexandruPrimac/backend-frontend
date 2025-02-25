@@ -1,6 +1,7 @@
 package org.example.service.Interfaces;
 
 import org.example.domain.Car;
+import org.example.domain.CarCategory;
 import org.example.domain.Race;
 import org.example.domain.Sponsor;
 import org.example.presentation.CarViewModel;
@@ -11,8 +12,6 @@ public interface CarService {
 
     List<Car> getAllCars();
 
-    Car addCar(CarViewModel carViewModel);
-
     List<Car> filterCarsDynamically(String brand);
 
     Car getCarById(int id);
@@ -22,5 +21,7 @@ public interface CarService {
     List<Race> getRacesByCarId(int carId);
 
     List<Sponsor> getSponsorsByCarId(int carId);
+
+    Car add(String brand, String model, Double engineCapacity, int horsepower, int year, CarCategory category);
 
 }

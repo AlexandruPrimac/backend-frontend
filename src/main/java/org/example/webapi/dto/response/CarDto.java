@@ -1,4 +1,4 @@
-package org.example.webapi.dto;
+package org.example.webapi.dto.response;
 
 import org.example.domain.Car;
 

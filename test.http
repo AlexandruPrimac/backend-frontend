@@ -34,3 +34,33 @@ DELETE http://localhost:8080/api/sponsors/1
 ###
 
 DELETE http://localhost:8080/api/sponsors/999
+
+###
+
+POST http://localhost:8080/api/cars
+Content-Type: application/json
+Accept: application/json
+
+{
+  "brand": "Toyota",
+  "model": "Corolla",
+  "engine": 1.8,
+  "horsePower": 30,
+  "year": 2020,
+  "category": "SEDAN"
+  }
+
+###
+
+POST http://localhost:8080/api/races
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "MX5 Race",
+  "date": "2023-01-29",
+  "track": "Oulton Park Circuit",
+  "location": "UK",
+  "distance": 8.0
+
+}

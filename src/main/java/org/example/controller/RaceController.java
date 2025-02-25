@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import jakarta.validation.Valid;
 import org.example.domain.Car;
 import org.example.domain.Race;
 import org.example.exception.CustomApplicationException;
@@ -12,11 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -50,28 +46,6 @@ public class RaceController {
     public String addRace(Model model) {
         model.addAttribute("raceViewModel", new RaceViewModel());
         return "addRace";
-    }
-
-    @PostMapping("/addRace")
-    public String addRace(@Valid @ModelAttribute("raceViewModel") RaceViewModel raceViewModel,
-                          BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            logger.warn("Validation errors while adding race: {}", bindingResult.getAllErrors());
-            return "addRace";
-        }
-
-        try {
-            logger.info("Adding race: {}", raceViewModel.getName());
-            raceService.addRace(raceViewModel);
-        } catch (DatabaseException ex) {
-            logger.error("Database exception while adding race: {}", ex.getMessage());
-            throw ex;
-        } catch (Exception ex) {
-            logger.error("Unexpected exception: {}", ex.getMessage());
-            throw new CustomApplicationException("Failed to add the race");
-        }
-
-        return "redirect:/races";
     }
 
     @GetMapping("/race/{id}")

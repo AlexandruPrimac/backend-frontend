@@ -2,7 +2,8 @@ package org.example.webapi;
 
 import org.example.exception.CustomApplicationException;
 import org.example.service.Interfaces.SponsorService;
-import org.example.webapi.dto.SponsorDto;
+import org.example.webapi.dto.response.SponsorDto;
+import org.example.webapi.dto.response.SponsorMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +15,17 @@ import java.util.List;
 public class SponsorApiController {
 
     private final SponsorService sponsorService;
+    private final SponsorMapper sponsorMapper;
 
-    public SponsorApiController(SponsorService sponsorService) {
+    public SponsorApiController(SponsorService sponsorService, SponsorMapper sponsorMapper) {
         this.sponsorService = sponsorService;
+        this.sponsorMapper = sponsorMapper;
     }
 
     //Filter sponsors by name
     @GetMapping
     public ResponseEntity<List<SponsorDto>> filter(@RequestParam("name") final String name) {
-        final List<SponsorDto> sponsor = sponsorService.filterSponsorsDynamically(name).stream().map(SponsorDto::fromSponsor).toList();
+        final List<SponsorDto> sponsor = sponsorService.filterSponsorsDynamically(name).stream().map(sponsorMapper::toSponsorDto).toList();
         return ResponseEntity.ok(sponsor);
     }
 

@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/addCar.css}">
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script src="/js/addCar.js" defer ></script>
 </head>
 <body>
 
@@ -14,7 +15,7 @@
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
     <div class="container mt-4">
-        <form action="addCar" method="post" th:object="${carViewModel}" class="needs-validation" novalidate>
+        <form id= "add-car-form" action="addCar" method="post" th:object="${carViewModel}" class="container mt-4">
             <!-- Error messages -->
             <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
                 <p>The form contains errors! Please fix them below.</p>

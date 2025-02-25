@@ -39,19 +39,16 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
     }
 
     @Override
-    public Car addCar(CarViewModel carViewModel) {
-        Car car = new Car(
-                carViewModel.getBrand(),
-                carViewModel.getModel(),
-                carViewModel.getEngine(),
-                carViewModel.getHorsepower(),
-                carViewModel.getYear(),
-                carViewModel.getCategory(),
-                carViewModel.getImage()
-        );
+    public Car add(String brand, String model, Double engineCapacity, int horsepower, int year, CarCategory category) {
+        Car car = new Car();
         logger.info("Adding car: {}", car);
-        entityManager.persist(car);
-        return car;
+        car.setBrand(brand);
+        car.setModel(model);
+        car.setEngine(engineCapacity);
+        car.setHorsepower(horsepower);
+        car.setYear(year);
+        car.setCategory(category);
+        return carRepository.save(car);
     }
 
 
