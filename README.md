@@ -127,6 +127,51 @@ HTTP/1.1 404
 Content-Length: 0
 <Response body is empty>
 ```
+
+### Adding Race to Car - 200 ok
+```
+PATCH http://localhost:8080/api/cars/1/add-race?raceId=12
+Accept: application/json
+Content-Type: application/json
+
+Json Response:
+HTTP/1.1 200
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Thu, 06 Mar 2025 19:54:06 GMT
+
+{
+"id": 1,
+"brand": "Ferrari",
+"model": "488 GTB",
+"image": "ferrari.jpg",
+"races": [
+{
+"id": 1,
+"name": "Monaco Grand Prix",
+"date": "2023-05-28",
+"location": "Monaco",
+"image": "monaco.jpg",
+"track": "Monaco Grand Prix"
+},
+{
+"id": 3,
+"name": "Nurburgring Endurance",
+"date": "2023-08-10",
+"location": "Germany",
+"image": "nurburgring.jpg",
+"track": "Nurburgring"
+},
+{
+"id": 12,
+"name": "NHRA Nationals",
+"date": "2024-03-15",
+"location": "USA",
+"image": "nhra.jpg",
+"track": "Las Vegas Motor Speedway"
+}]}
+```
+
 ---
 
 ## Instructions to Run the Project
