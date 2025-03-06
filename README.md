@@ -31,6 +31,102 @@ This project models a racing ecosystem with entities such as Cars, Races, and Sp
 
 ---
 
+## Week 2 & Week 3
+
+### Filtering Cars by Brand - OK
+
+```
+GET http://localhost:8080/api/cars?brand=ferrari
+Accept: application/json
+
+Json Response:
+HTTP/1.1 200 OK
+[{"id":1,"brand":"Ferrari","model":"488 GTB","engine":3.9,...}]
+```
+### Filtering Cars by Brand - OK(empty list)
+```
+GET http://localhost:8080/api/cars?brand=Citroen
+Accept: application/json
+
+Json Response:
+HTTP/1.1 200
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Thu, 06 Mar 2025 19:46:09 GMT
+[]
+```
+### Deleting Car with id 1 - 204 No Content
+
+```
+DELETE http://localhost:8080/api/cars/1
+
+Json Response:
+HTTP/1.1 204
+<Response body is empty>
+```
+
+### Deleting Car with id 999 - 404 Not Found
+
+```
+DELETE http://localhost:8080/api/cars/999
+
+Json Response:
+HTTP/1.1 404 Not Found
+{"error":"Car not found"}
+```
+
+### Creating New Car - 201 Created
+```
+POST http://localhost:8080/api/cars
+Accept: application/json
+Content-Type: application/json
+
+{
+"brand": "Toyota",
+"model": "Corolla",
+"engine": 1.8,
+"horsePower": 130,
+"year": 2020,
+"category": "SPORTS"
+}
+
+Json Response:
+HTTP/1.1 201 Created
+{"id":2,"brand":"Toyota","model":"Corolla",...}
+```
+
+### Partial Car Update - 200 OK
+```
+PATCH http://localhost:8080/api/cars/1
+Accept: application/json
+Content-Type: application/json
+
+{"horsepower": 630}
+
+Json Response:
+HTTP/1.1 200 OK
+{"id":1,"horsepower":630,...}
+```
+
+### Partial Car Update - 404 NOT FOUND (id not found)
+```
+PATCH http://localhost:8080/api/races/100
+Accept: application/json
+Content-Type: application/json
+
+{
+"name": "Monaco Grand Prix",
+"date": "2023-01-29",
+"track": "Monaco Grand Prix",
+"location": "Monaco",
+"distance": 9.0
+}
+
+Json Response:
+HTTP/1.1 404 
+Content-Length: 0
+<Response body is empty>
+```
 ---
 
 ## Instructions to Run the Project

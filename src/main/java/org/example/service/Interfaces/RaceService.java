@@ -24,4 +24,5 @@ public interface RaceService {
     Race add(String name, LocalDate date, String track, String location, double distance);
 
     Race patch(int id, String name, LocalDate date, String track, String location, double distance);
+
 }

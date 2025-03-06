@@ -64,7 +64,7 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
 
     @Override
     public Car getCarById(int id) {
-        Optional<Car> car = carRepository.findById(id);
+        Optional<Car> car = carRepository.findByIdWithRaces(id);
         if (car.isPresent()) {
             logger.info("Found car with ID: {}", id);
             return car.get();
@@ -93,7 +93,6 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
         entityManager.createQuery("DELETE FROM CarSponsors cs WHERE cs.car = :car")
                 .setParameter("car", car)
                 .executeUpdate();
-
 
         // Finally, delete the car
         carRepository.delete(car);
@@ -161,27 +160,24 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
 
     @Override
     public Car addRaceToCar(int carId, int raceId) {
-        Car car = carRepository.findById(carId)
+        Car car = carRepository.findByIdWithRaces(carId)
                 .orElseThrow(() -> new CustomApplicationException("Car not found with id " + carId));
 
         Race race = raceRepository.findById(raceId)
                 .orElseThrow(() -> new CustomApplicationException("Race not found with id " + raceId));
 
-        // Check if the race is already linked to the car
         boolean isRaceLinked = car.getRaces().stream()
                 .anyMatch(cr -> cr.getRace().getId() == raceId);
-
-        logger.info("Added race" + race);
 
         if (!isRaceLinked) {
             CarRaces carRace = new CarRaces();
             carRace.setCar(car);
             carRace.setRace(race);
             car.getRaces().add(carRace);
-            logger.info(carRace.toString());
-        }
 
-        logger.info("Updated car" + car.getRaces().toString());
+            entityManager.persist(carRace);
+            entityManager.flush();
+        }
 
         return carRepository.save(car);
     }

@@ -5,10 +5,11 @@ import jakarta.validation.Valid;
 import org.example.domain.Car;
 import org.example.exception.CustomApplicationException;
 import org.example.service.Interfaces.CarService;
+import org.example.service.Interfaces.RaceService;
 import org.example.webapi.dto.request.AddCarDto;
+import org.example.webapi.dto.request.PatchCarDto;
 import org.example.webapi.dto.response.CarDto;
 import org.example.webapi.dto.response.CarMapper;
-import org.example.webapi.dto.request.PatchCarDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -78,4 +79,5 @@ public class CarApiController {
         // Return the updated car with race added
         return ResponseEntity.ok(updatedCarDto);
     }
+
 }

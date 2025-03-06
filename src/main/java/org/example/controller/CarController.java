@@ -77,6 +77,14 @@ public class CarController {
             logger.info("Fetched races for car ID {}: {}", id, races);
             model.addAttribute("races", races);
 
+            // Filter races that the car is not participating in
+            List<Race> availableRaces = races.stream()
+                    .filter(race -> car.getRaces().stream().noneMatch(cr -> cr.getRace().getId() == race.getId()))
+                    .toList();
+
+            model.addAttribute("car", car);
+            model.addAttribute("availableRaces", availableRaces);
+
             List<Sponsor> sponsors = carService.getSponsorsByCarId(id);
             logger.info("Fetched sponsors for car ID {}: {}", id, sponsors);
             model.addAttribute("sponsors", sponsors);

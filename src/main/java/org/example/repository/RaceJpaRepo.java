@@ -15,4 +15,5 @@ public interface RaceJpaRepo extends JpaRepository<Race, Integer> {
 
     @Query("SELECT r FROM Race r WHERE LOWER(r.location) LIKE LOWER(:location)")
     List<Race> filterRacesByLocation(String location);
+
 }

@@ -28,6 +28,7 @@ public interface CarMapper {
         }
 
         return carRaces.stream()
+                .filter(carRace -> carRace.getRace() != null)  // <-- Prevents NullPointerException
                 .map(carRace -> {
                     Race race = carRace.getRace();
                     return new RaceDto(
@@ -40,6 +41,6 @@ public interface CarMapper {
                     );
                 })
                 .collect(Collectors.toList());
-    }
 
+    }
 }

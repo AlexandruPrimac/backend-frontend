@@ -27,7 +27,7 @@
                         </div>
                         <div class="card-footer text-center">
                             <a th:href="@{/races}" class="btn btn-primary bottom-0">View Race Details</a>
-                            <button class="btn btn-warning add-race-button" data-race-id="${race.id}">Add Race to Car
+                            <button class="btn btn-warning add-race-button" data-car-id="${car.id}">Add Race to Car
                             </button>
                         </div>
                     </div>
@@ -94,7 +94,9 @@
                         </div>
                         <div class="card-footer text-center">
                             <a th:href="@{/sponsors}" class="btn btn-primary">Sponsor Details</a>
-                            <button class="btn btn-warning add-sponsor-button" data-sponsor-id="${sponsor.id}">Add Sponsor to Car</button>
+                            <button class="btn btn-warning add-sponsor-button" data-sponsor-id="${sponsor.id}">Add
+                                Sponsor to Car
+                            </button>
                         </div>
                     </div>
                 </div>

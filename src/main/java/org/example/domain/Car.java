@@ -74,15 +74,14 @@ public class Car {
 
     @Override
     public String toString() {
-        return String.format("Car(id=%d, brand='%s', model='%s', engine='%s', horsepower=%d, year=%d, category='%s', races=%s)",
+        return String.format("Car(id=%d, brand='%s', model='%s', engine='%s', horsepower=%d, year=%d, category='%s')",
                 this.getId(),
                 this.getBrand(),
                 this.getModel(),
                 this.getEngine(),
                 this.getHorsepower(),
                 this.getYear(),
-                this.getCategory(),
-                this.getRaces()
+                this.getCategory()
         );
     }
 

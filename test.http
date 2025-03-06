@@ -106,7 +106,7 @@ Content-Type: application/json
 
 ###
 
-PATCH http://localhost:8080/api/races/1
+PATCH http://localhost:8080/api/races/100
 Accept: application/json
 Content-Type: application/json
 
@@ -120,7 +120,7 @@ Content-Type: application/json
 
 ###
 
-PATCH http://localhost:8080/api/cars/2/add-race?raceId=6
+PATCH http://localhost:8080/api/cars/1/add-race?raceId=12
 Accept: application/json
 Content-Type: application/json
 
