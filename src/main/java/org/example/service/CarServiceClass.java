@@ -1,12 +1,13 @@
 package org.example.service;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.example.domain.*;
 import org.example.exception.CustomApplicationException;
-import org.example.presentation.CarViewModel;
 import org.example.repository.CarJpaRepo;
+import org.example.repository.RaceJpaRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,15 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
 
     private final CarJpaRepo carRepository;
 
+    private final RaceJpaRepo raceRepository;
+
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
-    public CarServiceClass(CarJpaRepo carRepository) {
+    public CarServiceClass(CarJpaRepo carRepository, RaceJpaRepo raceRepository) {
         this.carRepository = carRepository;
+        this.raceRepository = raceRepository;
     }
 
     @Override
@@ -124,4 +128,61 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
                 .orElse(List.of());
     }
 
+    @Override
+    public Car patch(int id, String brand, String model, double engine, int horsepower, int year, CarCategory category) {
+        Car car = carRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Car not found"));
+
+        if (brand != null) {
+            car.setBrand(brand);
+        }
+
+        if (model != null) {
+            car.setModel(model);
+        }
+
+        if (engine != 0) {
+            car.setEngine(engine);
+        }
+
+        if (horsepower != 0) {
+            car.setHorsepower(horsepower);
+        }
+
+        if (year != 0) {
+            car.setYear(year);
+        }
+
+        if (category != null) {
+            car.setCategory(category);
+        }
+
+        return carRepository.save(car);
+    }
+
+    @Override
+    public Car addRaceToCar(int carId, int raceId) {
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new CustomApplicationException("Car not found with id " + carId));
+
+        Race race = raceRepository.findById(raceId)
+                .orElseThrow(() -> new CustomApplicationException("Race not found with id " + raceId));
+
+        // Check if the race is already linked to the car
+        boolean isRaceLinked = car.getRaces().stream()
+                .anyMatch(cr -> cr.getRace().getId() == raceId);
+
+        logger.info("Added race" + race);
+
+        if (!isRaceLinked) {
+            CarRaces carRace = new CarRaces();
+            carRace.setCar(car);
+            carRace.setRace(race);
+            car.getRaces().add(carRace);
+            logger.info(carRace.toString());
+        }
+
+        logger.info("Updated car" + car.getRaces().toString());
+
+        return carRepository.save(car);
+    }
 }

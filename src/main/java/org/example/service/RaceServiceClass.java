@@ -1,13 +1,13 @@
 package org.example.service;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.example.domain.Car;
 import org.example.domain.CarRaces;
 import org.example.domain.Race;
 import org.example.exception.CustomApplicationException;
-import org.example.presentation.RaceViewModel;
 import org.example.repository.RaceJpaRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,6 +104,33 @@ public class RaceServiceClass implements org.example.service.Interfaces.RaceServ
         race.setTrack(track);
         race.setLocation(location);
         race.setDistance(distance);
+        return raceRepository.save(race);
+    }
+
+    @Override
+    public Race patch(int id, String name, LocalDate date, String track, String location, double distance) {
+        Race race = raceRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Race not found"));
+
+        if (name != null) {
+            race.setName(name);
+        }
+
+        if (date != null) {
+            race.setDate(date);
+        }
+
+        if (track != null) {
+            race.setTrack(track);
+        }
+
+        if (location != null) {
+            race.setLocation(location);
+        }
+
+        if (distance != 0) {
+            race.setDistance(distance);
+        }
+
         return raceRepository.save(race);
     }
 

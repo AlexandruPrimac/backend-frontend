@@ -11,7 +11,6 @@ import java.util.Optional;
 public interface RaceJpaRepo extends JpaRepository<Race, Integer> {
 
     @Query("SELECT DISTINCT r FROM Race r LEFT JOIN FETCH r.cars rc LEFT JOIN FETCH rc.car WHERE r.id = :id")
-
     Optional<Race> findByIdWithDetails(@Param("id") int id);
 
     @Query("SELECT r FROM Race r WHERE LOWER(r.location) LIKE LOWER(:location)")

@@ -43,7 +43,6 @@ public class Car {
     // Relationships
     @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
     private List<CarRaces> races = new ArrayList<>();
-    ;
 
     @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
     private List<CarSponsors> sponsors = new ArrayList<>();
@@ -75,16 +74,18 @@ public class Car {
 
     @Override
     public String toString() {
-        return String.format("Car(id=%d, brand='%s', model='%s', engine='%s', horsepower=%d, year=%d, category='%s')",
+        return String.format("Car(id=%d, brand='%s', model='%s', engine='%s', horsepower=%d, year=%d, category='%s', races=%s)",
                 this.getId(),
                 this.getBrand(),
                 this.getModel(),
                 this.getEngine(),
                 this.getHorsepower(),
                 this.getYear(),
-                this.getCategory()
+                this.getCategory(),
+                this.getRaces()
         );
     }
+
 
 
 }

@@ -17,14 +17,18 @@
             <!-- Related Races card on the left -->
             <div class="col-4 col-md-4 mb-4">
                 <div class="card">
+                    <h3 class="card-title text-center">Related Races</h3>
                     <div class="card-body">
-                        <h3 class="card-title">Related Races</h3>
                         <div th:each="race : ${races}" class="list-group-item">
-                            <img th:src="@{/images/{image}(image=${race.image})}" class="card-img-top" alt="Car Image">
                             <h5 th:text="${race.name}"></h5>
                             <p><strong>Track:</strong> <span th:text="${race.track}"></span></p>
+                            <img th:src="@{/images/{image}(image=${race.image})}" class="card-img-top" alt="Car Image">
+                            <br><br><br>
+                        </div>
+                        <div class="card-footer text-center">
                             <a th:href="@{/races}" class="btn btn-primary bottom-0">View Race Details</a>
-                            <br><br>
+                            <button class="btn btn-warning add-race-button" data-race-id="${race.id}">Add Race to Car
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -35,19 +39,44 @@
                 <div class="card">
                     <img th:src="@{/images/{image}(image=${car.image})}" class="card-img-top" alt="Car Image">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${car.brand}"></h5>
-                        <p class="card-text"><strong>Model:</strong> <span th:text="${car.model}"></span></p>
-                        <p class="card-text"><strong>Engine Capacity:</strong> <span
-                                th:text="${car.engine} + ' L'"></span></p>
-                        <p class="card-text"><strong>Horsepower:</strong> <span th:text="${car.horsepower}"></span> hp
+                        <p class="card-text"><strong>Brand:</strong>
+                            <input type="text" id="car-brand" th:value="${car.brand}" class="form-control" disabled>
                         </p>
-                        <p class="card-text"><strong>Year:</strong> <span th:text="${car.year}"></span></p>
-                        <p class="card-text"><strong>Category:</strong> <span th:text="${car.category}"></span></p>
+                        <p class="card-text"><strong>Model:</strong>
+                            <input type="text" id="car-model" th:value="${car.model}" class="form-control" disabled>
+                        </p>
+                        <p class="card-text"><strong>Engine Capacity:</strong>
+                            <input type="number" step="0.1" id="car-engine" th:value="${car.engine}"
+                                   class="form-control" disabled>
+                        </p>
+                        <p class="card-text"><strong>Horsepower:</strong>
+                            <input type="number" id="car-horsepower" th:value="${car.horsepower}" class="form-control"
+                                   disabled>
+                        </p>
+                        <p class="card-text"><strong>Year:</strong>
+                            <input type="number" id="car-year" th:value="${car.year}" class="form-control" disabled>
+                        </p>
+                        <p class="card-text"><strong>Category:</strong>
+                            <select id="car-category" class="form-control" disabled>
+                                <option value="" disabled selected>Select Category</option>
+                                <!-- Loop through the categories enum -->
+                                <option th:each="category : ${categories}"
+                                        th:value="${category.name()}"
+                                        th:text="${category.name()}"
+                                        th:selected="${car.category == category}"></option>
+                            </select>
+                        </p>
                     </div>
                     <div class="card-footer text-center">
-                        <button id = "delete-button" class="delete-button btn btn-danger btn-lg"
+                        <button id="delete-button" class="delete-button btn btn-danger btn-lg"
                                 th:attr="data-car-id=${car.id}" th:utext="#{button.delete}">
                             <i class="bi bi-trash"></i> Delete
+                        </button>
+
+                        <!-- Buttons -->
+                        <button id="edit-button" class="btn btn-primary btn-lg">Edit Car</button>
+                        <button id="save-button" class="btn btn-success btn-lg" style="display: none;">Save</button>
+                        <button id="cancel-button" class="btn btn-secondary btn-lg" style="display: none;">Cancel
                         </button>
                     </div>
                 </div>
@@ -56,13 +85,16 @@
             <!-- Related Sponsors card on the right -->
             <div class="col-12 col-md-4 mb-4">
                 <div class="card">
+                    <h3 class="card-title text-center">Related Sponsors</h3>
                     <div class="card-body">
-                        <h3 class="card-title">Related Sponsors</h3>
                         <div th:each="sponsor : ${sponsors}" class="list-group-item">
                             <h5 th:text="${sponsor.name}"></h5>
                             <img th:src="@{/images/{image}(image=${sponsor.image})}" class="img-thumbnail"
-                                 alt="Sponsor Logo"><br>
-                            <a th:href="@{/sponsors}" class="btn btn-primary">View Sponsor Details</a>
+                                 alt="Sponsor Logo"><br><br><br>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a th:href="@{/sponsors}" class="btn btn-primary">Sponsor Details</a>
+                            <button class="btn btn-warning add-sponsor-button" data-sponsor-id="${sponsor.id}">Add Sponsor to Car</button>
                         </div>
                     </div>
                 </div>

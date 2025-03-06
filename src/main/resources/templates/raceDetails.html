@@ -17,29 +17,36 @@
     <div class="row">
         <!-- Race Details Card (on the left) -->
         <div class="col-12 col-md-6 mb-4">
-            <div class="card mb-4">
-                <h2 class="text-center">Track Details</h2>
+            <div class="card">
+                <img th:src="@{/images/{image}(image=${race.image})}" class="card-img-top" alt="Race Image">
                 <div class="card-body">
-                    <img th:src="@{/images/{image}(image=${race.image})}" class="card-img-top" alt="Race Image">
-                    <h5 class="card-title" th:text="${race.name}"></h5>
-                    <p class="card-text"><strong th:utext="#{addRace.name}"></strong> <span
-                            th:text="${race.name}"></span></p>
-                    <p class="card-text"><strong th:utext="#{race.date}"></strong> <span th:text="${race.date}"></span>
+                    <p class="card-text"><strong>Race Name:</strong>
+                        <input type="text" id="race-name" th:value="${race.name}" class="form-control" disabled>
                     </p>
-                    <p class="card-text"><strong th:utext="#{race.track}"></strong> <span
-                            th:text="${race.track}"></span></p>
-                    <p class="card-text"><strong th:utext="#{race.location}"></strong> <span
-                            th:text="${race.location}"></span></p>
-                    <p class="card-text"><strong th:utext="#{race.distance}"></strong> <span
-                            th:text="${race.distance}"></span> km</p>
+                    <p class="card-text"><strong>Race Date:</strong>
+                        <input type="date" id="race-date" th:value="${race.date}" class="form-control" disabled>
+                    </p>
+                    <p class="card-text"><strong>Track:</strong>
+                        <input type="text" id="race-track" th:value="${race.track}" class="form-control" disabled>
+                    </p>
+                    <p class="card-text"><strong>Location:</strong>
+                        <input type="text" id="race-location" th:value="${race.location}" class="form-control" disabled>
+                    </p>
+                    <p class="card-text"><strong>Distance (in km):</strong>
+                        <input type="number" id="race-distance" th:value="${race.distance}" class="form-control"
+                               disabled>
+                    </p>
                 </div>
-
-                <!-- Delete Button for the Race -->
                 <div class="card-footer text-center">
-                    <button id = "delete-button" class="delete-button btn btn-danger btn-lg"
+                    <button id="delete-button" class="delete-button btn btn-danger btn-lg"
                             th:attr="data-race-id=${race.id}" th:utext="#{button.delete}">
                         <i class="bi bi-trash"></i> Delete
                     </button>
+
+                    <!-- Buttons -->
+                    <button id="edit-button" class="btn btn-primary btn-lg">Edit Race</button>
+                    <button id="save-button" class="btn btn-success btn-lg" style="display: none;">Save</button>
+                    <button id="cancel-button" class="btn btn-secondary btn-lg" style="display: none;">Cancel</button>
                 </div>
             </div>
         </div>
@@ -63,10 +70,11 @@
                         <p class="card-text"><strong th:utext="#{car.category}">Category:</strong> <span
                                 th:text="${car.category}"></span></p>
                     </div>
-                    <br><br>
+                    <br>
                 </div>
                 <div class="card-footer text-center">
-                    <a th:href="@{/cars}" class="btn btn-primary bottom-0">View Cars Details</a>
+                    <a th:href="@{/cars}" class="btn btn-primary">View Cars Details</a>
+                    <button class="btn btn-warning add-car-button" data-car-id="${car.id}">Add Car to Race</button>
                 </div>
             </div>
         </div>

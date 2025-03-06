@@ -15,11 +15,11 @@ public class CarRaces {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "car_id", referencedColumnName = "id")
+    @JoinColumn(name = "car_id", referencedColumnName = "id", nullable = false)
     private Car car;
 
     @ManyToOne
-    @JoinColumn(name = "race_id", referencedColumnName = "id")
+    @JoinColumn(name = "race_id", referencedColumnName = "id", nullable = false)
     private Race race;
 
 

@@ -4,7 +4,6 @@ import org.example.domain.Car;
 import org.example.domain.CarCategory;
 import org.example.domain.Race;
 import org.example.domain.Sponsor;
-import org.example.presentation.CarViewModel;
 
 import java.util.List;
 
@@ -24,4 +23,7 @@ public interface CarService {
 
     Car add(String brand, String model, Double engineCapacity, int horsepower, int year, CarCategory category);
 
+    Car patch(int id, String brand, String model, double engine, int horsepower, int year, CarCategory category);
+
+    Car addRaceToCar(int carId, int raceId);
 }

@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.domain.Car;
+import org.example.domain.CarCategory;
 import org.example.domain.Race;
 import org.example.domain.Sponsor;
 import org.example.exception.CustomApplicationException;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -67,7 +69,9 @@ public class CarController {
 
             Car car = carService.getCarById(id);
             logger.info("Fetched car details: {}", car);
+            List<CarCategory> categories = Arrays.asList(CarCategory.values());
             model.addAttribute("car", car);
+            model.addAttribute("categories", categories);
 
             List<Race> races = carService.getRacesByCarId(id);
             logger.info("Fetched races for car ID {}: {}", id, races);

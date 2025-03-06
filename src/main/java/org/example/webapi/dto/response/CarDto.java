@@ -1,9 +1,7 @@
 package org.example.webapi.dto.response;
 
-import org.example.domain.Car;
+import java.util.List;
 
-public record CarDto(int id, String brand, String model, String image) {
-    public static CarDto fromCar(final Car car){
-        return new CarDto(car.getId(), car.getBrand(), car.getModel(), car.getImage());
-    }
+public record CarDto(int id, String brand, String model, String image, List<RaceDto> races) {
+
 }
