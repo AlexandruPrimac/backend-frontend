@@ -44,6 +44,8 @@ dependencies {
     annotationProcessor ("org.mapstruct:mapstruct-processor:1.6.3")
 
     implementation ("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
+    implementation ("org.springframework.boot:spring-boot-starter-security")
+
 }
 
 application {

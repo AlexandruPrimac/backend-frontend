@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Nav Bar Fragment</title>
@@ -15,31 +15,63 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="/cars" th:href="@{/cars}" th:utext="#{nav.allCars}">All Cars</a>
+                        <a class="nav-link click-scroll" href="/cars" th:href="@{/cars}" th:utext="#{nav.allCars}">All
+                            Cars</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="/addCar" th:href="@{/addCar}" th:utext="#{nav.addCar}">Add Car</a>
+
+                    <!-- Show 'Add Car' only if user is an ADMIN -->
+                    <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+                        <a class="nav-link click-scroll" href="/addCar" th:href="@{/addCar}" th:utext="#{nav.addCar}">Add
+                            Car</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="/races" th:href="@{/races}" th:utext="#{nav.allRaces}">All Races</a>
+                        <a class="nav-link click-scroll" href="/races" th:href="@{/races}" th:utext="#{nav.allRaces}">All
+                            Races</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="/addRace" th:href="@{/addRace}" th:utext="#{nav.addRace}">Add Race</a>
+
+                    <!-- Show 'Add Race' only if user is an ADMIN -->
+                    <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+                        <a class="nav-link click-scroll" href="/addRace" th:href="@{/addRace}"
+                           th:utext="#{nav.addRace}">Add Race</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="/sponsors" th:href="@{/sponsors}" th:utext="#{nav.sponsors}">Sponsors</a>
+                        <a class="nav-link click-scroll" href="/sponsors" th:href="@{/sponsors}"
+                           th:utext="#{nav.sponsors}">Sponsors</a>
                     </li>
                 </ul>
                 <!-- Language switcher -->
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{page.language}"></a>
+                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false" th:text="#{page.language}"></a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
                             <li><a class="dropdown-item" href="?lang=en" th:text="#{language.english}">English</a></li>
-                            <li><a class="dropdown-item" href="?lang=be" th:text="#{language.Netherlands}">Netherlands</a></li>
+                            <li><a class="dropdown-item" href="?lang=be"
+                                   th:text="#{language.Netherlands}">Netherlands</a></li>
                         </ul>
                     </li>
                 </ul>
+                <br><br>
+
+                <!-- If the user is not logged in, show login button -->
+                <li sec:authorize="!isAuthenticated()" class="nav-item" style="list-style: none;">
+                    <a href="/login" class="btn btn-secondary">Login</a>
+                </li>
+
+                <!-- If the user is logged in, show logout button -->
+                <li sec:authorize="isAuthenticated()" class="nav-item" style="list-style: none;">
+                    <a href="/logout" class="btn btn-secondary">Logout</a>
+                </li>
+
+
+                <li sec:authorize="isAuthenticated()" class="nav-item" style="list-style: none;">
+                    <a class="nav-link click-scroll" href="/user/details" th:href="@{/user/details}">
+                        <i class="fas fa-user me-1"></i> My Profile
+                    </a>
+                </li>
+
             </div>
         </div>
     </nav>

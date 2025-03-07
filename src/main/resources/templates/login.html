@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Race Radar</title>
+    <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{css/login.css}">
+    <script src="/js/login.js" defer></script>
+</head>
+<body class="d-flex align-items-center justify-content-center py-4">
+<main class="login-card bg-white">
+    <div class="login-header text-center p-4 bg-primary text-white rounded-top">
+        <div class="container-fluid">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor"
+                 class="bi bi-lock-fill mb-3" viewBox="0 0 16 16">
+                <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2"/>
+            </svg>
+            <h1 class="h3 mb-2 fw-bold">Welcome!</h1>
+            <p class="mb-0 opacity-75">Sign in to your account</p>
+        </div>
+    </div>
+
+    <div class="p-4 p-md-5">
+        <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            Invalid username or password!
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <form th:action="@{/login}" method="POST" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label">Email or Username</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input id="username" name="username" type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter your email or username"
+                           required>
+                </div>
+            </div>
+
+            <div class="mb-4 position-relative">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input id="password" name="password" type="password"
+                           class="form-control form-control-lg"
+                           placeholder="••••••••"
+                           required>
+                    <i class="password-toggle fas fa-eye-slash"></i>
+                </div>
+                <div class="form-text text-end">
+                    <a href="/forgot-password" class="text-decoration-none">Forgot password?</a>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                Sign In <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+
+
+            <p class="text-center mb-0">
+                Don't have an account?
+                <a th:href="@{/register}" class="text-decoration-none fw-bold">Sign up</a>
+            </p>
+        </form>
+    </div>
+</main>
+</body>
+</html>

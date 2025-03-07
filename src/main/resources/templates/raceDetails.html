@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title th:utext="#{race.trackd}"></title>
@@ -38,15 +38,22 @@
                     </p>
                 </div>
                 <div class="card-footer text-center">
-                    <button id="delete-button" class="delete-button btn btn-danger btn-lg"
+                    <button sec:authorize="hasRole('ROLE_ADMIN')" id="delete-button"
+                            class="delete-button btn btn-danger btn-lg"
                             th:attr="data-race-id=${race.id}" th:utext="#{button.delete}">
                         <i class="bi bi-trash"></i> Delete
                     </button>
 
                     <!-- Buttons -->
-                    <button id="edit-button" class="btn btn-primary btn-lg">Edit Race</button>
-                    <button id="save-button" class="btn btn-success btn-lg" style="display: none;">Save</button>
-                    <button id="cancel-button" class="btn btn-secondary btn-lg" style="display: none;">Cancel</button>
+                    <button sec:authorize="hasRole('ROLE_ADMIN')" id="edit-button" class="btn btn-primary btn-lg">Edit
+                        Race
+                    </button>
+                    <button sec:authorize="hasRole('ROLE_ADMIN')" id="save-button" class="btn btn-success btn-lg"
+                            style="display: none;">Save
+                    </button>
+                    <button sec:authorize="hasRole('ROLE_ADMIN')" id="cancel-button" class="btn btn-secondary btn-lg"
+                            style="display: none;">Cancel
+                    </button>
                 </div>
             </div>
         </div>

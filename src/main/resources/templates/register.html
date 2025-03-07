@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Race Radar</title>
+    <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{css/login.css}">
+    <script src="/js/register.js" defer></script>
+</head>
+<body class="d-flex align-items-center justify-content-center py-4">
+<main class="login-card bg-white">
+    <div class="login-header text-center p-4 bg-primary text-white rounded-top">
+        <div class="container-fluid">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor"
+                 class="bi bi-person-add mb-3" viewBox="0 0 16 16">
+                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+            </svg>
+            <h1 class="h3 mb-2 fw-bold">Create Account</h1>
+            <p class="mb-0 opacity-75">Join our community today</p>
+        </div>
+    </div>
+
+    <div class="p-4 p-md-5">
+        <form th:action="@{/register}" method="POST" class="needs-validation" novalidate>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                        <input id="firstName" name="firstName" type="text"
+                               class="form-control form-control-lg"
+                               placeholder="John"
+                               required>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                        <input id="lastName" name="lastName" type="text"
+                               class="form-control form-control-lg"
+                               placeholder="Doe"
+                               required>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label for="email" class="form-label">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input id="email" name="email" type="email"
+                               class="form-control form-control-lg"
+                               placeholder="john@example.com"
+                               required>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input id="password" name="password" type="password"
+                               class="form-control form-control-lg"
+                               placeholder="••••••••"
+                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                               required>
+                        <i class="password-toggle fas fa-eye-slash"></i>
+                    </div>
+                    <div class="form-text">Must be 8+ chars with uppercase, number</div>
+                </div>
+
+                <div class="col-12">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input id="confirmPassword" name="confirmPassword" type="password"
+                               class="form-control form-control-lg"
+                               placeholder="••••••••"
+                               required>
+                        <i class="password-toggle fas fa-eye-slash"></i>
+                    </div>
+                </div>
+            </div>
+
+            <br><br>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                Create Account <i class="fas fa-user-plus ms-2"></i>
+            </button>
+
+            <p class="text-center mb-0">
+                Already have an account?
+                <a href="/login" class="text-decoration-none fw-bold">Sign in</a>
+            </p>
+        </form>
+    </div>
+</main>
+</body>
+</html>

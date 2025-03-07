@@ -31,12 +31,8 @@ public class CarApiController {
     //Filter cars by brand
     @GetMapping
     public ResponseEntity<List<CarDto>> filter(@RequestParam("brand") final String brand) {
-        try{
-            final List<CarDto> car = carService.filterCarsDynamically(brand).stream().map(carMapper::toCarDto).toList();
-            return ResponseEntity.ok(car);
-        }catch (CustomApplicationException ex){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        final List<CarDto> car = carService.filterCarsDynamically(brand).stream().map(carMapper::toCarDto).toList();
+        return ResponseEntity.ok(car);
     }
 
     //Delete a car - DELETE endpoint

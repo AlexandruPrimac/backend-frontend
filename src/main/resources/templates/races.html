@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{page.allraces}"></title>
@@ -13,16 +13,18 @@
 <main>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
+    <div sec:authorize="isAuthenticated()">
     <form onsubmit="return false;">
         <div>
             <label for="location">Filter:</label>
             <input type="text" id="location" name="location" placeholder="Enter location" required>
         </div>
     </form>
+    </div>
 
     <div id="search-results"></div>
 
-    <div id="all-races" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+    <div id="all-races" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 mt-4">
         <div class="col" th:each="race : ${races}">
             <div class="card mb-4">
                 <img th:src="@{/images/{image}(image=${race.image})}" class="card-img-top" alt="Car Image">

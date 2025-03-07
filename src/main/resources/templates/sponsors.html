@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title th:text="#{page.sponsors}">All Sponsors</title>
     <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
@@ -14,14 +14,16 @@
 <main>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
+    <div sec:authorize="isAuthenticated()">
     <form onsubmit="return false;">
         <label for="name">Filter:</label>
         <input type="text" id="name" name="name" placeholder="Enter sponsor name" required>
     </form>
+    </div>
 
     <div id="search-results"></div>
 
-    <div id="all-sponsors" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center">
+    <div id="all-sponsors" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 mt-4 justify-content-center">
         <div class="col" th:each="sponsor : ${sponsors}">
             <div class="card mb-4">
                 <img th:src="@{/images/{image}(image=${sponsor.image})}"
@@ -36,7 +38,7 @@
 
                 <!-- Delete Button for the Sponsor -->
                 <div class="card-footer text-center">
-                    <button class="btn btn-danger remove-sponsor-button"
+                    <button sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger remove-sponsor-button"
                             th:attr="data-sponsor-id=${sponsor.id}" th:utext="#{button.delete}">
                         <i class="bi bi-trash"></i> Delete
                     </button>

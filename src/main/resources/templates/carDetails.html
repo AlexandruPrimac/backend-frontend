@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Car Details</title>
     <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
@@ -27,7 +27,10 @@
                         </div>
                         <div class="card-footer text-center">
                             <a th:href="@{/races}" class="btn btn-primary bottom-0">View Race Details</a>
-                            <button class="btn btn-warning add-race-button" data-car-id="${car.id}">Add Race to Car
+
+                            <!-- Show 'Add Race to Car' only for users with ADMIN role -->
+                            <button sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-warning add-race-button"
+                                    data-car-id="${car.id}">Add Race to Car
                             </button>
                         </div>
                     </div>
@@ -68,13 +71,17 @@
                         </p>
                     </div>
                     <div class="card-footer text-center">
-                        <button id="delete-button" class="delete-button btn btn-danger btn-lg"
+                        <!-- Show 'Delete' and 'Edit' buttons only for ADMIN role -->
+                        <button sec:authorize="hasRole('ROLE_ADMIN')" id="delete-button"
+                                class="delete-button btn btn-danger btn-lg"
                                 th:attr="data-car-id=${car.id}" th:utext="#{button.delete}">
                             <i class="bi bi-trash"></i> Delete
                         </button>
 
-                        <!-- Buttons -->
-                        <button id="edit-button" class="btn btn-primary btn-lg">Edit Car</button>
+                        <!-- Show 'Edit Car' only for ADMIN role -->
+                        <button sec:authorize="hasRole('ROLE_ADMIN')" id="edit-button" class="btn btn-primary btn-lg">
+                            Edit Car
+                        </button>
                         <button id="save-button" class="btn btn-success btn-lg" style="display: none;">Save</button>
                         <button id="cancel-button" class="btn btn-secondary btn-lg" style="display: none;">Cancel
                         </button>
@@ -94,8 +101,10 @@
                         </div>
                         <div class="card-footer text-center">
                             <a th:href="@{/sponsors}" class="btn btn-primary">Sponsor Details</a>
-                            <button class="btn btn-warning add-sponsor-button" data-sponsor-id="${sponsor.id}">Add
-                                Sponsor to Car
+
+                            <!-- Show 'Add Sponsor to Car' only for ADMIN role -->
+                            <button sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-warning add-sponsor-button"
+                                    data-sponsor-id="${sponsor.id}">Add Sponsor to Car
                             </button>
                         </div>
                     </div>
