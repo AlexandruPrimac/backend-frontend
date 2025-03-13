@@ -174,6 +174,33 @@ Date: Thu, 06 Mar 2025 19:54:06 GMT
 
 ---
 
+## Week 4 Security
+
+### Users:
+1. **alexandru@gmail.com**:
+   - Password: alex1234
+
+This user has the "USER_ROLE" and can only access the following pages:
+```
+   - http://localhost:8080/, http://localhost:8080/register, http://localhost:8080/cars, http://localhost:8080/races, http://localhost:8080/sponsors, http://localhost:8080/carDetails, http://localhost:8080/raceDetails, http://localhost:8080/user/details
+```
+   - The users with this role can't add or delete cars, races or sponsors. They also don't have access to modify the information from the these entiteis.
+
+
+2. **sponge@gmail.com**:
+   - Password: sponge1234
+
+This user has the "USER_ADMIN" and can access every page:
+   - The users with this role can access and modify anything. 
+
+3. Guest users
+Guests can only access the following pages:
+```
+   - http://localhost:8080/, http://localhost:8080/register, http://localhost:8080/cars, http://localhost:8080/races, http://localhost:8080/sponsors
+```
+   - The functionality of these pages is limited, they don't have the filter feature and they are not able to inspect the details of the entities.
+
+
 ## Instructions to Run the Project
 ### Prerequisites:
 1. **Java 21**
