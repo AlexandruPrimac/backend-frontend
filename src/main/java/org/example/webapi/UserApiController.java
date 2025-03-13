@@ -24,23 +24,6 @@ public class UserApiController {
         this.userMapper = userMapper;
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<UserDto> getCurrentUser(@AuthenticationPrincipal ApplicationUser user) {
-        System.out.println("Current auth: " + (user != null ? user.getEmail() : "null"));
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        UserDto userDto = userMapper.toDto(user);
-        return ResponseEntity.ok(userDto);
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<String> testAuth(@AuthenticationPrincipal ApplicationUser user) {
-        return user != null ?
-                ResponseEntity.ok("Authenticated as: " + user.getEmail()) :
-                ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not authenticated");
-    }
-
     @PostMapping
     public ResponseEntity<UserDto> addUser(@Valid @RequestBody final AddUserDto userDto) {
         final ApplicationUser user = userService.add(userDto.firstName(), userDto.lastName(), userDto.email(), userDto.password());
