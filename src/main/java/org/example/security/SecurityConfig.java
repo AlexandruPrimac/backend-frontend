@@ -25,33 +25,34 @@ public class SecurityConfig {
                         .maximumSessions(1)
                 )
                 .authorizeHttpRequests(auths -> auths
-                        // Public Endpoints
-                        .requestMatchers(HttpMethod.GET, "/", "/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/cars", "/races", "/sponsors").permitAll()
+                        // Public Endpoints (Guest)
+                        .requestMatchers(HttpMethod.GET, "/", "/register", "/cars", "/races", "/sponsors").permitAll()
 
-                        // User-Specific API
-                        .requestMatchers(HttpMethod.GET, "/api/cars/{id}").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/users/me").authenticated() // Only logged-in users
-                        .requestMatchers(HttpMethod.GET, "/api/users/test").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-                        //
+                        // Endpoints for authenticated users (User)
+                        .requestMatchers(HttpMethod.GET, "/carDetails", "/raceDetails", "/user/details").authenticated()
 
-                        // Static Resources
+                        // Endpoints for admin
+                        .requestMatchers(HttpMethod.GET, "/addCar", "/addRace").hasRole("ADMIN")
+
+                        // Static Resources (Public)
                         .requestMatchers("/js/**", "/webjars/**", "/images/**", "/video/**", "/favicon/**", "/css/**").permitAll()
 
                         // Everything else requires authentication
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(
-                        exceptionHandling -> exceptionHandling.authenticationEntryPoint((request, response, authException) -> {
-                            if (request.getRequestURI().startsWith("/api")) {
-                                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                                response.setContentType("application/json");
-                                response.getWriter().write("{\"message\":\"Not authenticated\"}");
-                            } else {
-                                response.sendRedirect("/login");
-                            }
-                        })
+                        exceptionHandling -> exceptionHandling
+                                .authenticationEntryPoint((request, response, authException) -> {
+                                    if (request.getRequestURI().startsWith("/api")) {
+                                        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                                        response.setContentType("application/json");
+                                        response.getWriter().write("{\"message\":\"Not authenticated\"}");
+                                    } else {
+                                        response.sendRedirect("/login");
+                                    }
+                                })
+                                // Handling 403 (Forbidden) error
+                                .accessDeniedPage("/forbidden")
                 )
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF (enable later if needed)
                 .formLogin(
