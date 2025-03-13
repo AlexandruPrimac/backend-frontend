@@ -201,6 +201,10 @@ Guests can only access the following pages:
    - The functionality of these pages is limited, they don't have the filter feature and they are not able to inspect the details of the entities.
 
 
+---
+
+
+
 ## Instructions to Run the Project
 ### Prerequisites:
 1. **Java 21**
