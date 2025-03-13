@@ -5,9 +5,12 @@
     <title th:text="#{page.addcar}"></title>
     <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
     <link rel="stylesheet" th:href="@{/css/addCar.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script src="/js/addCar.js" defer ></script>
+    <script src="/js/addCar.js" defer></script>
+    <script src="/js/navbar.js" defer></script>
 </head>
 <body>
 
@@ -15,7 +18,7 @@
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
     <div class="container mt-4">
-        <form id= "add-car-form" action="addCar" method="post" th:object="${carViewModel}" class="container mt-4">
+        <form id="add-car-form" action="addCar" method="post" th:object="${carViewModel}" class="container mt-4">
             <!-- Error messages -->
             <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
                 <p>The form contains errors! Please fix them below.</p>
@@ -25,7 +28,8 @@
                 <!-- Brand -->
                 <label for="brand" class="col-md-4 col-form-label" th:utext="#{car.brand}">Brand</label>
                 <div class="col-md-8">
-                    <input type="text" id="brand" name="brand" th:field="*{brand}" class="form-control" placeholder="Brand" required>
+                    <input type="text" id="brand" name="brand" th:field="*{brand}" class="form-control"
+                           placeholder="Brand" required>
                     <div class="text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></div>
                 </div>
             </div>
@@ -34,7 +38,8 @@
                 <!-- Model -->
                 <label for="model" class="col-md-4 col-form-label" th:utext="#{car.model}">Model</label>
                 <div class="col-md-8">
-                    <input type="text" id="model" name="model" th:field="*{model}" class="form-control" placeholder="Model" required>
+                    <input type="text" id="model" name="model" th:field="*{model}" class="form-control"
+                           placeholder="Model" required>
                     <div class="text-danger" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></div>
                 </div>
             </div>
@@ -43,7 +48,8 @@
                 <!-- Engine Size -->
                 <label for="engine" class="col-md-4 col-form-label" th:utext="#{car.engine}">Engine Size</label>
                 <div class="col-md-8">
-                    <input type="number" id="engine" name="engine" th:field="*{engine}" class="form-control" placeholder="Engine Size" step="0.01" required>
+                    <input type="number" id="engine" name="engine" th:field="*{engine}" class="form-control"
+                           placeholder="Engine Size" step="0.01" required>
                     <div class="text-danger" th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"></div>
                 </div>
             </div>
@@ -52,7 +58,8 @@
                 <!-- Horsepower -->
                 <label for="horsepower" class="col-md-4 col-form-label" th:utext="#{car.horsepower}">Horsepower</label>
                 <div class="col-md-8">
-                    <input type="number" id="horsepower" name="horsepower" th:field="*{horsepower}" class="form-control" placeholder="Horsepower" required>
+                    <input type="number" id="horsepower" name="horsepower" th:field="*{horsepower}" class="form-control"
+                           placeholder="Horsepower" required>
                     <div class="text-danger" th:if="${#fields.hasErrors('horsepower')}" th:errors="*{horsepower}"></div>
                 </div>
             </div>
@@ -61,7 +68,8 @@
                 <!-- Year -->
                 <label for="year" class="col-md-4 col-form-label" th:utext="#{car.year}">Year</label>
                 <div class="col-md-8">
-                    <input type="number" id="year" name="year" th:field="*{year}" class="form-control" placeholder="Year" required>
+                    <input type="number" id="year" name="year" th:field="*{year}" class="form-control"
+                           placeholder="Year" required>
                     <div class="text-danger" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
                 </div>
             </div>
@@ -91,7 +99,7 @@
         </form>
     </div>
 
-     <!--    Footer-->
+    <!--    Footer-->
     <div th:replace="~{fragments/footer :: footer}"></div>
 </main>
 </body>

@@ -4,8 +4,11 @@
     <title>Car Details</title>
     <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
     <link rel="stylesheet" th:href="@{/css/carDetails.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css"/>
     <script src="/js/cars.js" defer></script>
+    <script src="/js/navbar.js" defer></script>
 </head>
 <body>
 <main>
@@ -27,7 +30,7 @@
                         </div>
                         <div class="card-footer text-center">
                             <a th:href="@{/races}" class="btn btn-primary bottom-0">View Race Details</a>
-
+                            <br><br>
                             <!-- Show 'Add Race to Car' only for users with ADMIN role -->
                             <button sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-warning add-race-button"
                                     data-car-id="${car.id}">Add Race to Car
@@ -101,7 +104,7 @@
                         </div>
                         <div class="card-footer text-center">
                             <a th:href="@{/sponsors}" class="btn btn-primary">Sponsor Details</a>
-
+                            <br><br>
                             <!-- Show 'Add Sponsor to Car' only for ADMIN role -->
                             <button sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-warning add-sponsor-button"
                                     data-sponsor-id="${sponsor.id}">Add Sponsor to Car

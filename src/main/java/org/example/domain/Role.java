@@ -19,4 +19,12 @@ public class Role {
 
     @ManyToMany(mappedBy = "roles")
     private Set<ApplicationUser> users;
+
+    @Override
+    public String toString() {
+        if (name.startsWith("ROLE_")) {
+            return name.substring(5);  // Removes "ROLE_" prefix
+        }
+        return name;
+    }
 }

@@ -1,0 +1,74 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 20px;
+    background: #f4f4f4; /* Light gray background for a soft feel */
+    color: #333;
+}
+
+/* Title */
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Profile Card */
+.card {
+    margin: 20px auto;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Header */
+.card-header {
+    background: #007bff; /* Light Blue Header */
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 1rem;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+/* User Details */
+.row dt {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1.1rem;
+}
+
+.row dd {
+    font-size: 1rem;
+    color: #555;
+    transition: color 0.3s ease-in-out;
+}
+
+.row dd:hover {
+    color: #007bff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card {
+        margin: 15px;
+    }
+
+    .row dt {
+        font-size: 1rem;
+    }
+
+    .row dd {
+        font-size: 0.95rem;
+    }
+}

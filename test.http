@@ -141,3 +141,16 @@ Accept: application/json
 GET http://localhost:8080/api/users/test
 Accept: application/json
 
+###
+
+POST http://localhost:8080/api/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "Joe",
+  "lastName": "Doe",
+  "email": "john@gmail.com",
+  "password": "joe1234"
+}
+
