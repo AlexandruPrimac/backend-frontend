@@ -31,6 +31,10 @@ public class SecurityConfig {
                         // Endpoints for authenticated users (User)
                         .requestMatchers(HttpMethod.GET, "/carDetails", "/raceDetails", "/user/details").authenticated()
 
+                        // Allow user registration
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/cars/**/add-race").hasRole("ADMIN")
+
                         // Endpoints for admin
                         .requestMatchers(HttpMethod.GET, "/addCar", "/addRace").hasRole("ADMIN")
 
@@ -55,6 +59,7 @@ public class SecurityConfig {
                                 .accessDeniedPage("/forbidden")
                 )
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF (enable later if needed)
+                .httpBasic(httpBasic -> {}) // Enable Basic Authentication
                 .formLogin(
                         login -> login
                                 .loginPage("/login")

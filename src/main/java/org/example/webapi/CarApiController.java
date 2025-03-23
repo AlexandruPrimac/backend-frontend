@@ -12,6 +12,7 @@ import org.example.webapi.dto.response.CarDto;
 import org.example.webapi.dto.response.CarMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -65,15 +66,21 @@ public class CarApiController {
     }
 
     @PatchMapping("{id}/add-race")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CarDto> addRaceToCar(@PathVariable int id, @RequestParam int raceId) {
-        // Add race to car via the service
-        Car updatedCar = carService.addRaceToCar(id, raceId);
+        try {
+            // Add race to car via the service
+            Car updatedCar = carService.addRaceToCar(id, raceId);
 
-        // Convert the updated Car entity to DTO
-        CarDto updatedCarDto = carMapper.toCarDto(updatedCar);
+            // Convert the updated Car entity to DTO
+            CarDto updatedCarDto = carMapper.toCarDto(updatedCar);
 
-        // Return the updated car with race added
-        return ResponseEntity.ok(updatedCarDto);
+            // Return the updated car with race added
+            return ResponseEntity.ok(updatedCarDto);
+        } catch (CustomApplicationException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
     }
 
 }

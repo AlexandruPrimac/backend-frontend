@@ -57,6 +57,7 @@ Accept: application/json
 
 ###
 
+# @no-cookie-jar
 POST http://localhost:8080/api/races
 Content-Type: application/json
 Accept: application/json
@@ -120,7 +121,7 @@ Content-Type: application/json
 
 ###
 
-PATCH http://localhost:8080/api/cars/1/add-race?raceId=12
+PATCH http://localhost:8080/api/cars/2/add-race?raceId=10
 Accept: application/json
 Content-Type: application/json
 
@@ -141,6 +142,6 @@ Accept: application/json
   "firstName": "Joe",
   "lastName": "Doe",
   "email": "john@gmail.com",
-  "password": "joe1234"
+  "password": "Joee1234"
 }
 

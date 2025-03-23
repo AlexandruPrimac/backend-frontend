@@ -160,7 +160,7 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
 
     @Override
     public Car addRaceToCar(int carId, int raceId) {
-        Car car = carRepository.findByIdWithRaces(carId)
+        Car car = carRepository.findById(carId)
                 .orElseThrow(() -> new CustomApplicationException("Car not found with id " + carId));
 
         Race race = raceRepository.findById(raceId)

@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.domain.ApplicationUser;
+import org.example.domain.Role;
 import org.example.repository.UserJpaRepo;
 import org.example.service.Interfaces.UserService;
 import org.slf4j.Logger;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
+
+import java.util.Set;
 
 @Service
 public class UserServiceClass implements UserService {

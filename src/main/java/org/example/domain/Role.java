@@ -20,6 +20,7 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private Set<ApplicationUser> users;
 
+
     @Override
     public String toString() {
         if (name.startsWith("ROLE_")) {
