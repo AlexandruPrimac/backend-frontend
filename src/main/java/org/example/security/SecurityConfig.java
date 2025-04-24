@@ -59,7 +59,6 @@ public class SecurityConfig {
                                 // Handling 403 (Forbidden) error
                                 .accessDeniedPage("/forbidden")
                 )
-                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF (enable later if needed)
                 .httpBasic(httpBasic -> {}) // Enable Basic Authentication
                 .formLogin(
                         login -> login
@@ -73,6 +72,11 @@ public class SecurityConfig {
                                             SecurityContextHolder.getContext());
                                     response.sendRedirect("/");
                                 })
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll()
                 )
                 .build();
     }

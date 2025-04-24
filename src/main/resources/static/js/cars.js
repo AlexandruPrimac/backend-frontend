@@ -1,3 +1,5 @@
+import { csrfToken, csrfHeaderName } from './util/csrf.js'
+
 const deleteButton = document.getElementById("delete-button")
 deleteButton.addEventListener("click", async e => {
 
@@ -14,7 +16,12 @@ deleteButton.addEventListener("click", async e => {
     }
 
     try {
-        const response = await fetch(`/api/cars/${carId}`, {method: "DELETE"});
+        const response = await fetch(`/api/cars/${carId}`, {
+            method: "DELETE", headers: {
+                [csrfHeaderName]: csrfToken,
+                'Content-Type': 'application/json'
+            }
+        });
 
         if (response.status === 204) {
             alert("Car deleted successfully!");
@@ -84,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 method: "PATCH",
                 headers: {
                     'Accept': 'application/json' ,
+                    [csrfHeaderName]: csrfToken,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(updatedCar)

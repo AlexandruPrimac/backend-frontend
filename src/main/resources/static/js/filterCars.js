@@ -1,3 +1,5 @@
+import { csrfToken, csrfHeaderName } from './util/csrf.js'
+
 const results = document.querySelector("#search-results");
 const allCarsContainer = document.querySelector("#all-cars");
 
@@ -12,7 +14,9 @@ document.querySelector("#brand").addEventListener("keyup", async (e) => {
     }
 
     const response = await fetch(`/api/cars?brand=${brand}`, {
-        headers: {'Accept': 'application/json'}
+        headers: {
+            [csrfHeaderName]: csrfToken,
+            'Accept': 'application/json'}
     });
 
     if (response.status === 200) {

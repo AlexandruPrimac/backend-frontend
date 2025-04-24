@@ -1,3 +1,5 @@
+import { csrfToken, csrfHeaderName } from './util/csrf.js'
+
 const form = document.getElementById("add-race-form")
 
 form.addEventListener("submit", async e => {
@@ -18,7 +20,9 @@ form.addEventListener("submit", async e => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                [csrfHeaderName]: csrfToken
+
             },
             body: jsonBody
         });

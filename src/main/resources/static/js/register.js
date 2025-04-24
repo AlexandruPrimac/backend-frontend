@@ -1,4 +1,6 @@
 // Password confirmation validation
+import { csrfToken, csrfHeaderName } from './util/csrf.js'
+
 const password = document.getElementById('password');
 const confirmPassword = document.getElementById('confirmPassword');
 
@@ -68,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/users', {
                 method: 'POST',
                 headers: {
+                    [csrfHeaderName]: csrfToken,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(userData)

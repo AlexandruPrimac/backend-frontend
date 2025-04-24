@@ -1,3 +1,5 @@
+import { csrfToken, csrfHeaderName } from './util/csrf.js'
+
 const form = document.querySelector("#add-car-form");
 
 form.addEventListener("submit", async e => {
@@ -18,8 +20,9 @@ form.addEventListener("submit", async e => {
         const response = await fetch('http://localhost:8080/api/cars', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json' ,
+                [csrfHeaderName]: csrfToken ,
+                'Content-Type': 'application/json'
             },
             body: jsonBody
         });

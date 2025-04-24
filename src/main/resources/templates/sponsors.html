@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title th:text="#{page.sponsors}">All Sponsors</title>
     <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
     <link rel="stylesheet" th:href="@{/css/sponsors.css}">
@@ -8,8 +10,8 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script src="/js/filterSponsors.js" defer></script>
-    <script src="/js/sponsors.js" defer></script>
+    <script src="/js/filterSponsors.js" type="module"></script>
+    <script src="/js/sponsors.js" type="module"></script>
     <script src="/js/navbar.js" defer></script>
 </head>
 <body>

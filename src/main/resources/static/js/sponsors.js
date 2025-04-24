@@ -1,3 +1,5 @@
+import { csrfToken, csrfHeaderName } from './util/csrf.js'
+
 const deleteButton = document.querySelectorAll(".remove-sponsor-button")
 
 deleteButton.forEach(deleteButton => {
@@ -16,7 +18,12 @@ deleteButton.forEach(deleteButton => {
         }
 
         try {
-            const response = await fetch(`/api/sponsors/${sponsorId}`, {method: "DELETE"});
+            const response = await fetch(`/api/sponsors/${sponsorId}`, {
+                method: "DELETE", headers: {
+                    [csrfHeaderName]: csrfToken,
+                    'Content-Type': 'application/json'
+                }
+            });
 
             if (response.status === 204) {
                 alert("Sponsor deleted successfully!");

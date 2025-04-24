@@ -1,3 +1,5 @@
+import { csrfToken, csrfHeaderName } from './util/csrf.js'
+
 const results = document.querySelector("#search-results");
 const allRaces = document.querySelector("#all-races");
 
@@ -12,7 +14,9 @@ document.querySelector("#location").addEventListener("keyup", async (e) => {
     }
 
     const response = await fetch(`/api/races?location=${location}`, {
-        headers: {'Accept': 'application/json'}
+        headers: {
+            [csrfHeaderName]: csrfToken,
+            'Accept': 'application/json'}
     });
 
     if (response.status === 200) {

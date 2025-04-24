@@ -1,3 +1,13 @@
+# @no-redirect
+POST http://localhost:8080/login
+Content-Type: application/x-www-form-urlencoded
+X-Csrf-Token: {{csrf}}
+Cookie: JSESSIONID={{session}}
+
+username=sponge@gmail.com&password=sponge1234&_csrf={{csrf}}
+
+###
+
 GET http://localhost:8080/api/cars?brand=ferrari
 Accept: application/json
 

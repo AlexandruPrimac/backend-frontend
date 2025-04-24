@@ -1,3 +1,5 @@
+import { csrfToken, csrfHeaderName } from './util/csrf.js'
+
 const results = document.querySelector("#search-results");
 const allSponsors = document.querySelector("#all-sponsors");
 
@@ -14,7 +16,9 @@ document.querySelector("#name").addEventListener("keyup", async (e) => {
 
     // Fetch filtered sponsors from the API
     const response = await fetch(`/api/sponsors?name=${name}`, {
-        headers: {'Accept': 'application/json'}
+        headers: {
+            [csrfHeaderName]: csrfToken,
+            'Accept': 'application/json'}
     });
 
     // Check if the response is successful
