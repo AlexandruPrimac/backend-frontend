@@ -19,5 +19,4 @@ public interface CarJpaRepo extends JpaRepository<Car, Integer> {
 
     @Query("SELECT c FROM Car c WHERE LOWER(c.brand) LIKE LOWER(:brand)")
     List<Car> findCarByBrand(String brand);
-
 }

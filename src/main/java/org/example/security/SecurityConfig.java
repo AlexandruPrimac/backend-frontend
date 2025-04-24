@@ -29,14 +29,15 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/", "/register", "/cars", "/races", "/sponsors").permitAll()
 
                         // Endpoints for authenticated users (User)
-                        .requestMatchers(HttpMethod.GET, "/carDetails", "/raceDetails", "/user/details").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/car/**", "/race/**", "/user/details").authenticated()
 
                         // Allow user registration
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/cars/**/add-race").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/cars/**/add-race").authenticated()
 
-                        // Endpoints for admin
-                        .requestMatchers(HttpMethod.GET, "/addCar", "/addRace").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/addCar").authenticated()
+
+                        .requestMatchers(HttpMethod.GET, "/addRace").hasRole("ADMIN")
 
                         // Static Resources (Public)
                         .requestMatchers("/js/**", "/webjars/**", "/images/**", "/video/**", "/favicon/**", "/css/**").permitAll()

@@ -1,16 +1,17 @@
 package org.example.controller;
 
-import org.example.domain.Car;
-import org.example.domain.CarCategory;
-import org.example.domain.Race;
-import org.example.domain.Sponsor;
+import org.example.domain.*;
 import org.example.exception.CustomApplicationException;
 import org.example.exception.DatabaseException;
 import org.example.presentation.CarViewModel;
+import org.example.security.CustomUserDetails;
+import org.example.service.Interfaces.AuthorizationService;
 import org.example.service.Interfaces.CarService;
+import org.example.service.Interfaces.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +25,14 @@ public class CarController {
 
     private final static Logger logger = LoggerFactory.getLogger(CarController.class);
     private final CarService carService;
+    private final AuthorizationService authorizationService;
+    private final UserService userService;
 
     @Autowired
-    public CarController(CarService carService) {
+    public CarController(CarService carService, AuthorizationService authorizationService, UserService userService) {
         this.carService = carService;
+        this.authorizationService = authorizationService;
+        this.userService = userService;
     }
 
     @GetMapping("/")
@@ -64,14 +69,16 @@ public class CarController {
 
 
     @GetMapping("/car/{id}")
-    public String getCarDetails(@PathVariable int id, Model model) {
+    public String getCarDetails(@PathVariable int id, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
-
+            ApplicationUser user = userService.findUserById(userDetails.getId());
             Car car = carService.getCarById(id);
+            boolean canModify = authorizationService.canEditOrDeleteCar(user, car);
             logger.info("Fetched car details: {}", car);
             List<CarCategory> categories = Arrays.asList(CarCategory.values());
             model.addAttribute("car", car);
             model.addAttribute("categories", categories);
+            model.addAttribute("canModify", canModify);
 
             List<Race> races = carService.getRacesByCarId(id);
             logger.info("Fetched races for car ID {}: {}", id, races);

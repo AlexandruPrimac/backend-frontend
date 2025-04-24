@@ -121,9 +121,11 @@ Content-Type: application/json
 
 ###
 
+# @no-cookie-jar
 PATCH http://localhost:8080/api/cars/2/add-race?raceId=10
 Accept: application/json
 Content-Type: application/json
+
 
 ###
 

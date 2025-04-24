@@ -74,20 +74,24 @@
                         </p>
                     </div>
                     <div class="card-footer text-center">
-                        <!-- Show 'Delete' and 'Edit' buttons only for ADMIN role -->
-                        <button sec:authorize="hasRole('ROLE_ADMIN')" id="delete-button"
+                        <!-- Show 'Delete' and 'Edit' buttons if user is ADMIN or OWNER -->
+                        <button th:if="${canModify}"
+                                id="delete-button"
                                 class="delete-button btn btn-danger btn-lg"
-                                th:attr="data-car-id=${car.id}" th:utext="#{button.delete}">
+                                th:attr="data-car-id=${car.id}"
+                                th:utext="#{button.delete}">
                             <i class="bi bi-trash"></i> Delete
                         </button>
 
-                        <!-- Show 'Edit Car' only for ADMIN role -->
-                        <button sec:authorize="hasRole('ROLE_ADMIN')" id="edit-button" class="btn btn-primary btn-lg">
+                        <button th:if="${canModify}"
+                                id="edit-button"
+                                class="btn btn-primary btn-lg">
                             Edit Car
                         </button>
+
+                        <!-- Hidden buttons (unchanged) -->
                         <button id="save-button" class="btn btn-success btn-lg" style="display: none;">Save</button>
-                        <button id="cancel-button" class="btn btn-secondary btn-lg" style="display: none;">Cancel
-                        </button>
+                        <button id="cancel-button" class="btn btn-secondary btn-lg" style="display: none;">Cancel</button>
                     </div>
                 </div>
             </div>

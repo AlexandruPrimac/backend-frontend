@@ -11,6 +11,8 @@ public interface CarService {
 
     List<Car> getAllCars();
 
+    Car add(String brand, String model, Double engineCapacity, int horsepower, int year, CarCategory category, final int userId);
+
     List<Car> filterCarsDynamically(String brand);
 
     Car getCarById(int id);
@@ -20,8 +22,6 @@ public interface CarService {
     List<Race> getRacesByCarId(int carId);
 
     List<Sponsor> getSponsorsByCarId(int carId);
-
-    Car add(String brand, String model, Double engineCapacity, int horsepower, int year, CarCategory category);
 
     Car patch(int id, String brand, String model, double engine, int horsepower, int year, CarCategory category);
 

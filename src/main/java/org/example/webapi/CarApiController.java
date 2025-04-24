@@ -4,8 +4,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.example.domain.Car;
 import org.example.exception.CustomApplicationException;
+import org.example.security.CustomUserDetails;
 import org.example.service.Interfaces.CarService;
-import org.example.service.Interfaces.RaceService;
 import org.example.webapi.dto.request.AddCarDto;
 import org.example.webapi.dto.request.PatchCarDto;
 import org.example.webapi.dto.response.CarDto;
@@ -13,6 +13,7 @@ import org.example.webapi.dto.response.CarMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,8 +49,9 @@ public class CarApiController {
     }
 
     @PostMapping
-    public ResponseEntity<CarDto> addCar(@RequestBody @Valid final AddCarDto carDto) {
-        final Car car = carService.add(carDto.brand(), carDto.model(), carDto.engine(), carDto.horsePower(), carDto.year(), carDto.category());
+    public ResponseEntity<CarDto> addCar(@RequestBody @Valid final AddCarDto carDto, @AuthenticationPrincipal CustomUserDetails user) {
+        System.out.println("User who is adding car: " + user.getEmail());
+        final Car car = carService.add(carDto.brand(), carDto.model(), carDto.engine(), carDto.horsePower(), carDto.year(), carDto.category(), user.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(carMapper.toCarDto(car));
     }
 

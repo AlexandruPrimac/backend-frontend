@@ -19,8 +19,8 @@
                             Cars</a>
                     </li>
 
-                    <!-- Show 'Add Car' only if user is an ADMIN -->
-                    <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+                    <!-- Show 'Add Car' only if user is authenticated -->
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
                         <a class="nav-link click-scroll" href="/addCar" th:href="@{/addCar}" th:utext="#{nav.addCar}">Add
                             Car</a>
                     </li>
@@ -30,7 +30,7 @@
                             Races</a>
                     </li>
 
-                    <!-- Show 'Add Race' only if user is an ADMIN -->
+                    <!-- Show 'Add Race' only if user is authenticated -->
                     <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
                         <a class="nav-link click-scroll" href="/addRace" th:href="@{/addRace}"
                            th:utext="#{nav.addRace}">Add Race</a>
