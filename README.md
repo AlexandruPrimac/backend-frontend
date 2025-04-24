@@ -185,7 +185,7 @@ This user has the "USER_ROLE" and can only access the following pages:
    - http://localhost:8080/, http://localhost:8080/register, http://localhost:8080/cars, http://localhost:8080/races, http://localhost:8080/sponsors, http://localhost:8080/carDetails, http://localhost:8080/raceDetails, http://localhost:8080/user/details
 ```
    - The users with this role can't add races or sponsors. They also don't have access to modify the information from these entities.
-   - The user is able to add a car and he/she will be linked to that specific car to modify and delete it. 
+   - The user is able to add a car, and he/she will be linked to that specific car to modify and delete it. 
 
 
 2. **sponge@gmail.com**:
@@ -194,13 +194,21 @@ This user has the "USER_ROLE" and can only access the following pages:
 This user has the "USER_ADMIN" and can access every page:
    - The users with this role can access and modify anything. 
 
-3. Guest users
+3. **Guest users**
+
 Guests can only access the following pages:
 ```
    - http://localhost:8080/, http://localhost:8080/register, http://localhost:8080/cars, http://localhost:8080/races, http://localhost:8080/sponsors
 ```
    - The functionality of these pages is limited, they don't have the filter feature and they are not able to inspect the details of the entities.
 
+
+4. **Registered Users**
+
+There is the functionality to register and create a user. Every user created is automatically assigned with the "USER_ROLE". 
+```
+   - http://localhost:8080/register
+```
 
 ---
 
