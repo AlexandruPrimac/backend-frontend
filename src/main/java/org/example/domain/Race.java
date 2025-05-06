@@ -1,6 +1,7 @@
 package org.example.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,6 +33,7 @@ public class Race {
     private String location;
 
     @Column(nullable = false)
+    @Min(0)
     private double distance;
 
     @Column(name = "image")

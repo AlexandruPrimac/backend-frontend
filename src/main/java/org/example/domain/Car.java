@@ -1,6 +1,7 @@
 package org.example.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,12 +26,15 @@ public class Car {
     private String model;
 
     @Column(nullable = false)
+    @Min(0)
     private double engine;
 
     @Column(nullable = false)
+    @Min(0)
     private int horsepower;
 
     @Column(name = "productionYear", nullable = false)
+    @Min(1885)
     private int year;
 
     @Enumerated(EnumType.STRING)
@@ -41,7 +45,7 @@ public class Car {
     private String image;
 
     // Relationships
-    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY , cascade = {CascadeType.PERSIST}, orphanRemoval = true)
     private List<CarRaces> races = new ArrayList<>();
 
     @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)

@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -89,8 +90,7 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
             logger.info("Found car with ID: {}", id);
             return car.get();
         } else {
-            logger.warn("Car with ID: {} not found", id);
-            return null;
+            throw new NotFoundException("Car not found with ID: " + id);
         }
     }
 
