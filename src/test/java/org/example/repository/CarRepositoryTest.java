@@ -1,13 +1,13 @@
 package org.example.repository;
 
 import jakarta.validation.ConstraintViolationException;
+import org.example.TestHelper;
 import org.example.domain.Car;
 import org.example.domain.CarCategory;
 import org.example.domain.CarRaces;
 import org.example.domain.Race;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CarRepositoryTest {
 
     @Autowired
-    private SponsorJpaRepo sponsorRepository;
+    private CarJpaRepo sut;
 
     @Autowired
     private RaceJpaRepo raceRepository;
@@ -32,32 +32,19 @@ public class CarRepositoryTest {
     private CarRacesJpaRepo carRacesRepository;
 
     @Autowired
-    CarJpaRepo sut;
-
+    private TestHelper testHelper;
 
     @AfterEach
     void tearDown() {
-        carRacesRepository.deleteAll();
-        raceRepository.deleteAll();
-        sponsorRepository.deleteAll();
-        sut.deleteAll();
+        testHelper.cleanUp();
     }
 
     @Test
     void shouldAddCar() {
         /// Arrange
-        final Car car = new Car();
-        car.setBrand("BMW");
-        car.setModel("M4");
-        car.setEngine(3.0);
-        car.setHorsepower(430);
-        car.setYear(2015);
-        car.setCategory(CarCategory.SPORTS);
+        Car car = testHelper.createCar();
 
-        /// Act
-        sut.save(car);
-
-        /// Assert
+        /// Act + Assert
         assertNotNull(car.getId());
         assertEquals(1, sut.findAll().size());
     }
@@ -65,22 +52,8 @@ public class CarRepositoryTest {
     @Test
     void shouldDeleteCarAndAlsoDeleteAssociatedRaces() {
         /// Arrange
-        Race race = new Race();
-        race.setName("Spa GP F1");
-        race.setDate(LocalDate.of(2025, 1, 28));
-        race.setTrack("Spa Francorchamps");
-        race.setLocation("Belgium");
-        race.setDistance(7);
-        raceRepository.save(race);
-
-        Car car = new Car();
-        car.setBrand("Ferrari");
-        car.setModel("SF-25");
-        car.setEngine(1.6);
-        car.setHorsepower(1000);
-        car.setYear(2025);
-        car.setCategory(CarCategory.F1);
-        sut.save(car);
+        Race race = testHelper.createRace();
+        Car car = testHelper.createCar();
 
         CarRaces carRace = new CarRaces();
         carRace.setCar(car);
@@ -92,11 +65,7 @@ public class CarRepositoryTest {
 
         /// Assert
         assertFalse(sut.findById(car.getId()).isPresent());
-
-        // CarRaces should be gone (if cascade or manually deleted) I added cascade = {CascadeType.PERSIST}, orphanRemoval = true to the OneToMany rel between cars and races
-        assertEquals(0, carRacesRepository.findAll().size());
-
-        // Race should still exist
+        assertEquals(0, carRacesRepository.findAll().size()); // assuming orphanRemoval = true
         assertEquals(1, raceRepository.findAll().size());
     }
 
@@ -110,11 +79,8 @@ public class CarRepositoryTest {
         car.setYear(2025);
         car.setCategory(CarCategory.F1);
 
-        /// Act
-        Executable action = () -> sut.save(car);  // Expect failure for null brand.
-
-        /// Assert
-        assertThrows(DataIntegrityViolationException.class, action);
+        /// Act + Assert
+        assertThrows(DataIntegrityViolationException.class, () -> sut.save(car));
     }
 
     @Test
@@ -122,11 +88,8 @@ public class CarRepositoryTest {
         /// Arrange
         Car car = new Car("Ferrari", "SF-25", 1.6, -100, 2025, CarCategory.F1, null);
 
-        /// Act
-        Executable action = () -> sut.save(car);
-
-        /// Assert
-        assertThrows(ConstraintViolationException.class, action);
+        /// Act + Assert
+        assertThrows(ConstraintViolationException.class, () -> sut.save(car));
     }
 
     @Test
@@ -146,21 +109,8 @@ public class CarRepositoryTest {
     @Test
     void shouldHandleMultipleRacesForOneCar() {
         /// Arrange
-        Car car = new Car();
-        car.setBrand("Porsche");
-        car.setModel("911 GT3");
-        car.setEngine(4.0);
-        car.setHorsepower(502);
-        car.setYear(2022);
-        car.setCategory(CarCategory.SPORTS);
-        sut.save(car);
-
-        Race race1 = new Race();
-        race1.setName("Le Mans");
-        race1.setDate(LocalDate.of(2024, 6, 15));
-        race1.setTrack("Circuit de la Sarthe");
-        race1.setLocation("France");
-        race1.setDistance(13.6);
+        Car car = testHelper.createCar();
+        Race race1 = testHelper.createRace(); // reuse once; clone next
 
         Race race2 = new Race();
         race2.setName("Nürburgring 24h");
@@ -168,8 +118,7 @@ public class CarRepositoryTest {
         race2.setTrack("Nordschleife");
         race2.setLocation("Germany");
         race2.setDistance(25.4);
-
-        raceRepository.saveAll(List.of(race1, race2));
+        raceRepository.save(race2);
 
         CarRaces carRace1 = new CarRaces();
         carRace1.setCar(car);
@@ -185,15 +134,14 @@ public class CarRepositoryTest {
         Car foundCar = sut.findByIdWithRaces(car.getId()).orElseThrow();
 
         /// Assert
-        assertEquals(2, foundCar.getRaces().size());  // Should be 2 races for this car
+        assertEquals(2, foundCar.getRaces().size());
     }
 
     @Test
     void shouldLoadRacesEagerly() {
         /// Arrange
-        Car car = new Car("Ferrari", "SF-25", 1.6, 1000, 2025, CarCategory.F1, null);
+        Car car = testHelper.createCar();
         Race race = new Race("Monaco GP", LocalDate.of(2024, 5, 1), "Monaco Circuit", "Monaco", 305.0, null);
-        sut.save(car);
         raceRepository.save(race);
 
         CarRaces carRace = new CarRaces();
@@ -205,7 +153,8 @@ public class CarRepositoryTest {
         Car foundCar = sut.findByIdWithRaces(car.getId()).orElseThrow();
 
         /// Assert
-        assertFalse(foundCar.getRaces().isEmpty()); // check if races are eagerly loaded
+        assertFalse(foundCar.getRaces().isEmpty());
         assertEquals("Monaco GP", foundCar.getRaces().get(0).getRace().getName());
     }
 }
+

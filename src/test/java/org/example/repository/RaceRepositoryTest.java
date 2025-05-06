@@ -1,13 +1,13 @@
 package org.example.repository;
 
 import jakarta.validation.ConstraintViolationException;
+import org.example.TestHelper;
 import org.example.domain.Car;
 import org.example.domain.CarCategory;
 import org.example.domain.CarRaces;
 import org.example.domain.Race;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -26,16 +26,17 @@ public class RaceRepositoryTest {
     private CarRacesJpaRepo carRacesRepository;
 
     @Autowired
-    CarJpaRepo carRepository;
+    private CarJpaRepo carRepository;
 
     @Autowired
     private RaceJpaRepo sut;
 
+    @Autowired
+    private TestHelper testHelper;
+
     @AfterEach
     void tearDown() {
-        carRacesRepository.deleteAll();
-        sut.deleteAll();
-        carRepository.deleteAll();
+        testHelper.cleanUp();
     }
 
     @Test
@@ -48,53 +49,23 @@ public class RaceRepositoryTest {
         race.setLocation("Monaco");
         race.setDistance(-1);
 
-        /// Act
-        Executable action = () -> sut.save(race);
-
-        /// Assert
-        assertThrows(ConstraintViolationException.class, action);
+        /// Act + Assert
+        assertThrows(ConstraintViolationException.class, () -> sut.save(race));
     }
 
     @Test
     void shouldHandleMultipleCarsForOneRace() {
         /// Arrange
-        Race race = new Race();
-        race.setName("Monaco GP");
-        race.setDate(LocalDate.of(2024, 5, 1));
-        race.setTrack("Monaco Circuit");
-        race.setLocation("Monaco");
-        race.setDistance(305.0);
-        sut.save(race);
+        Race race = testHelper.createRace();
 
-        // Create multiple cars
-        Car car1 = new Car();
-        car1.setBrand("Ferrari");
-        car1.setModel("SF-25");
-        car1.setEngine(1.6);
-        car1.setHorsepower(1000);
-        car1.setYear(2025);
-        car1.setCategory(CarCategory.F1);
-        carRepository.save(car1);
+        Car car1 = testHelper.createCar();
 
-        Car car2 = new Car();
-        car2.setBrand("Mercedes");
-        car2.setModel("W12");
-        car2.setEngine(1.6);
-        car2.setHorsepower(1000);
-        car2.setYear(2025);
-        car2.setCategory(CarCategory.F1);
-        carRepository.save(car2);
+        /// Create variations of car manually or expand helper later
+        Car car2 = new Car("Mercedes", "W12", 1.6, 1000, 2025, CarCategory.F1, null);
+        Car car3 = new Car("Red Bull", "RB16", 1.6, 1000, 2025, CarCategory.F1, null);
+        carRepository.saveAll(List.of(car2, car3));
 
-        Car car3 = new Car();
-        car3.setBrand("Red Bull");
-        car3.setModel("RB16");
-        car3.setEngine(1.6);
-        car3.setHorsepower(1000);
-        car3.setYear(2025);
-        car3.setCategory(CarCategory.F1);
-        carRepository.save(car3);
-
-        // Create CarRaces relationships
+        /// Create CarRaces relationships
         CarRaces carRace1 = new CarRaces();
         carRace1.setCar(car1);
         carRace1.setRace(race);
@@ -107,12 +78,12 @@ public class RaceRepositoryTest {
         carRace3.setCar(car3);
         carRace3.setRace(race);
 
-        carRacesRepository.saveAll(List.of(carRace1, carRace2, carRace3)); // Save the car-race relationships
+        carRacesRepository.saveAll(List.of(carRace1, carRace2, carRace3));
 
         /// Act
         Race foundRace = sut.findByIdWithCars(race.getId()).orElseThrow();
 
         /// Assert
-        assertEquals(3, foundRace.getCars().size()); // Ensure there are 3 CarRaces associated with this race
+        assertEquals(3, foundRace.getCars().size());
     }
 }
