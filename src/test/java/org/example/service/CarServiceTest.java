@@ -83,7 +83,7 @@ public class CarServiceTest {
         final Executable action = () -> sut.addRaceToCar(999, race.getId());
 
         /// Assert
-        assertThrows(NullPointerException.class, action, "Expected exception for non-existent car");
+        assertThrows(CustomApplicationException.class, action, "Expected exception for non-existent car");
     }
 
     @Test
@@ -92,7 +92,7 @@ public class CarServiceTest {
         final Executable action = () -> sut.addRaceToCar(car.getId(), 999);
 
         /// Assert
-        assertThrows(NullPointerException.class, action, "Expected exception for non-existent race");
+        assertThrows(CustomApplicationException.class, action, "Expected exception for non-existent race");
     }
 
     @Test
