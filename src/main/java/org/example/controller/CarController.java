@@ -1,19 +1,23 @@
 package org.example.controller;
 
-import jakarta.validation.Valid;
 import org.example.domain.*;
 import org.example.exception.CustomApplicationException;
 import org.example.exception.DatabaseException;
 import org.example.presentation.CarViewModel;
+import org.example.security.CustomUserDetails;
+import org.example.service.Interfaces.AuthorizationService;
 import org.example.service.Interfaces.CarService;
+import org.example.service.Interfaces.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -21,15 +25,19 @@ public class CarController {
 
     private final static Logger logger = LoggerFactory.getLogger(CarController.class);
     private final CarService carService;
+    private final AuthorizationService authorizationService;
+    private final UserService userService;
 
     @Autowired
-    public CarController(CarService carService) {
+    public CarController(CarService carService, AuthorizationService authorizationService, UserService userService) {
         this.carService = carService;
+        this.authorizationService = authorizationService;
+        this.userService = userService;
     }
 
     @GetMapping("/")
     public String home() {
-        return "index";  // Should point to the main page
+        return "index";
     }
 
     @GetMapping("/cars")
@@ -56,62 +64,33 @@ public class CarController {
             logger.error("Unexpected error while showing add car form: {}", ex.getMessage());
             throw new CustomApplicationException("Unable to display the add car form.");
         }
-        return "addCar"; // This corresponds to the "addCar"
+        return "addCar";
     }
 
-    @PostMapping("/addCar")
-    public String addCar(@Valid @ModelAttribute("car") CarViewModel carViewModel, BindingResult errors, Model model) {
-        if (carViewModel.getBrand().equalsIgnoreCase("error")) {
-            throw new DatabaseException("Simulated database error: Invalid brand provided.");
-        }
-
-        if (errors.hasErrors()) {
-            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-            return "addCar"; // Show the form again
-        }
-
-        try {
-            logger.info("Adding car: {} {}", carViewModel.getBrand(), carViewModel.getModel());
-            carService.addCar(carViewModel);
-        } catch (DatabaseException ex) {
-            logger.error("Database error while adding car: {}", ex.getMessage());
-            throw ex;
-        } catch (Exception ex) {
-            logger.error("Unexpected error while adding car: {}", ex.getMessage());
-            throw new CustomApplicationException("Unable to add the car due to an unexpected error.");
-        }
-
-        return "redirect:/cars"; // Redirect to all cars after adding
-    }
-
-    @GetMapping("/filter/cars")
-    public String filterCars(@RequestParam(value = "brand", required = false) String brand, Model model) {
-        try {
-            List<Car> filteredCars = carService.filterCars(brand);
-
-            logger.info("Filtered cars by brand '{}': {}", brand, filteredCars);
-            model.addAttribute("cars", filteredCars);
-        } catch (DatabaseException ex) {
-            logger.error("Database error while filtering cars: {}", ex.getMessage());
-            throw ex;
-        } catch (Exception ex) {
-            logger.error("Unexpected error while filtering cars: {}", ex.getMessage());
-            throw new CustomApplicationException("Unable to filter cars due to an unexpected error.");
-        }
-        return "cars";  // cars.html
-    }
 
     @GetMapping("/car/{id}")
-    public String getCarDetails(@PathVariable int id, Model model) {
+    public String getCarDetails(@PathVariable int id, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
-
+            ApplicationUser user = userService.findUserById(userDetails.getId());
             Car car = carService.getCarById(id);
+            boolean canModify = authorizationService.canEditOrDeleteCar(user, car);
             logger.info("Fetched car details: {}", car);
+            List<CarCategory> categories = Arrays.asList(CarCategory.values());
             model.addAttribute("car", car);
+            model.addAttribute("categories", categories);
+            model.addAttribute("canModify", canModify);
 
             List<Race> races = carService.getRacesByCarId(id);
             logger.info("Fetched races for car ID {}: {}", id, races);
             model.addAttribute("races", races);
+
+            // Filter races that the car is not participating in
+            List<Race> availableRaces = races.stream()
+                    .filter(race -> car.getRaces().stream().noneMatch(cr -> cr.getRace().getId() == race.getId()))
+                    .toList();
+
+            model.addAttribute("car", car);
+            model.addAttribute("availableRaces", availableRaces);
 
             List<Sponsor> sponsors = carService.getSponsorsByCarId(id);
             logger.info("Fetched sponsors for car ID {}: {}", id, sponsors);
@@ -127,20 +106,6 @@ public class CarController {
         return "carDetails";
     }
 
-    @PostMapping("/cars/delete/{id}")
-    public String deleteCar(@PathVariable int id) {
-        try {
-            logger.info("Attempting to delete car with ID {}", id);
-            carService.deleteCar(id);
-        } catch (DatabaseException ex) {
-            logger.error("Database exception while deleting car with ID {}: {}", id, ex.getMessage());
-            throw ex;
-        } catch (Exception ex) {
-            logger.error("Unexpected exception while deleting car with ID {}: {}", id, ex.getMessage());
-            throw new CustomApplicationException("Failed to delete car.");
-        }
-        return "redirect:/cars"; // Redirect to cars list page after deletion
-    }
 
     @GetMapping("/testDatabaseException")
     public String testException() {

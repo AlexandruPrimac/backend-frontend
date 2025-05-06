@@ -1,7 +1,9 @@
 package org.example.service.Interfaces;
 
-import org.example.domain.*;
-import org.example.presentation.CarViewModel;
+import org.example.domain.Car;
+import org.example.domain.CarCategory;
+import org.example.domain.Race;
+import org.example.domain.Sponsor;
 
 import java.util.List;
 
@@ -9,9 +11,9 @@ public interface CarService {
 
     List<Car> getAllCars();
 
-    Car addCar(CarViewModel carViewModel);
+    Car add(String brand, String model, Double engineCapacity, int horsepower, int year, CarCategory category, final int userId);
 
-    List<Car> filterCars(String brand);
+    List<Car> filterCarsDynamically(String brand);
 
     Car getCarById(int id);
 
@@ -21,4 +23,7 @@ public interface CarService {
 
     List<Sponsor> getSponsorsByCarId(int carId);
 
+    Car patch(int id, String brand, String model, double engine, int horsepower, int year, CarCategory category);
+
+    Car addRaceToCar(int carId, int raceId);
 }

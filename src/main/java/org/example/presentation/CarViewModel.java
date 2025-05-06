@@ -4,9 +4,13 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 import org.example.domain.Car;
 import org.example.domain.CarCategory;
 
+@Setter
+@Getter
 public class CarViewModel {
 
     @NotNull(message = "Brand in required")
@@ -49,63 +53,6 @@ public class CarViewModel {
     }
 
     public CarViewModel() {
-    }
-
-    // Getters and setters for the attributes
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public double getEngine() {
-        return engine;
-    }
-
-    public void setEngine(double engine) {
-        this.engine = engine;
-    }
-
-    public int getHorsepower() {
-        return horsepower;
-    }
-
-    public void setHorsepower(int horsepower) {
-        this.horsepower = horsepower;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public CarCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(CarCategory category) {
-        this.category = category;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
 }

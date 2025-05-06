@@ -1,0 +1,159 @@
+# @no-redirect
+POST http://localhost:8080/login
+Content-Type: application/x-www-form-urlencoded
+X-Csrf-Token: {{csrf}}
+Cookie: JSESSIONID={{session}}
+
+username=sponge@gmail.com&password=sponge1234&_csrf={{csrf}}
+
+###
+
+GET http://localhost:8080/api/cars?brand=ferrari
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/races?location=germany
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/sponsors?name=castrol
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/cars?brand=Citroen
+Accept: application/json
+
+###
+
+DELETE http://localhost:8080/api/cars/1
+
+###
+
+DELETE http://localhost:8080/api/cars/999
+
+###
+
+DELETE http://localhost:8080/api/races/1
+
+###
+
+DELETE http://localhost:8080/api/races/999
+
+###
+
+DELETE http://localhost:8080/api/sponsors/1
+
+###
+
+DELETE http://localhost:8080/api/sponsors/999
+
+###
+
+POST http://localhost:8080/api/cars
+Content-Type: application/json
+Accept: application/json
+
+{
+  "brand": "Toyota",
+  "model": "Corolla",
+  "engine": 1.8,
+  "horsePower": 130,
+  "year": 2020,
+  "category": "SPORTS"
+  }
+
+###
+
+# @no-cookie-jar
+POST http://localhost:8080/api/races
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "MX5 Race",
+  "date": "2023-01-29",
+  "track": "Oulton Park Circuit",
+  "location": "UK",
+  "distance": 8.0
+
+}
+
+###
+
+PATCH http://localhost:8080/api/cars/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "brand": "Ferrari",
+  "model": "488 GTB",
+  "engine": 3.9,
+  "horsepower": 650,
+  "year": 2021,
+  "category": "SPORTS"
+}
+
+###
+
+PATCH http://localhost:8080/api/cars/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "horsepower": 630
+}
+
+###
+
+PATCH http://localhost:8080/api/cars/1
+Accept: application/json
+Content-Type: application/json
+
+{
+}
+
+###
+
+PATCH http://localhost:8080/api/races/100
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Monaco Grand Prix",
+  "date": "2023-01-29",
+  "track": "Monaco Grand Prix",
+  "location": "Monaco",
+  "distance": 9.0
+}
+
+###
+
+# @no-cookie-jar
+PATCH http://localhost:8080/api/cars/2/add-race?raceId=10
+Accept: application/json
+Content-Type: application/json
+
+
+###
+
+PATCH http://localhost:8080/api/cars/1/add-race?raceId=200
+Accept: application/json
+Content-Type: application/json
+
+
+###
+
+POST http://localhost:8080/api/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "Joe",
+  "lastName": "Doe",
+  "email": "john@gmail.com",
+  "password": "Joee1234"
+}
+

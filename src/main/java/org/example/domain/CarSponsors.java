@@ -1,7 +1,11 @@
 package org.example.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "car_sponsors", uniqueConstraints = {@UniqueConstraint(name = "u_car_sponsors", columnNames = {"car_id", "sponsor_id"})})
 public class CarSponsors {
@@ -18,29 +22,5 @@ public class CarSponsors {
     @JoinColumn(name = "sponsor_id", referencedColumnName = "id")
     private Sponsor sponsor;
 
-    // Getters and setters
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public Sponsor getSponsor() {
-        return sponsor;
-    }
-
-    public void setSponsor(Sponsor sponsor) {
-        this.sponsor = sponsor;
-    }
 }

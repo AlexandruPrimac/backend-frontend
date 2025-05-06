@@ -1,5 +1,8 @@
 package org.example.domain;
 
+import lombok.Getter;
+
+@Getter
 public enum CarCategory {
     F1(1),
     RALLY(2),
@@ -10,10 +13,6 @@ public enum CarCategory {
 
     CarCategory(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
     }
 
     public static CarCategory fromValue(int value) {

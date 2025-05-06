@@ -3,9 +3,13 @@ package org.example.presentation;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
+@Setter
+@Getter
 public class RaceViewModel {
 
     @NotEmpty(message = "Race name is required")
@@ -26,39 +30,4 @@ public class RaceViewModel {
 
     private String image;
 
-    // Getters and setters
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public String getTrack() {
-        return track;
-    }
-
-    public void setTrack(String track) {this.track = track;}
-
-    public String getLocation() {return location;}
-
-    public void setLocation(String location) {this.location = location;}
-
-    public double getDistance() {return distance;}
-
-    public void setDistance(double distance) {this.distance = distance;}
-
-    public String getImage() { return image; }
-
-    public void setImage(String image) {this.image = image;}
 }

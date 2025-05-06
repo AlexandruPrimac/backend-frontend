@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/userDetails.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script src="/js/navbar.js" defer></script>
+    <link>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="card shadow-lg rounded">
+    <div class="card-header bg-primary text-white text-center py-4">
+        <h2>User Profile</h2>
+    </div>
+    <div class="card-body">
+
+        <!-- User Details -->
+        <dl class="row">
+            <dt class="col-sm-3 font-weight-bold">First Name:</dt>
+            <dd class="col-sm-9" th:text="${user.firstName}"></dd>
+
+            <dt class="col-sm-3 font-weight-bold">Last Name:</dt>
+            <dd class="col-sm-9" th:text="${user.lastName}"></dd>
+
+            <dt class="col-sm-3 font-weight-bold">Email:</dt>
+            <dd class="col-sm-9" th:text="${user.email}"></dd>
+
+            <dt class="col-sm-3">Role:</dt>
+            <dd class="col-sm-9" th:text="${role}"></dd>
+        </dl>
+
+        <!-- Action Buttons -->
+        <div class="text-center">
+<!--            <a href="/user/edit" class="btn btn-warning btn-lg m-2">Edit Profile</a>-->
+            <a href="/login" class="btn btn-danger btn-lg m-2">Logout</a>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

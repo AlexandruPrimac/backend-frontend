@@ -1,17 +1,21 @@
 package org.example.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "races")
 public class Race {
 
-    /// Attributes
+    // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generates ID
     private int id;
@@ -29,6 +33,7 @@ public class Race {
     private String location;
 
     @Column(nullable = false)
+    @Min(0)
     private double distance;
 
     @Column(name = "image")
@@ -58,71 +63,6 @@ public class Race {
     }
 
     public Race() {
-    }
-
-    //Getters and setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public String getTrack() {
-        return track;
-    }
-
-    public void setTrack(String track) {
-        this.track = track;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public List<CarRaces> getCars() {
-        return cars;
-    }
-
-    public void setCars(List<CarRaces> cars) {
-        this.cars = cars;
     }
 
 
