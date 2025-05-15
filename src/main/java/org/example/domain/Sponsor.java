@@ -27,7 +27,7 @@ public class Sponsor {
     @Column(nullable = false)
     private int foundingYear;
 
-    @Column(nullable = false)
+    @Column(name = "image")
     private String image;
 
     // Many-to-Many with Car

@@ -14,6 +14,8 @@ public class TestHelper {
 
     public static final String ADMIN_EMAIL = "sponge@gmail.com";
 
+    public static final String NORMAL_EMAIL = "alexandru@gmail.com";
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -69,11 +71,18 @@ public class TestHelper {
     }
 
     public ApplicationUser createNormalUser() {
+        Role userRole = roleRepository.findByName("ROLE_USER")
+                .orElseGet(() -> {
+                    Role newRole = new Role();
+                    newRole.setName("ROLE_USER");
+                    return roleRepository.save(newRole);
+                });
         final ApplicationUser user = new ApplicationUser();
         user.setFirstName("Test");
         user.setLastName("Test");
-        user.setEmail("test@gmail.com");
-        user.setPassword("test");
+        user.setEmail(NORMAL_EMAIL);
+        user.setPassword(passwordEncoder.encode("test"));
+        user.setRoles(Set.of(userRole));
         return userRepository.save(user);
     }
 
@@ -93,6 +102,15 @@ public class TestHelper {
         user.setRoles(Set.of(adminRole));
         userRepository.save(user);
         return user;
+    }
+
+    public Sponsor createSponsor(){
+        final Sponsor sponsor = new Sponsor();
+        sponsor.setName("SponsorTest");
+        sponsor.setIndustry("test");
+        sponsor.setFoundingYear(2000);
+        sponsorRepository.save(sponsor);
+        return sponsor;
     }
 
 

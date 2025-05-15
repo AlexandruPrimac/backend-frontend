@@ -15,10 +15,12 @@ public class AuthorizationServiceClass implements AuthorizationService {
 
     private final CarOwnerShipJpaRepo carOwnershipRepository;
 
+
     public AuthorizationServiceClass(CarOwnerShipJpaRepo carOwnershipRepository) {
         this.carOwnershipRepository = carOwnershipRepository;
     }
 
+    @Override
     public boolean canEditOrDeleteCar(ApplicationUser user, Car car) {
         if (user == null || car == null) {
             logger.warn("User is: " + user + ", Car is: " + car + ". Cannot proceed with authorization.");
@@ -35,12 +37,15 @@ public class AuthorizationServiceClass implements AuthorizationService {
         return isOwner(user, car);
     }
 
-    private boolean isAdmin(ApplicationUser user) {
+    @Override
+    public boolean isAdmin(ApplicationUser user) {
         return user.getRoles().stream()
                 .anyMatch(role -> role.getName().equals("ROLE_ADMIN"));
     }
 
-    private boolean isOwner(ApplicationUser user, Car car) {
+
+    @Override
+    public boolean isOwner(ApplicationUser user, Car car) {
         return carOwnershipRepository.findByCarIdAndUserId(car.getId(), user.getId())
                 .map(ownership -> {
                     logger.info("User is the owner of the car, can edit/delete car");

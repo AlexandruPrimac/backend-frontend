@@ -39,7 +39,7 @@ public class CarApiController {
 
     //Delete a car - DELETE endpoint
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> remove(@PathVariable int id) {
+    public ResponseEntity<Void> remove(@PathVariable int id, @AuthenticationPrincipal CustomUserDetails user) {
         try {
             carService.deleteCar(id);
             return ResponseEntity.noContent().build();  // 204 response when deleted

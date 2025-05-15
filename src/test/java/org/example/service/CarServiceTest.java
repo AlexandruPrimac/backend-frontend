@@ -44,9 +44,16 @@ public class CarServiceTest {
 
     private Race race;
     private Car car;
+    private ApplicationUser user;
 
     @BeforeEach
     void setUp() {
+        user = new ApplicationUser();
+        user.setFirstName("Test");
+        user.setLastName("Test");
+        user.setEmail("test@gmail.com");
+        user.setPassword("test");
+        userRepository.save(user);
 
         race = new Race();
         race.setName("F1 Miami GP");
@@ -68,14 +75,18 @@ public class CarServiceTest {
 
     @AfterEach
     void tearDown() {
+        carOwnerRepository.deleteAll();
+
         if (car != null) {
             carRepository.delete(car);
         }
         if (race != null) {
             raceRepository.delete(race);
         }
+        if (user != null) {
+            userRepository.delete(user);
+        }
     }
-
 
     @Test
     void shouldNotAddRaceToNonExistentCar() {
@@ -98,26 +109,76 @@ public class CarServiceTest {
     @Test
     void shouldAddCarAndLinkToUser() {
         /// Arrange
-        ApplicationUser user = new ApplicationUser();
-        user.setFirstName("Test");
-        user.setLastName("Test");
-        user.setEmail("test@gmail.com");
-        user.setPassword("test");
-        userRepository.save(user);
+        ApplicationUser testUser = new ApplicationUser();
+        testUser.setFirstName("Test");
+        testUser.setLastName("Test");
+        testUser.setEmail("test2@gmail.com");
+        testUser.setPassword("testttt");
+        userRepository.save(testUser);
 
+        try {
+            /// Act
+            Car createdCar = sut.add("BMW", "M3", 3.0, 473, 2023, CarCategory.SPORTS, testUser.getId());
+
+            /// Assert
+            assertNotNull(createdCar.getId());
+            List<CarOwnership> ownerships = carOwnerRepository.findAll();
+            assertFalse(ownerships.isEmpty());
+            assertEquals(testUser.getId(), ownerships.get(0).getUser().getId());
+        } finally {
+            carOwnerRepository.deleteAll();
+            userRepository.delete(testUser);
+        }
+    }
+
+    @Test
+    void shouldNotAddCarWithInvalidUser() {
         /// Act
-        Car createdCar = sut.add("BMW", "M3", 3.0, 473, 2023, CarCategory.SPORTS, user.getId());
+        final Executable action = () -> sut.add("BMW", "M3", 3.0, 473, 2023, CarCategory.SPORTS, 999);
 
         /// Assert
-        assertNotNull(createdCar.getId());
-        List<CarOwnership> ownerships = carOwnerRepository.findAll();
-        assertFalse(ownerships.isEmpty());
-        assertEquals(user.getId(), ownerships.get(0).getUser().getId());
+        assertThrows(Exception.class, action, "Expected exception for non-existent user");
+    }
+
+    @Test
+    void shouldNotAddCarWithInvalidYear() {
+        /// Act
+        final Executable action = () -> sut.add("BMW", "M3", 3.0, 473, 1884, CarCategory.SPORTS, user.getId());
+
+        /// Assert
+        assertThrows(Exception.class, action, "Expected exception for invalid year");
+    }
+
+    @Test
+    void shouldNotAddCarWithInvalidHorsepower() {
+        /// Act
+        final Executable action = () -> sut.add("BMW", "M3", 3.0, -1, 2023, CarCategory.SPORTS, user.getId());
+
+        /// Assert
+        assertThrows(Exception.class, action, "Expected exception for negative horsepower");
+    }
+
+    @Test
+    void shouldNotAddCarWithNullBrand() {
+        /// Act
+        final Executable action = () -> sut.add(null, "M3", 3.0, 473, 2023, CarCategory.SPORTS, user.getId());
+
+        /// Assert
+        assertThrows(Exception.class, action, "Expected exception for null brand");
+    }
+
+    @Test
+    void shouldNotAddCarWithNullModel() {
+        /// Act
+        final Executable action = () -> sut.add("BMW", null, 3.0, 473, 2023, CarCategory.SPORTS, user.getId());
+
+        /// Assert
+        assertThrows(Exception.class, action, "Expected exception for null model");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"cITroEn"})
-    void shouldSearchIssues(final String query) {
+    @ValueSource(strings = {"cITroEn", "CITROEN", "citroen"})
+    void shouldSearchIssuesCaseInsensitive(final String query) {
         /// Arrange
         Car car1 = new Car();
         car1.setBrand("Citroen");
@@ -128,12 +189,16 @@ public class CarServiceTest {
         car1.setCategory(CarCategory.SPORTS);
         carRepository.save(car1);
 
-        /// Act
-        final List<Car> cars = sut.filterCarsDynamically(query);
+        try {
+            /// Act
+            final List<Car> cars = sut.filterCarsDynamically(query);
 
-        /// Assert
-        assertEquals(1, cars.size());
-        assertEquals("Citroen", cars.get(0).getBrand());
+            /// Assert
+            assertEquals(1, cars.size());
+            assertEquals("Citroen", cars.get(0).getBrand());
+        } finally {
+            carRepository.delete(car1);
+        }
     }
 
     @Test
@@ -148,38 +213,101 @@ public class CarServiceTest {
     @Test
     void shouldRemoveCar() {
         /// Arrange
-        Car car = new Car();
-        car.setBrand("Renault");
-        car.setModel("Megane RS Troph");
-        car.setEngine(1.8);
-        car.setHorsepower(300);
-        car.setYear(2018);
-        car.setCategory(CarCategory.SPORTS);
-        carRepository.save(car);
+        Car testCar = new Car();
+        testCar.setBrand("Renault");
+        testCar.setModel("Megane RS Troph");
+        testCar.setEngine(1.8);
+        testCar.setHorsepower(300);
+        testCar.setYear(2018);
+        testCar.setCategory(CarCategory.SPORTS);
+        carRepository.save(testCar);
 
-        /// Act
-        sut.deleteCar(car.getId());
+        try {
+            /// Act
+            sut.deleteCar(testCar.getId());
 
-        /// Assert
-        assertThrows(NotFoundException.class, () -> sut.getCarById(car.getId()));
+            /// Assert
+            assertThrows(NotFoundException.class, () -> sut.getCarById(testCar.getId()));
+        } finally {
+            carRepository.delete(testCar);
+        }
     }
 
     @Test
     void shouldPatchCarYear() {
         /// Arrange
-        Car car = new Car();
-        car.setBrand("Audi");
-        car.setModel("R8");
-        car.setEngine(5.2);
-        car.setHorsepower(520);
-        car.setYear(2014);
-        car.setCategory(CarCategory.SPORTS);
-        carRepository.save(car);
+        Car testCar = new Car();
+        testCar.setBrand("Audi");
+        testCar.setModel("R8");
+        testCar.setEngine(5.2);
+        testCar.setHorsepower(520);
+        testCar.setYear(2014);
+        testCar.setCategory(CarCategory.SPORTS);
+        carRepository.save(testCar);
 
+        try {
+            /// Act
+            final Car patchedCar = sut.patch(testCar.getId(), "Audi", "R8", 5.2, 520, 2015, CarCategory.SPORTS);
+
+            /// Assert
+            assertEquals(2015, patchedCar.getYear());
+        } finally {
+            carRepository.delete(testCar);
+        }
+    }
+
+    @Test
+    void shouldNotPatchNonExistentCar() {
         /// Act
-        final Car patchedCar = sut.patch(car.getId(), "Audi", "R8", 5.2, 520,2015,CarCategory.SPORTS);
+        final Executable action = () -> sut.patch(999, "Audi", "R8", 5.2, 520, 2015, CarCategory.SPORTS);
 
         /// Assert
-        assertEquals(2015, patchedCar.getYear());
+        assertThrows(Exception.class, action, "Expected exception for non-existent car");
+    }
+
+    @Test
+    void shouldNotPatchCarWithInvalidYear() {
+        /// Arrange
+        Car testCar = new Car();
+        testCar.setBrand("Audi");
+        testCar.setModel("R8");
+        testCar.setEngine(5.2);
+        testCar.setHorsepower(520);
+        testCar.setYear(2014);
+        testCar.setCategory(CarCategory.SPORTS);
+        carRepository.save(testCar);
+
+        try {
+            /// Act
+            final Executable action = () -> sut.patch(testCar.getId(), "Audi", "R8", 5.2, 520, 1884, CarCategory.SPORTS);
+
+            /// Assert
+            assertThrows(Exception.class, action, "Expected exception for invalid year");
+        } finally {
+            carRepository.delete(testCar);
+        }
+    }
+
+    @Test
+    void shouldNotPatchCarWithInvalidHorsepower() {
+        /// Arrange
+        Car testCar = new Car();
+        testCar.setBrand("Audi");
+        testCar.setModel("R8");
+        testCar.setEngine(5.2);
+        testCar.setHorsepower(520);
+        testCar.setYear(2014);
+        testCar.setCategory(CarCategory.SPORTS);
+        carRepository.save(testCar);
+
+        try {
+            /// Act
+            final Executable action = () -> sut.patch(testCar.getId(), "Audi", "R8", 5.2, -1, 2015, CarCategory.SPORTS);
+
+            /// Assert
+            assertThrows(Exception.class, action, "Expected exception for negative horsepower");
+        } finally {
+            carRepository.delete(testCar);
+        }
     }
 }
