@@ -6,10 +6,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.example.domain.*;
 import org.example.exception.CustomApplicationException;
-import org.example.repository.CarJpaRepo;
-import org.example.repository.CarOwnerShipJpaRepo;
-import org.example.repository.RaceJpaRepo;
-import org.example.repository.UserJpaRepo;
+import org.example.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +26,10 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
 
     private final RaceJpaRepo raceRepository;
 
+    private final CarRacesJpaRepo carRacesRepository;
+
+    private final CarSponsorsJpaRepo carSponsorsRepository;
+
     private final UserJpaRepo userRepository;
 
     private final CarOwnerShipJpaRepo carOwnerShipJpaRepo;
@@ -37,9 +38,11 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
     private EntityManager entityManager;
 
     @Autowired
-    public CarServiceClass(CarJpaRepo carRepository, RaceJpaRepo raceRepository, UserJpaRepo userRepository, CarOwnerShipJpaRepo carOwnerShipJpaRepo) {
+    public CarServiceClass(CarJpaRepo carRepository, RaceJpaRepo raceRepository, CarRacesJpaRepo carRacesRepository, CarSponsorsJpaRepo carSponsorsRepository, UserJpaRepo userRepository, CarOwnerShipJpaRepo carOwnerShipJpaRepo) {
         this.carRepository = carRepository;
         this.raceRepository = raceRepository;
+        this.carRacesRepository = carRacesRepository;
+        this.carSponsorsRepository = carSponsorsRepository;
         this.userRepository = userRepository;
         this.carOwnerShipJpaRepo = carOwnerShipJpaRepo;
     }
@@ -96,29 +99,18 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
 
     @Override
     public void deleteCar(int id) {
-        // Check if the car exists
         if (!carRepository.existsById(id)) {
             throw new CustomApplicationException("Car not found with ID: " + id);
         }
 
-        // Proceed with deletion if the car exists
         Car car = carRepository.findById(id)
                 .orElseThrow(() -> new CustomApplicationException("Car not found with ID: " + id));
 
-        // Remove associated relationships (races and sponsors)
-        entityManager.createQuery("DELETE FROM CarRaces cr WHERE cr.car = :car")
-                .setParameter("car", car)
-                .executeUpdate();
+        // Delete related entities using repositories
+        carRacesRepository.deleteByCar(car);
+        carSponsorsRepository.deleteByCar(car);
+        carOwnerShipJpaRepo.deleteByCar(car);
 
-        entityManager.createQuery("DELETE FROM CarSponsors cs WHERE cs.car = :car")
-                .setParameter("car", car)
-                .executeUpdate();
-
-        entityManager.createQuery("DELETE FROM CarOwnership cw WHERE cw.car = :car")
-                .setParameter("car", car)
-                .executeUpdate();
-
-        // Finally, delete the car
         carRepository.delete(car);
     }
 

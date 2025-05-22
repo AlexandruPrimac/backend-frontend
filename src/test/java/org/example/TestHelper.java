@@ -41,12 +41,12 @@ public class TestHelper {
     private RoleJpaRepo roleRepository;
 
     public void cleanUp() {
+        carRacesRepository.deleteAll();
+        carOwnerRepository.deleteAll();
         carRepository.deleteAll();
         raceRepository.deleteAll();
-        carRacesRepository.deleteAll();
-        userRepository.deleteAll();
         sponsorRepository.deleteAll();
-        carOwnerRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     public Race createRace() {
