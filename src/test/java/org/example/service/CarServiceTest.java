@@ -78,14 +78,23 @@ public class CarServiceTest {
         carOwnerRepository.deleteAll();
 
         if (car != null) {
-            carRepository.delete(car);
+            carRepository.deleteAll();
         }
         if (race != null) {
-            raceRepository.delete(race);
+            raceRepository.deleteAll();
         }
         if (user != null) {
-            userRepository.delete(user);
+            userRepository.deleteAll();
         }
+    }
+
+    @Test
+    void shouldRetrieveAllCars() {
+        /// Act
+        final List<Car> cars = sut.getAllCars();
+
+        /// Assert
+        assertEquals(1, cars.size());
     }
 
     @Test

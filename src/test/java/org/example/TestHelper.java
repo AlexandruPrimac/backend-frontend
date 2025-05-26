@@ -104,7 +104,7 @@ public class TestHelper {
         return user;
     }
 
-    public Sponsor createSponsor(){
+    public Sponsor createSponsor() {
         final Sponsor sponsor = new Sponsor();
         sponsor.setName("SponsorTest");
         sponsor.setIndustry("test");
@@ -113,5 +113,27 @@ public class TestHelper {
         return sponsor;
     }
 
+    public int getNormalUserId() {
+        return userRepository.findByEmail(NORMAL_EMAIL)
+                .orElseGet(this::createNormalUser)
+                .getId();
+    }
 
+    public int getAdminUserId() {
+        return userRepository.findByEmail(ADMIN_EMAIL)
+                .orElseGet(this::createAdmin)
+                .getId();
+    }
+
+    public void assignCarToUser(int carId, int userId) {
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new RuntimeException("Car not found"));
+        ApplicationUser user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        CarOwnership ownership = new CarOwnership();
+        ownership.setCar(car);
+        ownership.setUser(user);
+        carOwnerRepository.save(ownership);
+    }
 }

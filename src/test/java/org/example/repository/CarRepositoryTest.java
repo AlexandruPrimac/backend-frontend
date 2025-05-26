@@ -65,7 +65,7 @@ public class CarRepositoryTest {
 
         /// Assert
         assertFalse(sut.findById(car.getId()).isPresent());
-        assertEquals(0, carRacesRepository.findAll().size()); // assuming orphanRemoval = true
+        assertEquals(0, carRacesRepository.findAll().size());
         assertEquals(1, raceRepository.findAll().size());
     }
 
@@ -110,7 +110,7 @@ public class CarRepositoryTest {
     void shouldHandleMultipleRacesForOneCar() {
         /// Arrange
         Car car = testHelper.createCar();
-        Race race1 = testHelper.createRace(); // reuse once; clone next
+        Race race1 = testHelper.createRace();
 
         Race race2 = new Race();
         race2.setName("Nürburgring 24h");
