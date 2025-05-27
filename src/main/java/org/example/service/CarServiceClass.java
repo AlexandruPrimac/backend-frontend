@@ -75,8 +75,22 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
         carOwnerShipJpaRepo.save(carOwnership);
 
         return savedCar;
+    }
 
+    @Override
+    public Car addCarClient(String brand, String model, Double engineCapacity, int horsepower, int year, CarCategory category){
+        Car car = new Car();
+        logger.info("Adding car: {}", car);
+        car.setBrand(brand);
+        car.setModel(model);
+        car.setEngine(engineCapacity);
+        car.setHorsepower(horsepower);
+        car.setYear(year);
+        car.setCategory(category);
 
+        Car savedCar = carRepository.save(car);
+
+        return savedCar;
     }
 
 

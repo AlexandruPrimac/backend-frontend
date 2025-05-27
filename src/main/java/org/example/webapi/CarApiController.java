@@ -60,6 +60,12 @@ public class CarApiController {
         return ResponseEntity.status(HttpStatus.CREATED).body(carMapper.toCarDto(car));
     }
 
+    @PostMapping("/client")
+    public ResponseEntity<CarDto> addCarClient(@RequestBody @Valid final AddCarDto carDto) {
+        final Car car = carService.addCarClient(carDto.brand(), carDto.model(), carDto.engine(), carDto.horsePower(), carDto.year(), carDto.category());
+        return ResponseEntity.status(HttpStatus.CREATED).body(carMapper.toCarDto(car));
+    }
+
     @PatchMapping("{id}")
     public ResponseEntity<CarDto> updateCar(@PathVariable int id, @RequestBody @Valid final PatchCarDto patchCar) {
         try {

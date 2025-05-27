@@ -13,6 +13,8 @@ public interface CarService {
 
     Car add(String brand, String model, Double engineCapacity, int horsepower, int year, CarCategory category, final int userId);
 
+    Car addCarClient(String brand, String model, Double engineCapacity, int horsepower, int year, CarCategory category);
+
     List<Car> filterCarsDynamically(String brand);
 
     Car getCarById(int id);
