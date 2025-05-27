@@ -7,7 +7,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +26,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auths -> auths
                         // Public Endpoints (Guest)
                         .requestMatchers(HttpMethod.GET, "/", "/register", "/cars", "/races", "/sponsors").permitAll()
+
+                        // Add API endpoints for use in seperate client project
+                        .requestMatchers("api/cars/**").permitAll()
 
                         // Endpoints for authenticated users (User)
                         .requestMatchers(HttpMethod.GET, "/car/**", "/race/**", "/user/details").authenticated()
@@ -59,7 +61,8 @@ public class SecurityConfig {
                                 // Handling 403 (Forbidden) error
                                 .accessDeniedPage("/forbidden")
                 )
-                .httpBasic(httpBasic -> {}) // Enable Basic Authentication
+                .httpBasic(httpBasic -> {
+                }) // Enable Basic Authentication
                 .formLogin(
                         login -> login
                                 .loginPage("/login")
@@ -78,6 +81,7 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 )
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/cars/**"))
                 .build();
     }
 

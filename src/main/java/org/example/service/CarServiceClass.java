@@ -145,6 +145,7 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
 
     @Override
     public Car patch(int id, String brand, String model, double engine, int horsepower, int year, CarCategory category) {
+        logger.info("Car with id" + id + " patching!");
         Car car = carRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Car not found"));
 
         if (brand != null) {
@@ -171,6 +172,7 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
             car.setCategory(category);
         }
 
+        logger.info("Car patched successfully!");
         return carRepository.save(car);
     }
 

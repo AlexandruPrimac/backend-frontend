@@ -30,6 +30,11 @@ public class CarApiController {
         this.carMapper = carMapper;
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<CarDto> getById(@PathVariable("id") final int id) {
+        return ResponseEntity.ok(carMapper.toCarDto(carService.getCarById(id)));
+    }
+
     //Filter cars by brand
     @GetMapping
     public ResponseEntity<List<CarDto>> filter(@RequestParam("brand") final String brand) {
@@ -57,12 +62,12 @@ public class CarApiController {
 
     @PatchMapping("{id}")
     public ResponseEntity<CarDto> updateCar(@PathVariable int id, @RequestBody @Valid final PatchCarDto patchCar) {
-        try{
+        try {
             Car updateCar = carService.patch(id, patchCar.brand(), patchCar.model(), patchCar.engine(), patchCar.horsepower(), patchCar.year(), patchCar.category());
             return ResponseEntity.ok(carMapper.toCarDto(updateCar));
-        }catch (EntityNotFoundException ex) {
+        } catch (EntityNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
