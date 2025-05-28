@@ -47,6 +47,9 @@ public class SecurityConfig {
                         .requestMatchers(
                                 antMatcher("/js/**"),
                                 antMatcher("/css/**"),
+                                antMatcher("/images/**"),
+                                antMatcher("/favicon/**"),
+                                antMatcher("/video/**"),
                                 antMatcher("/webjars/**")).permitAll()
 
                         // Everything else requires authentication
