@@ -1,3 +1,5 @@
+import '../scss/addCar.scss'
+
 import { csrfToken, csrfHeaderName } from './util/csrf.js'
 
 const form = document.querySelector("#add-car-form");

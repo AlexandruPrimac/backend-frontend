@@ -1,5 +1,6 @@
 /* General body styles */
 body, main {
+    height: 100%;
     margin: 0;
     padding: 0;
 }
@@ -15,6 +16,7 @@ h1 {
 
 /* Filter form styles */
 form {
+
     display: flex;
     gap: 10px;
     margin-bottom: 20px;

@@ -1,3 +1,5 @@
+import '../scss/addRace.scss'
+
 import { csrfToken, csrfHeaderName } from './util/csrf.js'
 
 const form = document.getElementById("add-race-form")

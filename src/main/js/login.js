@@ -1,3 +1,5 @@
+import '../scss/login.scss'
+
 // Password toggle
 document.querySelector('.password-toggle').addEventListener('click', function(e) {
     const passwordInput = document.querySelector('#password');

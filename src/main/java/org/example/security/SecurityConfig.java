@@ -12,6 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -42,7 +44,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/addRace").hasRole("ADMIN")
 
                         // Static Resources (Public)
-                        .requestMatchers("/js/**", "/webjars/**", "/images/**", "/video/**", "/favicon/**", "/css/**").permitAll()
+                        .requestMatchers(
+                                antMatcher("/js/**"),
+                                antMatcher("/css/**"),
+                                antMatcher("/webjars/**")).permitAll()
 
                         // Everything else requires authentication
                         .anyRequest().authenticated()

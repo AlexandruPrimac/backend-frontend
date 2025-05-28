@@ -1,3 +1,4 @@
+import '../scss/cars.scss'
 import { csrfToken, csrfHeaderName } from './util/csrf.js'
 
 const deleteButton = document.getElementById("delete-button")

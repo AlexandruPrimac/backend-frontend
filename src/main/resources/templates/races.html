@@ -4,19 +4,19 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title th:text="#{page.allraces}"></title>
-    <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
-    <link rel="stylesheet" th:href="@{/css/races.css}">
-    <link rel="stylesheet" th:href="@{/css/navbar.css}">
-    <link rel="stylesheet" th:href="@{/css/footer.css}">
-    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css"/>
-    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script src="/js/filterRaces.js" defer type="module"></script>
-    <script src="/js/navbar.js" defer></script>
+    <link rel="stylesheet" href="/css/bundle-site.css">
+    <link rel="stylesheet" href="/css/bundle-races.css">
+    <link rel="stylesheet" href="/css/bundle-navbar.css">
+    <link rel="stylesheet" href="/css/bundle-footer.css">
+    <script src="/js/bundle-site.js" defer></script>
+    <script src="/js/bundle-filterRaces.js" defer></script>
+    <script src="/js/bundle-navbar.js" defer></script>
 </head>
 <body>
 <main>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
+    <br>
     <div sec:authorize="isAuthenticated()">
     <form onsubmit="return false;">
         <div>

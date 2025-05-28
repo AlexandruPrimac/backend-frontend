@@ -1,3 +1,5 @@
+import '../scss/sponsors.scss'
+
 import { csrfToken, csrfHeaderName } from './util/csrf.js'
 
 const deleteButton = document.querySelectorAll(".remove-sponsor-button")
