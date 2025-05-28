@@ -3,11 +3,16 @@
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register | Race Radar</title>
-    <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
-    <link rel="stylesheet" href="/css/bundle-site.css">
-    <link rel="stylesheet" href="/css/bundle-login.css">
+    <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32" />
+    <link rel="stylesheet" href="/css/bundle-site.css" />
+    <link rel="stylesheet" href="/css/bundle-login.css" />
+    <!-- Bootstrap Icons CSS -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+    />
     <script src="/js/bundle-site.js" defer></script>
     <script src="/js/bundle-register.js"></script>
 </head>
@@ -31,46 +36,62 @@
                 <div class="col-md-6">
                     <label for="firstName" class="form-label">First Name</label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                        <input id="firstName" name="firstName" type="text"
-                               class="form-control form-control-lg"
-                               placeholder="John"
-                               required>
+                        <span class="input-group-text"><i class="bi bi-person-badge-fill"></i></span>
+                        <input
+                                id="firstName"
+                                name="firstName"
+                                type="text"
+                                class="form-control form-control-lg"
+                                placeholder="John"
+                                required
+                        />
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <label for="lastName" class="form-label">Last Name</label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                        <input id="lastName" name="lastName" type="text"
-                               class="form-control form-control-lg"
-                               placeholder="Doe"
-                               required>
+                        <span class="input-group-text"><i class="bi bi-person-badge-fill"></i></span>
+                        <input
+                                id="lastName"
+                                name="lastName"
+                                type="text"
+                                class="form-control form-control-lg"
+                                placeholder="Doe"
+                                required
+                        />
                     </div>
                 </div>
 
                 <div class="col-12">
                     <label for="email" class="form-label">Email</label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                        <input id="email" name="email" type="email"
-                               class="form-control form-control-lg"
-                               placeholder="john@example.com"
-                               required>
+                        <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                        <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                class="form-control form-control-lg"
+                                placeholder="john@example.com"
+                                required
+                        />
                     </div>
                 </div>
 
                 <div class="col-12">
                     <label for="password" class="form-label">Password</label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        <input id="password" name="password" type="password"
-                               class="form-control form-control-lg"
-                               placeholder="••••••••"
-                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                               required>
-                        <i class="password-toggle fas fa-eye-slash"></i>
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                class="form-control form-control-lg"
+                                placeholder="••••••••"
+                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                required
+                        />
+                        <i class="password-toggle bi bi-eye-slash"></i>
                     </div>
                     <div class="form-text">Must be 8+ chars with uppercase, number</div>
                 </div>
@@ -78,20 +99,24 @@
                 <div class="col-12">
                     <label for="confirmPassword" class="form-label">Confirm Password</label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        <input id="confirmPassword" name="confirmPassword" type="password"
-                               class="form-control form-control-lg"
-                               placeholder="••••••••"
-                               required>
-                        <i class="password-toggle fas fa-eye-slash"></i>
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                type="password"
+                                class="form-control form-control-lg"
+                                placeholder="password"
+                                required
+                        />
+                        <i class="password-toggle bi bi-eye-slash"></i>
                     </div>
                 </div>
             </div>
 
-            <br><br>
+            <br /><br />
 
             <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
-                Create Account <i class="fas fa-user-plus ms-2"></i>
+                Create Account <i class="bi bi-person-plus ms-2"></i>
             </button>
 
             <p class="text-center mb-0">

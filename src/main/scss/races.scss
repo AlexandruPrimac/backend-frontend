@@ -34,39 +34,91 @@ h1 {
     margin-bottom: 20px;
 }
 
-// Filter form container
-form {
+/* Filter form styles */
+.filter-container {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 0 15px;
+}
+
+.filter-form {
     display: flex;
-    gap: 10px;
     justify-content: center;
     align-items: center;
-    background-color: $bg-light;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-    label {
-        font-weight: bold;
-        color: $text-color;
+.filter-group {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 30px;
+    padding: 5px 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 500px;
+
+    &:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        border-color: rgba(0, 0, 0, 0.15);
+    }
+}
+
+.filter-icon {
+    color: #0056b3; /* Racing red to match theme */
+    font-size: 1.2rem;
+    margin-right: 10px;
+    opacity: 0.8;
+}
+
+.filter-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 12px 0;
+    font-size: 1rem;
+    outline: none;
+    color: #333;
+
+    &::placeholder {
+        color: #999;
+        font-style: italic;
+    }
+}
+
+.filter-button {
+    background: #0056b3; /* Racing red */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #0056b3;
+        transform: scale(1.15);
     }
 
-    input[type="text"] {
-        @include input-style;
+    i {
+        font-size: 1rem;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .filter-group {
+        padding: 5px 10px;
     }
 
-    button[type="submit"] {
-        padding: 10px 20px;
-        background-color: $primary-color;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            background-color: $primary-hover;
-        }
+    .filter-input {
+        padding: 10px 0;
+        font-size: 0.9rem;
     }
 }
 

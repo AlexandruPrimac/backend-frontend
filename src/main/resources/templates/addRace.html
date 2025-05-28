@@ -17,67 +17,91 @@
 <main>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <div class="container mt-4">
-        <form id="add-race-form" action="addRace" method="post" th:object="${raceViewModel}" class="container mt-4">
-            <div class="row mb-3">
+    <div class="form-container">
+        <div class="form-header">
+            <h2><i class="bi bi-flag-fill"></i> <span th:utext="#{addRace.name}">Add New Race</span></h2>
+            <p class="form-subtitle">Enter details to schedule a new racing event</p>
+        </div>
+
+        <form id="add-race-form" action="addRace" method="post" th:object="${raceViewModel}" class="racing-form">
+            <!-- Error messages -->
+            <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger racing-alert">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <p>The form contains errors! Please fix them below.</p>
+            </div>
+
+            <div class="form-grid">
                 <!-- Race Name -->
-                <label for="name" class="form-label col-12 col-md-4" th:utext="#{addRace.name}">Race Name:</label>
-                <div class="col-12 col-md-8">
-                    <input type="text" id="name" name="name" th:field="*{name}" class="form-control" required/>
-                    <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                <div class="form-group">
+                    <label for="name" th:utext="#{addRace.name}">
+                        <i class="bi bi-trophy-fill"></i> Race Name
+                    </label>
+                    <div class="input-group">
+                        <input type="text" id="name" name="name" th:field="*{name}"
+                               placeholder="e.g. Grand Prix" required>
+                        <i class="bi bi-card-heading input-icon"></i>
+                    </div>
+                    <div class="text-danger error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
                 <!-- Date -->
-                <label for="date" class="form-label col-12 col-md-4" th:utext="#{race.date}">Date:</label>
-                <div class="col-12 col-md-8">
-                    <input type="date" id="date" name="date" th:field="*{date}" class="form-control" required/>
-                    <div class="text-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+                <div class="form-group">
+                    <label for="date" th:utext="#{race.date}">
+                        <i class="bi bi-calendar-date-fill"></i> Date
+                    </label>
+                    <div class="input-group">
+                        <input type="date" id="date" name="date" th:field="*{date}" required>
+                        <i class="bi bi-calendar-check input-icon"></i>
+                    </div>
+                    <div class="text-danger error-message" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
                 <!-- Track -->
-                <label for="track" class="form-label col-12 col-md-4" th:utext="#{race.track}">Track:</label>
-                <div class="col-12 col-md-8">
-                    <input type="text" id="track" name="track" th:field="*{track}" class="form-control" required/>
-                    <div class="text-danger" th:if="${#fields.hasErrors('track')}" th:errors="*{track}"></div>
+                <div class="form-group">
+                    <label for="track" th:utext="#{race.track}">
+                        <i class="bi bi-geo-alt-fill"></i> Track
+                    </label>
+                    <div class="input-group">
+                        <input type="text" id="track" name="track" th:field="*{track}"
+                               placeholder="e.g. Circuit de Monaco" required>
+                        <i class="bi bi-pin-map-fill input-icon"></i>
+                    </div>
+                    <div class="text-danger error-message" th:if="${#fields.hasErrors('track')}" th:errors="*{track}"></div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
                 <!-- Location -->
-                <label for="location" class="form-label col-12 col-md-4" th:utext="#{race.location}">Location:</label>
-                <div class="col-12 col-md-8">
-                    <input type="text" id="location" name="location" th:field="*{location}" class="form-control"
-                           required/>
-                    <div class="text-danger" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></div>
+                <div class="form-group">
+                    <label for="location" th:utext="#{race.location}">
+                        <i class="bi bi-globe2"></i> Location
+                    </label>
+                    <div class="input-group">
+                        <input type="text" id="location" name="location" th:field="*{location}"
+                               placeholder="e.g. Monaco, Germany" required>
+                        <i class="bi bi-geo-fill input-icon"></i>
+                    </div>
+                    <div class="text-danger error-message" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
                 <!-- Distance -->
-                <label for="distance" class="form-label col-12 col-md-4" th:utext="#{race.distance}">Distance
-                    (km):</label>
-                <div class="col-12 col-md-8">
-                    <input type="number" id="distance" name="distance" th:field="*{distance}" class="form-control"
-                           step="0.01" required/>
-                    <div class="text-danger" th:if="${#fields.hasErrors('distance')}" th:errors="*{distance}"></div>
+                <div class="form-group full-width center-text">
+                    <label for="distance" th:utext="#{race.distance}">
+                        <i class="bi bi-signpost-2-fill"></i> Distance
+                    </label>
+                    <div class="input-group">
+                        <input type="number" id="distance" name="distance" th:field="*{distance}"
+                               placeholder="e.g. 5.2, 7.0, 20.8" step="0.01" required>
+                        <span class="input-unit">km</span>
+                    </div>
+                    <div class="text-danger error-message" th:if="${#fields.hasErrors('distance')}" th:errors="*{distance}"></div>
                 </div>
             </div>
 
             <!-- Submit Button -->
-            <div class="row mt-4">
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary btn-lg w-100" th:utext="#{button.addRace}">
-                        <i class="bi bi-plus-circle"></i> Add Race
-                    </button>
-                </div>
-            </div>
+            <button type="submit" class="submit-btn" th:utext="#{button.addRace}">
+                <i class="bi bi-plus-circle-fill"></i> Add Race
+            </button>
         </form>
     </div>
-
     <!-- Footer -->
     <div th:replace="~{fragments/footer :: footer}"></div>
 

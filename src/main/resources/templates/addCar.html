@@ -13,94 +13,114 @@
     <script src="/js/bundle-navbar.js" defer></script>
 </head>
 <body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<main>
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
+<div class="form-container">
+    <div class="form-header">
+        <h2><i class="bi bi-car-front-fill"></i> <span th:utext="#{page.addcar}">Add New Car</span></h2>
+        <p class="form-subtitle">Enter details to add a new racing car to the database</p>
+    </div>
 
-    <div class="container mt-4">
-        <form id="add-car-form" action="addCar" method="post" th:object="${carViewModel}" class="container mt-4">
-            <!-- Error messages -->
-            <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
-                <p>The form contains errors! Please fix them below.</p>
-            </div>
+    <form id="add-car-form" action="addCar" method="post" th:object="${carViewModel}" class="racing-form">
+        <!-- Error messages -->
+        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger racing-alert">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <p>The form contains errors! Please fix them below.</p>
+        </div>
 
-            <div class="row mb-3">
+            <div class="form-grid">
                 <!-- Brand -->
-                <label for="brand" class="col-md-4 col-form-label" th:utext="#{car.brand}">Brand</label>
-                <div class="col-md-8">
-                    <input type="text" id="brand" name="brand" th:field="*{brand}" class="form-control"
-                           placeholder="Brand" required>
-                    <div class="text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></div>
+                <div class="form-group">
+                    <label for="brand" th:utext="#{car.brand}">
+                        <i class="bi bi-tag-fill"></i> Brand
+                    </label>
+                    <div class="input-group">
+                        <input type="text" id="brand" name="brand" th:field="*{brand}"
+                               placeholder="e.g. Ferrari, Porsche" required>
+                        <i class="bi bi-building input-icon"></i>
+                    </div>
+                    <div class="text-danger error-message" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
                 <!-- Model -->
-                <label for="model" class="col-md-4 col-form-label" th:utext="#{car.model}">Model</label>
-                <div class="col-md-8">
-                    <input type="text" id="model" name="model" th:field="*{model}" class="form-control"
-                           placeholder="Model" required>
-                    <div class="text-danger" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></div>
+                <div class="form-group">
+                    <label for="model" th:utext="#{car.model}">
+                        <i class="bi bi-card-text"></i> Model
+                    </label>
+                    <div class="input-group">
+                        <input type="text" id="model" name="model" th:field="*{model}"
+                               placeholder="e.g. 488 Pista, 911 GT3" required>
+                        <i class="bi bi-input-cursor-text input-icon"></i>
+                    </div>
+                    <div class="text-danger error-message" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
                 <!-- Engine Size -->
-                <label for="engine" class="col-md-4 col-form-label" th:utext="#{car.engine}">Engine Size</label>
-                <div class="col-md-8">
-                    <input type="number" id="engine" name="engine" th:field="*{engine}" class="form-control"
-                           placeholder="Engine Size" step="0.01" required>
-                    <div class="text-danger" th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"></div>
+                <div class="form-group">
+                    <label for="engine" th:utext="#{car.engine}">
+                        <i class="bi bi-bounding-box-circles input-icon"></i> Engine Size
+                    </label>
+                    <div class="input-group">
+                        <input type="number" id="engine" name="engine" th:field="*{engine}"
+                               placeholder="e.g. 3.9, 4.0, 6.2" step="0.01" required>
+                        <span class="input-unit">L</span>
+                    </div>
+                    <div class="text-danger error-message" th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"></div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
                 <!-- Horsepower -->
-                <label for="horsepower" class="col-md-4 col-form-label" th:utext="#{car.horsepower}">Horsepower</label>
-                <div class="col-md-8">
-                    <input type="number" id="horsepower" name="horsepower" th:field="*{horsepower}" class="form-control"
-                           placeholder="Horsepower" required>
-                    <div class="text-danger" th:if="${#fields.hasErrors('horsepower')}" th:errors="*{horsepower}"></div>
+                <div class="form-group">
+                    <label for="horsepower" th:utext="#{car.horsepower}">
+                        <i class="bi bi-speedometer input-icon"></i> Horsepower
+                    </label>
+                    <div class="input-group">
+                        <input type="number" id="horsepower" name="horsepower" th:field="*{horsepower}"
+                               placeholder="e.g. 650, 710, 1000" required>
+                        <span class="input-unit">HP</span>
+                    </div>
+                    <div class="text-danger error-message" th:if="${#fields.hasErrors('horsepower')}" th:errors="*{horsepower}"></div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
                 <!-- Year -->
-                <label for="year" class="col-md-4 col-form-label" th:utext="#{car.year}">Year</label>
-                <div class="col-md-8">
-                    <input type="number" id="year" name="year" th:field="*{year}" class="form-control"
-                           placeholder="Year" required>
-                    <div class="text-danger" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+                <div class="form-group">
+                    <label for="year" th:utext="#{car.year}">
+                        <i class="bi bi-calendar3"></i> Year
+                    </label>
+                    <div class="input-group">
+                        <input type="number" id="year" name="year" th:field="*{year}"
+                               placeholder="e.g. 2020, 2022, 2023" required>
+                        <i class="bi bi-calendar-check input-icon"></i>
+                    </div>
+                    <div class="text-danger error-message" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
                 <!-- Category -->
-                <label for="category" class="col-md-4 col-form-label" th:utext="#{car.category}">Category</label>
-                <div class="col-md-8">
-                    <select id="category" name="category" th:field="*{category}" class="form-select">
-                        <option value="F1" th:selected="*{category == 1}">F1</option>
-                        <option value="RALLY" th:selected="*{category == 2}">Rally</option>
-                        <option value="SPORTS" th:selected="*{category == 3}">Sports</option>
-                        <option value="DRAG" th:selected="*{category == 4}">Drag</option>
-                    </select>
-                    <div class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+                <div class="form-group">
+                    <label for="category" th:utext="#{car.category}">
+                        <i class="bi bi-trophy input-icon"></i> Category
+                    </label>
+                    <div class="input-group select-group">
+                        <select id="category" name="category" th:field="*{category}" required>
+                            <option value="" disabled selected>Select category</option>
+                            <option value="F1">Formula 1</option>
+                            <option value="RALLY">Rally</option>
+                            <option value="SPORTS">Sports</option>
+                            <option value="DRAG">Drag</option>
+                        </select>
+                        <i class="bi bi-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="text-danger error-message" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
                 </div>
             </div>
 
             <!-- Submit Button -->
-            <div class="row mt-4">
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary btn-lg w-100" th:utext="#{button.addCar}">
-                        <i class="bi bi-plus-circle"></i> Add Car
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
+            <button type="submit" class="submit-btn" th:utext="#{button.addCar}">
+                <i class="bi bi-plus-circle-fill"></i> Add Car
+            </button>
+    </form>
+</div>
 
-    <!--    Footer-->
-    <div th:replace="~{fragments/footer :: footer}"></div>
-</main>
+<!--    Footer-->
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

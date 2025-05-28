@@ -19,11 +19,17 @@
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
     <br>
-    <div sec:authorize="isAuthenticated()">
-    <form onsubmit="return false;">
-        <label for="name">Filter:</label>
-        <input type="text" id="name" name="name" placeholder="Enter sponsor name" required>
-    </form>
+    <div sec:authorize="isAuthenticated()" class="filter-container">
+        <form onsubmit="return false;" class="filter-form">
+            <div class="filter-group">
+                <i class="bi bi-funnel-fill filter-icon"></i>
+                <label for="name"></label>
+                <input type="text" id="name" name="name" placeholder="Search by name..." class="filter-input" required>
+                <button type="submit" class="filter-button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
     </div>
 
     <div id="search-results"></div>

@@ -1,72 +1,188 @@
-/* General body styles */
-body, main {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+// Racing Theme Variables
+$racing-red: #0056b3;
+$racing-dark: #1a1a1a;
+$racing-light: #f8f9fa;
+$racing-gray: #6c757d;
+$racing-blue: #0056b3;
+
+// Form Container
+.form-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
 
-/* Form container */
-form {
-    justify-content: center;
-    align-items: center;
-    position: relative; /* Position the form absolutely */
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 400px;
+    h2 {
+        color: $racing-red;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+
+        i {
+            margin-right: 10px;
+        }
+    }
+
+    .form-subtitle {
+        color: $racing-gray;
+        font-size: 1.1rem;
+    }
+}
+
+.racing-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 1.5rem;
 }
 
-/* Form elements alignment */
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #333;
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
 }
 
-input[type="text"],
-input[type="date"],
-input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-    background-color: #f9f9f9;
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+        font-weight: 600;
+        color: $racing-dark;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        i {
+            color: $racing-red;
+        }
+    }
 }
 
-/* Add race button styling */
-button[type="submit"] {
-    background-color: #007bff;
+.input-group {
+    position: relative;
+
+    input, select {
+        width: 100%;
+        padding: 12px 15px 12px 40px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: $racing-light;
+
+        &:focus {
+            border-color: $racing-red;
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+            outline: none;
+        }
+
+        &[type="date"] {
+            appearance: none;
+        }
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $racing-gray;
+    }
+
+    .input-unit {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $racing-gray;
+        font-weight: 600;
+    }
+}
+
+.submit-btn {
+    background: $racing-red;
     color: white;
-    padding: 12px 20px;
     border: none;
-    border-radius: 5px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    width: 100%;
-    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+
+    &:hover {
+        background: darken($racing-red, 10%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
 }
 
-button[type="submit"]:hover {
-    background-color: #0056b3;
+.racing-alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 8px;
+
+    i {
+        font-size: 1.2rem;
+    }
 }
 
-/* Optional: add some hover effects */
-input:hover,
-input:focus {
-    border-color: #007bff;
-    outline: none;
+.error-message {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    padding-left: 10px;
 }
 
-/* Adjust padding for the form to make it more compact */
-form input,
-form label {
-    margin-bottom: 10px;
+// Date input custom styling
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+.full-width {
+    grid-column: 1 / -1; // span full width of the grid
+}
+
+.center-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .form-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
 }

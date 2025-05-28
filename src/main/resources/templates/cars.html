@@ -18,10 +18,16 @@
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
     <br>
-    <div sec:authorize="isAuthenticated()">
-        <form onsubmit="return false;">
-            <label for="brand">Filter:</label>
-            <input type="text" id="brand" name="brand" placeholder="Enter brand name" required>
+    <div sec:authorize="isAuthenticated()" class="filter-container">
+        <form onsubmit="return false;" class="filter-form">
+            <div class="filter-group">
+                <i class="bi bi-funnel-fill filter-icon"></i>
+                <label for="brand"></label>
+                <input type="text" id="brand" name="brand" placeholder="Search by brand..." class="filter-input" required>
+                <button type="submit" class="filter-button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
         </form>
     </div>
 
@@ -52,6 +58,5 @@
     <!-- Footer -->
     <div th:replace="~{fragments/footer :: footer}"></div>
 </main>
-
 </body>
 </html>

@@ -1,80 +1,176 @@
-// Variables
-$primary-color: #007bff;
-$primary-hover: #0056b3;
-$light-gray: #f9f9f9;
-$border-color: #cccccc;
-$form-width: 400px;
-$spacing: 15px;
+// Racing Theme Variables
+$racing-red: #0056b3;
+$racing-dark: #1a1a1a;
+$racing-light: #f8f9fa;
+$racing-gray: #6c757d;
+$racing-blue: #0056b3;
 
-// Mixin for input fields
-@mixin input-style {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid $border-color;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: $light-gray;
-    outline: none;
-    transition: border 0.3s ease;
+// Form Container
+.form-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
 
-    &:focus {
-        border-color: $primary-color;
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h2 {
+        color: $racing-red;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+
+        i {
+            margin-right: 10px;
+        }
+    }
+
+    .form-subtitle {
+        color: $racing-gray;
+        font-size: 1.1rem;
     }
 }
 
-// Body and main full height
-body, main {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-// Form container
-form {
+.racing-form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: $form-width;
-    gap: $spacing;
-    margin-top: 60px;
+    gap: 1.5rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 
     label {
-        font-weight: bold;
-        margin-bottom: 5px;
+        font-weight: 600;
+        color: $racing-dark;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        i {
+            color: $racing-red;
+        }
+    }
+}
+
+.input-group {
+    position: relative;
+
+    input, select {
+        width: 100%;
+        padding: 12px 15px 12px 40px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: $racing-light;
+
+        &:focus {
+            border-color: $racing-red;
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+            outline: none;
+        }
     }
 
-    input[type="text"],
-    input[type="number"],
-    select {
-        @include input-style;
-        margin-bottom: $spacing;
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $racing-gray;
     }
 
+    .input-unit {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $racing-gray;
+        font-weight: 600;
+    }
+}
+
+.select-group {
     select {
         appearance: none;
-        background-color: white;
-        cursor: pointer;
+        padding-right: 40px;
     }
 
-    button[type="submit"],
-    input[type="submit"] {
-        background-color: $primary-color;
-        color: white;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 100%;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
+    .select-arrow {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: $racing-gray;
+    }
+}
 
-        &:hover {
-            background-color: $primary-hover;
-        }
+.submit-btn {
+    background: $racing-red;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+
+    &:hover {
+        background: darken($racing-red, 10%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.racing-alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 8px;
+
+    i {
+        font-size: 1.2rem;
+    }
+}
+
+.error-message {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    padding-left: 10px;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .form-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
     }
 }
