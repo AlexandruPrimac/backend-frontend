@@ -1,7 +1,9 @@
 import '../scss/cars.scss'
+
 import { csrfHeaderName, csrfToken } from './util/csrf.js'
 
 const deleteButton = document.getElementById('delete-button')
+
 deleteButton.addEventListener('click', async e => {
     e.preventDefault()
     if (!confirm('Are you sure you want to delete this car?')) {

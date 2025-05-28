@@ -4,6 +4,7 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title th:text="#{page.addcar}"></title>
+    <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32">
     <link rel="stylesheet" href="/css/bundle-site.css">
     <link rel="stylesheet" href="/css/bundle-addCar.css">
     <link rel="stylesheet" href="/css/bundle-navbar.css">
@@ -18,16 +19,11 @@
 <div class="form-container">
     <div class="form-header">
         <h2><i class="bi bi-car-front-fill"></i> <span th:utext="#{page.addcar}">Add New Car</span></h2>
-        <p class="form-subtitle">Enter details to add a new racing car to the database</p>
+        <p class="form-subtitle">Enter details to add a new racing car</p>
     </div>
 
     <form id="add-car-form" action="addCar" method="post" th:object="${carViewModel}" class="racing-form">
-        <!-- Error messages -->
-        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger racing-alert">
-            <i class="bi bi-exclamation-triangle-fill"></i>
-            <p>The form contains errors! Please fix them below.</p>
-        </div>
-
+        <div id="error-messages" class="invalid-feedback d-block"></div>
             <div class="form-grid">
                 <!-- Brand -->
                 <div class="form-group">
@@ -36,10 +32,9 @@
                     </label>
                     <div class="input-group">
                         <input type="text" id="brand" name="brand" th:field="*{brand}"
-                               placeholder="e.g. Ferrari, Porsche" required>
+                               placeholder="e.g. Ferrari, Porsche">
                         <i class="bi bi-building input-icon"></i>
                     </div>
-                    <div class="text-danger error-message" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></div>
                 </div>
 
                 <!-- Model -->
@@ -49,10 +44,9 @@
                     </label>
                     <div class="input-group">
                         <input type="text" id="model" name="model" th:field="*{model}"
-                               placeholder="e.g. 488 Pista, 911 GT3" required>
+                               placeholder="e.g. 488 Pista, 911 GT3">
                         <i class="bi bi-input-cursor-text input-icon"></i>
                     </div>
-                    <div class="text-danger error-message" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></div>
                 </div>
 
                 <!-- Engine Size -->
@@ -62,10 +56,9 @@
                     </label>
                     <div class="input-group">
                         <input type="number" id="engine" name="engine" th:field="*{engine}"
-                               placeholder="e.g. 3.9, 4.0, 6.2" step="0.01" required>
+                               placeholder="e.g. 3.9, 4.0, 6.2" step="0.01">
                         <span class="input-unit">L</span>
                     </div>
-                    <div class="text-danger error-message" th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"></div>
                 </div>
 
                 <!-- Horsepower -->
@@ -75,10 +68,9 @@
                     </label>
                     <div class="input-group">
                         <input type="number" id="horsepower" name="horsepower" th:field="*{horsepower}"
-                               placeholder="e.g. 650, 710, 1000" required>
+                               placeholder="e.g. 650, 710, 1000">
                         <span class="input-unit">HP</span>
                     </div>
-                    <div class="text-danger error-message" th:if="${#fields.hasErrors('horsepower')}" th:errors="*{horsepower}"></div>
                 </div>
 
                 <!-- Year -->
@@ -88,10 +80,9 @@
                     </label>
                     <div class="input-group">
                         <input type="number" id="year" name="year" th:field="*{year}"
-                               placeholder="e.g. 2020, 2022, 2023" required>
+                               placeholder="e.g. 2020, 2022, 2023">
                         <i class="bi bi-calendar-check input-icon"></i>
                     </div>
-                    <div class="text-danger error-message" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
                 </div>
 
                 <!-- Category -->
@@ -100,7 +91,7 @@
                         <i class="bi bi-trophy input-icon"></i> Category
                     </label>
                     <div class="input-group select-group">
-                        <select id="category" name="category" th:field="*{category}" required>
+                        <select id="category" name="category" th:field="*{category}">
                             <option value="" disabled selected>Select category</option>
                             <option value="F1">Formula 1</option>
                             <option value="RALLY">Rally</option>
@@ -109,7 +100,6 @@
                         </select>
                         <i class="bi bi-chevron-down select-arrow"></i>
                     </div>
-                    <div class="text-danger error-message" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
                 </div>
             </div>
 

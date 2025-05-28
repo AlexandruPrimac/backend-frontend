@@ -1,6 +1,15 @@
 import '../scss/addRace.scss'
+import Joi from 'joi'
 
 import { csrfHeaderName, csrfToken } from './util/csrf.js'
+
+const raceSchema = Joi.object({
+    name: Joi.string().min(2).required().label('Race name'),
+    date: Joi.date().min(1 - 1 - 1890).required().label('Date'),
+    track: Joi.string().min(2).required().label('Race Track'),
+    location: Joi.string().min(2).required().label('Race Location'),
+    distance: Joi.number().min(0.5).label('Race Distance')
+})
 
 const form = document.getElementById('add-race-form')
 
@@ -13,6 +22,21 @@ form.addEventListener('submit', async e => {
     const location = document.querySelector('#location').value
     const distance = document.querySelector('#distance').value
 
+    const formData = { name, date, track, location, distance }
+    const { error } = raceSchema.validate(formData, { abortEarly: false })
+    const errorMessage = document.querySelector('#error-messages')
+
+    if (error) {
+        errorMessage.innerHTML = `
+            <ul>
+                ${error.details.map(err => `<li>${err.message}</li>`).join('')}
+            </ul>
+        `
+        return
+    } else {
+        errorMessage.innerHTML = ''
+    }
+
     const jsonBody = JSON.stringify({ name, date, track, location, distance })
 
     console.log('Sending data:', jsonBody)
@@ -22,8 +46,8 @@ form.addEventListener('submit', async e => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                [csrfHeaderName]: csrfToken
+                [csrfHeaderName]: csrfToken,
+                'Accept': 'application/json'
             },
             body: jsonBody
         })

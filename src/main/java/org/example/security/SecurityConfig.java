@@ -30,7 +30,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/", "/register", "/cars", "/races", "/sponsors").permitAll()
 
                         // Add API endpoints for use in seperate client project
-                        .requestMatchers("api/cars/**").permitAll()
+                        .requestMatchers("/api/cars/**").permitAll()
 
                         // Endpoints for authenticated users (User)
                         .requestMatchers(HttpMethod.GET, "/car/**", "/race/**", "/user/details").authenticated()
@@ -77,7 +77,6 @@ public class SecurityConfig {
                                 .permitAll()
                                 .defaultSuccessUrl("/", true)
                                 .successHandler((request, response, authentication) -> {
-                                    // Force session creation
                                     HttpSession session = request.getSession(true);
                                     session.setAttribute("SPRING_SECURITY_CONTEXT",
                                             SecurityContextHolder.getContext());
