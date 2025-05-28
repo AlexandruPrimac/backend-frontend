@@ -2,15 +2,14 @@ import '../scss/login.scss'
 
 // Password toggle
 document.querySelector('.password-toggle').addEventListener('click', function(e) {
-    const passwordInput = document.querySelector('#password');
-    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-    passwordInput.setAttribute('type', type);
-    this.classList.toggle('fa-eye');
-    this.classList.toggle('fa-eye-slash');
-});
-
-// Form validation
-(() => {
+    e.preventDefault()
+    const passwordInput = document.querySelector('#password')
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password'
+    passwordInput.setAttribute('type', type)
+    this.classList.toggle('fa-eye')
+    this.classList.toggle('fa-eye-slash')
+}) // Form validation
+;(() => {
     'use strict'
     const forms = document.querySelectorAll('.needs-validation')
     Array.from(forms).forEach(form => {

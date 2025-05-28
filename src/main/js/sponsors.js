@@ -1,42 +1,42 @@
 import '../scss/sponsors.scss'
 
-import { csrfToken, csrfHeaderName } from './util/csrf.js'
+import { csrfHeaderName, csrfToken } from './util/csrf.js'
 
-const deleteButton = document.querySelectorAll(".remove-sponsor-button")
+const deleteButton = document.querySelectorAll('.remove-sponsor-button')
 
 deleteButton.forEach(deleteButton => {
-
-    deleteButton.addEventListener("click", async e => {
-        if (!confirm("Are you sure you want to delete this sponsor?")) {
-            return;
+    deleteButton.addEventListener('click', async e => {
+        e.preventDefault()
+        if (!confirm('Are you sure you want to delete this sponsor?')) {
+            return
         }
 
         // Get the sponsor ID from a data attribute on the button
-        const sponsorId = deleteButton.getAttribute("data-sponsor-id");
+        const sponsorId = deleteButton.getAttribute('data-sponsor-id')
 
         if (!sponsorId) {
-            alert("Sponsor ID is missing!");
-            return;
+            alert('Sponsor ID is missing!')
+            return
         }
 
         try {
             const response = await fetch(`/api/sponsors/${sponsorId}`, {
-                method: "DELETE", headers: {
+                method: 'DELETE',
+                headers: {
                     [csrfHeaderName]: csrfToken,
                     'Content-Type': 'application/json'
                 }
-            });
+            })
 
             if (response.status === 204) {
-                alert("Sponsor deleted successfully!");
-                location.reload();
+                alert('Sponsor deleted successfully!')
+                location.reload()
             } else {
-                alert("Sponsor not found or could not be deleted.");
+                alert('Sponsor not found or could not be deleted.')
             }
         } catch (error) {
-            console.error("Error deleting sponsor:", error);
-            alert("Something went wrong. Please try again.");
+            console.error('Error deleting sponsor:', error)
+            alert('Something went wrong. Please try again.')
         }
     })
-
 })

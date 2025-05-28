@@ -5,6 +5,7 @@ import { csrfToken, csrfHeaderName } from './util/csrf.js'
 const deleteButton = document.getElementById("delete-button")
 
 deleteButton.addEventListener("click", async e => {
+    e.preventDefault();
     if (!confirm("Are you sure you want to delete this race?")) {
         return;
     }

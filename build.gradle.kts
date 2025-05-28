@@ -26,7 +26,6 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
-    implementation("org.webjars:bootstrap:5.3.2")
     implementation("org.webjars:webjars-locator-core:0.48")
     implementation ("org.springframework.boot:spring-boot-starter-jdbc")
     implementation ("org.postgresql:postgresql:42.7.5")
