@@ -1,20 +1,24 @@
-/* General body styles */
+// Variables
+$primary-color: #0056b3;
+$text-color: #333333;
+$placeholder-color: #999;
+$box-shadow-light: rgba(0, 0, 0, 0.1);
+$box-shadow-medium: rgba(0, 0, 0, 0.15);
+$box-shadow-dark: rgba(0, 0, 0, 0.2);
+
 body, main {
     height: 100%;
     margin: 0;
     padding: 0;
 }
 
-
-/* Title style */
 h1 {
     text-align: center;
-    color: #333333;
+    color: $text-color;
     font-size: 28px;
     margin-bottom: 20px;
 }
 
-/* Filter form styles */
 .filter-container {
     margin: 20px auto;
     max-width: 800px;
@@ -33,20 +37,20 @@ h1 {
     background: rgba(255, 255, 255, 0.9);
     border-radius: 30px;
     padding: 5px 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px $box-shadow-light;
+    border: 1px solid $box-shadow-light;
     transition: all 0.3s ease;
     width: 100%;
     max-width: 500px;
 
     &:hover {
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        border-color: rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 20px $box-shadow-medium;
+        border-color: $box-shadow-medium;
     }
 }
 
 .filter-icon {
-    color: #0056b3; /* Racing red to match theme */
+    color: $primary-color;
     font-size: 1.2rem;
     margin-right: 10px;
     opacity: 0.8;
@@ -59,16 +63,16 @@ h1 {
     padding: 12px 0;
     font-size: 1rem;
     outline: none;
-    color: #333;
+    color: $text-color;
 
     &::placeholder {
-        color: #999;
+        color: $placeholder-color;
         font-style: italic;
     }
 }
 
 .filter-button {
-    background: #0056b3; /* Racing red */
+    background: $primary-color;
     color: white;
     border: none;
     border-radius: 50%;
@@ -81,7 +85,7 @@ h1 {
     transition: all 0.2s ease;
 
     &:hover {
-        background: #0056b3;
+        background: $primary-color;
         transform: scale(1.15);
     }
 
@@ -90,7 +94,6 @@ h1 {
     }
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .filter-group {
         padding: 5px 10px;
@@ -106,27 +109,24 @@ h1 {
     margin-left: 20px;
     margin-right: 20px;
     transition: transform 0.2s;
-    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Optional: shadow for depth */
+    box-shadow: 0px 4px 10px $box-shadow-dark;
 
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 20px $box-shadow-dark;
+    }
+
+    img {
+        max-height: 300px;
+        object-fit: cover;
+    }
+
+    .card-img-top {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        height: 400px;
+        object-fit: cover;
+    }
 }
-
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.card img {
-    max-height: 300px; /* Ensures larger images */
-    object-fit: cover;
-}
-
-/* Styles for the image */
-.card-img-top {
-    border-top-left-radius: 10px; /* Round top left corner */
-    border-top-right-radius: 10px; /* Round top right corner */
-    height: 400px; /* Fixed height for uniformity */
-    object-fit: cover; /* Cover the image area */
-}
-
