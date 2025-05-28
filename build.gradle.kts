@@ -6,6 +6,11 @@ plugins {
     id ("com.github.node-gradle.node") version "7.1.0"
 }
 
+val npmPath = file("/opt/homebrew/bin/npm")
+if (npmPath.exists()) {
+    the<com.github.gradle.node.NodeExtension>().npmCommand.set(npmPath.absolutePath)
+}
+
 group = "org.example"
 version = "1.0-SNAPSHOT"
 
@@ -31,7 +36,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     compileOnly("org.projectlombok:lombok")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -53,8 +57,11 @@ dependencies {
 }
 
 application {
-    // Specify the main class of your application
     mainClass.set("org.example.Runner")
+}
+
+tasks.named("processResources") {
+    dependsOn("npm_run_build")
 }
 
 tasks.test {

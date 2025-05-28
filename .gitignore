@@ -5,6 +5,10 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+src/main/resources/static/css/bundle-*.css*
+src/main/resources/static/js/bundle-*.js*
+node_modules/
+
 ### STS ###
 .apt_generated
 .classpath
