@@ -29,8 +29,23 @@ deleteButton.forEach(deleteButton => {
             })
 
             if (response.status === 204) {
-                alert('Sponsor deleted successfully!')
-                location.reload()
+                const cardCol = deleteButton.closest('.col')
+                if (cardCol) {
+                    // Animate fade-out + shrink effect
+                    cardCol.animate(
+                        [
+                            { opacity: 1, transform: 'scale(1)', height: `${cardCol.offsetHeight}px` },
+                            { opacity: 0, transform: 'scale(0.95)', height: '0px' }
+                        ],
+                        {
+                            duration: 400,
+                            easing: 'ease-out',
+                            fill: 'forwards'
+                        }
+                    ).onfinish = () => {
+                        cardCol.remove()
+                    }
+                }
             } else {
                 alert('Sponsor not found or could not be deleted.')
             }

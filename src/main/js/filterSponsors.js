@@ -5,16 +5,28 @@ const allSponsors = document.querySelector('#all-sponsors')
 
 document.querySelector('#name').addEventListener('keyup', async (e) => {
     const searchField = e.target
-    const name = searchField.value.trim().toLowerCase() // Convert to lowercase for case-insensitive search
+    const name = searchField.value.trim().toLowerCase()
 
-    // Reset the search results if no input
     if (name === '') {
         results.innerHTML = ''
-        allSponsors.style.display = 'flex' // Show all sponsors
+
+        // Fade in the allSponsors container
+        allSponsors.style.display = 'flex'
+        allSponsors.style.opacity = '0'
+        allSponsors.animate(
+            [
+                { opacity: 0 },
+                { opacity: 1 }
+            ],
+            {
+                duration: 500,
+                easing: 'ease-out',
+                fill: 'forwards'
+            }
+        )
         return
     }
 
-    // Fetch filtered sponsors from the API
     const response = await fetch(`/api/sponsors?name=${name}`, {
         headers: {
             [csrfHeaderName]: csrfToken,
@@ -22,42 +34,101 @@ document.querySelector('#name').addEventListener('keyup', async (e) => {
         }
     })
 
-    // Check if the response is successful
     if (response.status === 200) {
         const sponsors = await response.json()
-        results.innerHTML = '' // Clear previous results
-        allSponsors.style.display = 'none' // Hide the original sponsors
 
-        if (sponsors.length === 0) {
-            results.innerHTML =
-                '<p class="d-flex justify-content-center align-items-center vh-80">No results found!</p>'
-        } else {
-            let cardContainer = document.createElement('div')
-            cardContainer.classList.add('row', 'row-cols-1', 'row-cols-sm-2', 'row-cols-lg-4')
+        function showResults() {
+            allSponsors.style.display = 'none'
+            results.innerHTML = ''
 
-            // Create sponsor cards dynamically
-            sponsors.forEach(sponsor => {
-                let card = document.createElement('div')
-                card.classList.add('col')
-                card.innerHTML = `
-                    <div class="card mb-4">
-                        <img src="/images/${sponsor.image}" class="card-img-top" alt="Sponsor Image">
-                        <div class="card-body">
-                            <h5 class="card-title">${sponsor.name}</h5>
-                            <p class="card-text">
-                                <strong>Industry:</strong> ${sponsor.industry}
-                            </p>
-                            <p class="card-text">
-                                <strong>Founded:</strong> ${sponsor.foundingYear}
-                            </p>
+            if (sponsors.length === 0) {
+                const noResults = document.createElement('p')
+                noResults.className = 'd-flex justify-content-center align-items-center vh-80'
+                noResults.textContent = 'No results found!'
+                results.appendChild(noResults)
+
+                requestAnimationFrame(() => {
+                    noResults.animate(
+                        [
+                            { opacity: 0, transform: 'scale(0.95)' },
+                            { opacity: 1, transform: 'scale(1)' }
+                        ],
+                        {
+                            duration: 500,
+                            easing: 'ease-out',
+                            fill: 'forwards'
+                        }
+                    )
+                })
+            } else {
+                let cardContainer = document.createElement('div')
+                cardContainer.classList.add('row', 'row-cols-1', 'row-cols-sm-2', 'row-cols-lg-4')
+
+                sponsors.forEach(sponsor => {
+                    let card = document.createElement('div')
+                    card.classList.add('col')
+                    card.innerHTML = `
+                        <div class="card mb-4">
+                            <img src="/images/${sponsor.image}" class="card-img-top" alt="Sponsor Image">
+                            <div class="card-body">
+                                <h5 class="card-title">${sponsor.name}</h5>
+                                <p class="card-text">
+                                    <strong>Industry:</strong> ${sponsor.industry}
+                                </p>
+                                <p class="card-text">
+                                    <strong>Founded:</strong> ${sponsor.foundingYear}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                `
-                cardContainer.appendChild(card)
-            })
+                    `
+                    cardContainer.appendChild(card)
 
-            // Append the new sponsor cards to the results container
-            results.appendChild(cardContainer)
+                    requestAnimationFrame(() => {
+                        card.animate(
+                            [
+                                { opacity: 0, transform: 'translateY(20px)' },
+                                { opacity: 1, transform: 'translateY(0)' }
+                            ],
+                            {
+                                duration: 400,
+                                easing: 'ease-out',
+                                fill: 'forwards'
+                            }
+                        )
+                    })
+                })
+
+                results.appendChild(cardContainer)
+
+                cardContainer.animate(
+                    [
+                        { opacity: 0, transform: 'translateY(20px)' },
+                        { opacity: 1, transform: 'translateY(0)' }
+                    ],
+                    {
+                        duration: 600,
+                        easing: 'ease-out',
+                        fill: 'forwards'
+                    }
+                )
+            }
+        }
+
+        if (allSponsors.style.display !== 'none') {
+            const fadeOutAnim = allSponsors.animate(
+                [
+                    { opacity: 1 },
+                    { opacity: 0 }
+                ],
+                {
+                    duration: 300,
+                    easing: 'ease-in',
+                    fill: 'forwards'
+                }
+            )
+            fadeOutAnim.finished.then(showResults)
+        } else {
+            showResults()
         }
     } else {
         alert('Something went wrong, please try again later.')

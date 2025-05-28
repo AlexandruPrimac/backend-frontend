@@ -101,7 +101,17 @@ document.addEventListener('DOMContentLoaded', () => {
             })
 
             if (response.ok) {
-                alert('Car updated successfully!')
+                const carCard = document.getElementById('car-card')
+                carCard.animate(
+                    [
+                        { backgroundColor: '#d4edda' },
+                        { backgroundColor: '#ffffff' }
+                    ],
+                    {
+                        duration: 1200,
+                        easing: 'ease-in-out'
+                    }
+                )
                 inputs.forEach(input => input.setAttribute('disabled', 'true')) // Disable inputs
                 carCategory.setAttribute('disabled', 'true') // Disable category input
                 editButton.style.display = 'inline-block'
