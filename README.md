@@ -31,7 +31,7 @@ This project models a racing ecosystem with entities such as Cars, Races, and Sp
 
 ---
 
-## Week 2 & Week 3
+## Week 2 & Week 3 API
 
 ### Filtering Cars by Brand - OK
 
@@ -185,16 +185,16 @@ This user has the "USER_ROLE" and can only access the following pages:
    - http://localhost:8080/, http://localhost:8080/register, http://localhost:8080/cars, http://localhost:8080/races, http://localhost:8080/sponsors, http://localhost:8080/carDetails, http://localhost:8080/raceDetails, http://localhost:8080/user/details
 ```
    - The users with this role can't add races or sponsors. They also don't have access to modify the information from these entities.
-   - The user is able to add a car, and he/she will be linked to that specific car to modify and delete it. 
+   - The user is able to add a car, and he/she will be linked to that specific car to modify and delete it. He can add a race or a sponsor to the car he is linked to.
 
 
 2. **sponge@gmail.com**:
    - Password: sponge1234
 
 This user has the "USER_ADMIN" and can access every page:
-   - The users with this role can access and modify anything. 
+   - The users with this role can access and modify everything. 
 
-3. **Guest users**
+3. **Guest users (unauthenticated):**
 
 Guests can only access the following pages:
 ```
@@ -203,7 +203,7 @@ Guests can only access the following pages:
    - The functionality of these pages is limited, they don't have the filter feature and they are not able to inspect the details of the entities.
 
 
-4. **Registered Users**
+4. **Registered Users:**
 
 There is the functionality to register and create a user. Every user created is automatically assigned with the "USER_ROLE". 
 ```
@@ -232,12 +232,148 @@ headers: {
 body: jsonBody
 });
 ```
+---
+## Week 6 Tests
+In week 6 I created Repository and Service Tests. I use the **test** spring profile so that the seeding routine doesn't interfere with my tests. Tests run consistently and not interfere with the production data. 
+
+Command for runnning all the tests:
+```bash
+./gradlew test
+```
+
+CarRepositoryTest - 7 tests
+
+RaceRepositoryTest - 2 tests
+
+CarServiceTest - 18 tests
+```
+60% methods 
+53% lines covered
+```
+
+---
+## Week 8 Integration Tests
+In week 8 I created MVC and API integration tests. 
+
+MVC Classic Integration Tests - CarControllerTest:
+```
+5 tests
+50% methods 
+74% lines covered
+```
+![img.png](img.png)
+Role verification tests in CarControllerTest:
+```
+Test Name	                           Role Being Verified      Access Granted?
+shouldShowAdminCarDetails	                 Admin	                 Yes
+shouldAllowUserToViewCarDetails	                 Admin	                 Yes
+shouldNotAllowAnonymousUserToViewCarDetails  Normal User (Owner)         Yes
+```
+
+API Integration tests - CarApiControllerTest: 
+```
+13 tests
+66% methods 
+65% lines covered
+```
+![img_1.png](img_1.png)
+
+For these tests, I mocked the car service and the authorization service. I am testing the controller logic.
+
+Role verification tests in CarApiControllerTest:
+```
+Test Name	             Role Being Verified      Access Granted?
+shouldAllowAdminToUpdateCar	  Admin	                   Yes
+shouldAllowAdminToDeleteCar	  Admin	                   Yes
+shouldAllowOwnerToUpdateCar	  Normal User (Owner)      Yes
+shouldAllowOwnerToDeleteCar	  Normal User (Owner)      Yes
+```
+
+---
+## Week 10 Unit Test
+In  week 10 I created mock tests for the car service and the car api controller. 
+
+CarServiceUnitTest - 15 tests
+```
+80% methods 
+65% lines covered
+```
+Verify Tests in CarServiceUnitTest:
+```
+Test Name	                        'verify' Used?	         Notes
+shouldReturnCarsIfFilteredByBrand            Yes	                  Verifies brand query
+shouldRemoveCar	                             Yes	                  Verifies deletions
+shouldThrowExceptionIfCarDoesNotExist        Yes	                  Ensures no deletion attempted
+shouldFindRacesWhenCarExists	             Yes	                  Verifies race fetch
+shouldReturnEmptyListWhenCarDoesNotExist     Yes	                  Verifies race fetch (empty case)
+shouldReturnSponsorsWhenCarExists	     Yes	                  Verifies sponsor fetch
+shouldReturnEmptyListWhenCarNotFound	     Yes	                  Verifies sponsor fetch (empty case)
+shouldPatchAllFieldsOfCar	             Yes	                  Verifies save
+shouldPatchOnlySomeFieldsOfCar	             Yes	                  Verifies save
+```
+
+CarApiControllerUnitTest - 8 tests
+```
+55% methods 
+57% lines covered
+```
+Verify Tests in CarServiceUnitTest:
+```
+Test Name	                        'verify' Used?	            Notes
+shouldRemoveCarSuccessfully	              Yes            Verifies car deletions
+```
+---
+## Week 12 NPM Gradle Integration
+In week 12 I integrated npm and webpack following the 13-step process.
+I addded:
+ - ESlint and dprint 
+ - Bootstrap icons (every icon from the website is boostrap)
+ - Joi Client side Form validation for both forms (adding a car and adding a race):
+```
+addCar.js
+addRace.js
+```
+ - Axios HTTP for better error handling in the API responses (js):
+```
+adding a car or a race:
+deleting a car, race or sponsor:
+addCar.js
+addRace.js
+cars.js
+races.js
+sponsors.js
+
+```
+ - Animejs for animations when editing a car and race (green glowing card after clicking save) and animation when deleting a sponsor:
+```
+cars.js
+races.js
+sponsors.js
+```
 
 
+---
 ## Instructions to Run the Project
 ### Prerequisites:
 1. **Java 21**
 
 ### Steps:
 1. Clone the repository:
-   https://gitlab.com/kdg-ti/programming-5/projects-24-25/acs201/alexandru.primac/spring-backend.git
+```bash
+git clone https://gitlab.com/AlexandruPrimac/programmingalexandruprimac-client.git
+```
+2. Install Dependencies
+```bash
+npm install
+```
+```bash
+npm run build
+```
+3. Compile code, run tests, and packages of the project:
+```bash
+./gradlew build
+```
+3. Run all tests separately
+```bash
+./gradlew test
+```

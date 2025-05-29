@@ -316,12 +316,12 @@ class CarServiceUnitTest {
         Car updatedCar = sut.patch(1, "UpdatedBrand", null, 0, 0, 2023, null);
 
         /// Assert
-        assertEquals("UpdatedBrand", updatedCar.getBrand());  // updated
-        assertEquals("OldModel", updatedCar.getModel());      // unchanged
-        assertEquals(1.0, updatedCar.getEngine());            // unchanged
-        assertEquals(100, updatedCar.getHorsepower());        // unchanged
-        assertEquals(2023, updatedCar.getYear());             // updated
-        assertEquals(CarCategory.DRAG, updatedCar.getCategory()); // unchanged
+        assertEquals("UpdatedBrand", updatedCar.getBrand());
+        assertEquals("OldModel", updatedCar.getModel());
+        assertEquals(1.0, updatedCar.getEngine());
+        assertEquals(100, updatedCar.getHorsepower());
+        assertEquals(2023, updatedCar.getYear());
+        assertEquals(CarCategory.DRAG, updatedCar.getCategory());
         verify(carRepository).save(existingCar);
     }
 

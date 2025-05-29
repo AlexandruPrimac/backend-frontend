@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("application") // Apply the application plugin
+    id("application")
     id ("org.springframework.boot") version "3.3.4"
     id("io.spring.dependency-management") version "1.1.7"
     id ("com.github.node-gradle.node") version "7.1.0"
