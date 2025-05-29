@@ -1,4 +1,4 @@
-import { csrfHeaderName, csrfToken } from './util/csrf.js'
+import {csrfHeaderName, csrfToken} from './util/csrf.js'
 
 const results = document.querySelector('#search-results')
 const allCarsContainer = document.querySelector('#all-cars')
@@ -17,8 +17,8 @@ document.querySelector('#brand').addEventListener('keyup', async (e) => {
         // Animate fade-in
         allCarsContainer.animate(
             [
-                { opacity: 0 },
-                { opacity: 1 }
+                {opacity: 0},
+                {opacity: 1}
             ],
             {
                 duration: 500,
@@ -40,7 +40,7 @@ document.querySelector('#brand').addEventListener('keyup', async (e) => {
     if (response.status === 200) {
         const cars = await response.json()
 
-        // Define a function to handle showing results after hiding old cars
+        // Function to handle showing results after hiding old cars
         function showResults() {
             allCarsContainer.style.display = 'none'
             results.innerHTML = '' // Clear previous results
@@ -54,8 +54,8 @@ document.querySelector('#brand').addEventListener('keyup', async (e) => {
                 requestAnimationFrame(() => {
                     noResults.animate(
                         [
-                            { opacity: 0, transform: 'scale(0.95)' },
-                            { opacity: 1, transform: 'scale(1)' }
+                            {opacity: 0, transform: 'scale(0.95)'},
+                            {opacity: 1, transform: 'scale(1)'}
                         ],
                         {
                             duration: 500,
@@ -90,8 +90,8 @@ document.querySelector('#brand').addEventListener('keyup', async (e) => {
                     requestAnimationFrame(() => {
                         card.animate(
                             [
-                                { opacity: 0, transform: 'translateY(20px)' },
-                                { opacity: 1, transform: 'translateY(0)' }
+                                {opacity: 0, transform: 'translateY(20px)'},
+                                {opacity: 1, transform: 'translateY(0)'}
                             ],
                             {
                                 duration: 400,
@@ -107,8 +107,8 @@ document.querySelector('#brand').addEventListener('keyup', async (e) => {
                 // Animate the entire container once appended
                 cardContainer.animate(
                     [
-                        { opacity: 0, transform: 'translateY(20px)' },
-                        { opacity: 1, transform: 'translateY(0)' }
+                        {opacity: 0, transform: 'translateY(20px)'},
+                        {opacity: 1, transform: 'translateY(0)'}
                     ],
                     {
                         duration: 600,
@@ -123,8 +123,8 @@ document.querySelector('#brand').addEventListener('keyup', async (e) => {
             // Animate fade-out of old cars container before showing results
             const fadeOutAnim = allCarsContainer.animate(
                 [
-                    { opacity: 1 },
-                    { opacity: 0 }
+                    {opacity: 1},
+                    {opacity: 0}
                 ],
                 {
                     duration: 300,

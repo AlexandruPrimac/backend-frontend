@@ -299,7 +299,7 @@ class CarServiceUnitTest {
 
     @Test
     void shouldPatchOnlySomeFieldsOfCar() {
-        // Arrange
+        /// Arrange
         Car existingCar = new Car();
         existingCar.setId(1);
         existingCar.setBrand("OldBrand");
@@ -312,10 +312,10 @@ class CarServiceUnitTest {
         when(carRepository.findById(1)).thenReturn(Optional.of(existingCar));
         when(carRepository.save(any(Car.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        // Act: Only brand and year are updated
+        /// Act: Only brand and year are updated
         Car updatedCar = sut.patch(1, "UpdatedBrand", null, 0, 0, 2023, null);
 
-        // Assert
+        /// Assert
         assertEquals("UpdatedBrand", updatedCar.getBrand());  // updated
         assertEquals("OldModel", updatedCar.getModel());      // unchanged
         assertEquals(1.0, updatedCar.getEngine());            // unchanged
@@ -327,10 +327,10 @@ class CarServiceUnitTest {
 
     @Test
     void shouldThrowWhenCarNotFound() {
-        // Arrange
+        /// Arrange
         when(carRepository.findById(999)).thenReturn(Optional.empty());
 
-        // Act + Assert
+        /// Act + Assert
         assertThrows(EntityNotFoundException.class,
                 () -> sut.patch(999, "Brand", "Model", 1.0, 100, 2023, CarCategory.SPORTS));
     }

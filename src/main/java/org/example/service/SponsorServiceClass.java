@@ -16,8 +16,10 @@ import java.util.List;
 @Service
 @Transactional
 public class SponsorServiceClass implements org.example.service.Interfaces.SponsorService {
+    /// Logger
     private final static Logger logger = LoggerFactory.getLogger(SponsorServiceClass.class);
 
+    /// Repositories
     private final SponsorJpaRepo sponsorRepository;
 
     @PersistenceContext
@@ -55,7 +57,6 @@ public class SponsorServiceClass implements org.example.service.Interfaces.Spons
                 .setParameter("sponsor", sponsor)
                 .executeUpdate();
 
-        // Delete the sponsor
         sponsorRepository.deleteById(id);
     }
 }

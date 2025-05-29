@@ -1,4 +1,4 @@
-import { csrfHeaderName, csrfToken } from './util/csrf.js'
+import {csrfHeaderName, csrfToken} from './util/csrf.js'
 
 const results = document.querySelector('#search-results')
 const allSponsors = document.querySelector('#all-sponsors')
@@ -15,8 +15,8 @@ document.querySelector('#name').addEventListener('keyup', async (e) => {
         allSponsors.style.opacity = '0'
         allSponsors.animate(
             [
-                { opacity: 0 },
-                { opacity: 1 }
+                {opacity: 0},
+                {opacity: 1}
             ],
             {
                 duration: 500,
@@ -50,8 +50,8 @@ document.querySelector('#name').addEventListener('keyup', async (e) => {
                 requestAnimationFrame(() => {
                     noResults.animate(
                         [
-                            { opacity: 0, transform: 'scale(0.95)' },
-                            { opacity: 1, transform: 'scale(1)' }
+                            {opacity: 0, transform: 'scale(0.95)'},
+                            {opacity: 1, transform: 'scale(1)'}
                         ],
                         {
                             duration: 500,
@@ -86,8 +86,8 @@ document.querySelector('#name').addEventListener('keyup', async (e) => {
                     requestAnimationFrame(() => {
                         card.animate(
                             [
-                                { opacity: 0, transform: 'translateY(20px)' },
-                                { opacity: 1, transform: 'translateY(0)' }
+                                {opacity: 0, transform: 'translateY(20px)'},
+                                {opacity: 1, transform: 'translateY(0)'}
                             ],
                             {
                                 duration: 400,
@@ -102,8 +102,8 @@ document.querySelector('#name').addEventListener('keyup', async (e) => {
 
                 cardContainer.animate(
                     [
-                        { opacity: 0, transform: 'translateY(20px)' },
-                        { opacity: 1, transform: 'translateY(0)' }
+                        {opacity: 0, transform: 'translateY(20px)'},
+                        {opacity: 1, transform: 'translateY(0)'}
                     ],
                     {
                         duration: 600,
@@ -117,8 +117,8 @@ document.querySelector('#name').addEventListener('keyup', async (e) => {
         if (allSponsors.style.display !== 'none') {
             const fadeOutAnim = allSponsors.animate(
                 [
-                    { opacity: 1 },
-                    { opacity: 0 }
+                    {opacity: 1},
+                    {opacity: 0}
                 ],
                 {
                     duration: 300,

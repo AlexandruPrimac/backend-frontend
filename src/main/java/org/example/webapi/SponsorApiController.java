@@ -13,8 +13,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "api/sponsors")
 public class SponsorApiController {
-
+    /// Services
     private final SponsorService sponsorService;
+
+    /// Mappers
     private final SponsorMapper sponsorMapper;
 
     public SponsorApiController(SponsorService sponsorService, SponsorMapper sponsorMapper) {
@@ -22,10 +24,10 @@ public class SponsorApiController {
         this.sponsorMapper = sponsorMapper;
     }
 
-    //Filter sponsors by name
     @GetMapping
     public ResponseEntity<List<SponsorDto>> filter(@RequestParam("name") final String name) {
         final List<SponsorDto> sponsor = sponsorService.filterSponsorsDynamically(name).stream().map(sponsorMapper::toSponsorDto).toList();
+
         return ResponseEntity.ok(sponsor);
     }
 
@@ -33,9 +35,10 @@ public class SponsorApiController {
     public ResponseEntity<Void> remove(@PathVariable int id) {
         try {
             sponsorService.deleteSponsor(id);
-            return ResponseEntity.noContent().build();  // 204 response when deleted
+            return ResponseEntity.noContent().build();
+
         } catch (CustomApplicationException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // 404 response if not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }

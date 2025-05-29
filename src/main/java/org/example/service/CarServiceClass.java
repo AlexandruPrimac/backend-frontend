@@ -19,21 +19,16 @@ import java.util.Optional;
 @Service
 @Transactional
 public class CarServiceClass implements org.example.service.Interfaces.CarService {
-
+    /// Logger
     private final static Logger logger = LoggerFactory.getLogger(CarServiceClass.class);
 
+    /// Repositories
     private final CarJpaRepo carRepository;
-
     private final RaceJpaRepo raceRepository;
-
     private final CarRacesJpaRepo carRacesRepository;
-
     private final SponsorJpaRepo sponsorRepository;
-
     private final CarSponsorsJpaRepo carSponsorsRepository;
-
     private final UserJpaRepo userRepository;
-
     private final CarOwnerShipJpaRepo carOwnerShipJpaRepo;
 
     @PersistenceContext
@@ -81,7 +76,7 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
     }
 
     @Override
-    public Car addCarClient(String brand, String model, Double engineCapacity, int horsepower, int year, CarCategory category){
+    public Car addCarClient(String brand, String model, Double engineCapacity, int horsepower, int year, CarCategory category) {
         Car car = new Car();
         logger.info("Adding car: {}", car);
         car.setBrand(brand);
@@ -123,7 +118,7 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
         Car car = carRepository.findById(id)
                 .orElseThrow(() -> new CustomApplicationException("Car not found with ID: " + id));
 
-        // Delete related entities using repositories
+        /// Delete related entities using repositories
         carRacesRepository.deleteByCar(car);
         carSponsorsRepository.deleteByCar(car);
         carOwnerShipJpaRepo.deleteByCar(car);
@@ -152,8 +147,7 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
                 .map(car -> car.getSponsors().stream()
                         .map(CarSponsors::getSponsor)
                         .map(sponsor -> {
-                            // Force initialization of sponsor data
-                            sponsor.getName();  // or any other property access
+                            sponsor.getName();
                             return sponsor;
                         })
                         .toList())

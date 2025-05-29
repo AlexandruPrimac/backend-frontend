@@ -18,8 +18,10 @@ import java.util.List;
 
 @Controller
 public class RaceController {
-
+    /// Logger
     private final static Logger logger = LoggerFactory.getLogger(RaceController.class);
+
+    /// Services
     private final RaceService raceService;
 
     @Autowired
@@ -32,25 +34,28 @@ public class RaceController {
         try {
             logger.info("Getting all races");
             model.addAttribute("races", raceService.getAllRaces());
+
         } catch (DatabaseException ex) {
             logger.error("Database exception while fetching races: {}", ex.getMessage());
-            throw ex; // Handled by the global exception handler
+            throw ex;
+
         } catch (Exception ex) {
             logger.error("Unexpected exception: {}", ex.getMessage());
             throw new CustomApplicationException("Failed to fetch races");
         }
+
         return "races";
     }
 
     @GetMapping("/addRace")
     public String addRace(Model model) {
         model.addAttribute("raceViewModel", new RaceViewModel());
+
         return "addRace";
     }
 
     @GetMapping("/race/{id}")
     public String getRaceDetails(@PathVariable int id, Model model) {
-
         try {
             Race race = raceService.getRaceById(id);
             logger.info("Fetched race details: {}", race);
@@ -59,12 +64,15 @@ public class RaceController {
             List<Car> cars = raceService.getCarsByRaceId(id);
             logger.info("Cars for race: {}", cars);
             model.addAttribute("car", cars);
+
         } catch (DatabaseException ex) {
             logger.error("Database exception while fetching race details: {}", ex.getMessage());
             throw ex;
+
         } catch (Exception ex) {
             logger.error("Unexpected exception: {}", ex.getMessage());
             throw new CustomApplicationException("Failed to fetch race details");
+
         }
 
         return "raceDetails";

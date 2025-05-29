@@ -15,9 +15,9 @@ import java.util.List;
 @Table(name = "races")
 public class Race {
 
-    // Attributes
+    /// Attributes
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generates ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false)
@@ -39,19 +39,20 @@ public class Race {
     @Column(name = "image")
     private String image;
 
-    //Relationship
+    /// Relationship
     @OneToMany(mappedBy = "race", fetch = FetchType.LAZY)
-    private List<CarRaces> cars = new ArrayList<>();;
+    private List<CarRaces> cars = new ArrayList<>();
+    ;
 
 
-    // Constructors
+    /// Constructors
     public Race(int id, String name, LocalDate date, String track, String location, double distance, String image) {
         this(name, date, track, location, distance, image);
         this.id = id;
 
     }
 
-    public Race(String name, LocalDate date,String track, String location, double distance, String image) {
+    public Race(String name, LocalDate date, String track, String location, double distance, String image) {
         this.name = name;
         this.date = date;
         this.track = track;
@@ -75,5 +76,4 @@ public class Race {
                 "The location is '" + location + '\'' + ". " +
                 "The race has a distance of " + distance + "km.";
     }
-
 }

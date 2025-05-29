@@ -11,7 +11,7 @@ public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    // Handle database exceptions
+    /// Handle database exceptions
     @ExceptionHandler(DatabaseException.class)
     public ModelAndView dataBaseException(DatabaseException ex) {
         logger.error("DatabaseException occurred: {}", ex.getMessage(), ex);
@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
         return modelAndView;
     }
 
-    // Handle generic exceptions
+    /// Handle generic exceptions
     @ExceptionHandler(Exception.class)
     public ModelAndView handleGenericException(Exception ex) {
         logger.error("Unexpected Exception occurred: {}", ex.getMessage(), ex);
@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         return modelAndView;
     }
 
-    // Handle custom exceptions
+    /// Handle custom exceptions
     @ExceptionHandler(CustomApplicationException.class)
     public ModelAndView handleCustomException(CustomApplicationException ex) {
         logger.warn("CustomApplicationException occurred: {}", ex.getMessage(), ex);
@@ -37,6 +37,4 @@ public class GlobalExceptionHandler {
         modelAndView.addObject("errorMessage", ex.getMessage());
         return modelAndView;
     }
-
-
 }

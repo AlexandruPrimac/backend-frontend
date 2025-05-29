@@ -21,8 +21,10 @@ import java.util.Optional;
 @Service
 @Transactional
 public class RaceServiceClass implements org.example.service.Interfaces.RaceService {
+    /// Logger
     private final static Logger logger = LoggerFactory.getLogger(RaceServiceClass.class);
 
+    /// Repositories
     private final RaceJpaRepo raceRepository;
 
     @PersistenceContext

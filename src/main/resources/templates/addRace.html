@@ -15,85 +15,85 @@
 </head>
 <body>
 
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <div class="form-container">
-        <div class="form-header">
-            <h2><i class="bi bi-flag-fill"></i> <span th:utext="#{nav.addRace}">Add New Race</span></h2>
-            <p class="form-subtitle">Enter details to schedule a new racing event</p>
-        </div>
+<div class="form-container">
+    <div class="form-header">
+        <h2><i class="bi bi-flag-fill"></i> <span th:utext="#{nav.addRace}">Add New Race</span></h2>
+        <p class="form-subtitle">Enter details to schedule a new racing event</p>
+    </div>
 
-        <form id="add-race-form" action="addRace" method="post" th:object="${raceViewModel}" class="racing-form">
-            <div id="error-messages" class="invalid-feedback d-block"></div>
-            <div class="form-grid">
-                <!-- Race Name -->
-                <div class="form-group">
-                    <label for="name" th:utext="#{addRace.name}">
-                        <i class="bi bi-trophy-fill"></i> Race Name
-                    </label>
-                    <div class="input-group">
-                        <input type="text" id="name" name="name" th:field="*{name}"
-                               placeholder="e.g. Grand Prix">
-                        <i class="bi bi-card-heading input-icon"></i>
-                    </div>
-                </div>
-
-                <!-- Date -->
-                <div class="form-group">
-                    <label for="date" th:utext="#{race.date}">
-                        <i class="bi bi-calendar-date-fill"></i> Date
-                    </label>
-                    <div class="input-group">
-                        <input type="date" id="date" name="date" th:field="*{date}">
-                        <i class="bi bi-calendar-check input-icon"></i>
-                    </div>
-                </div>
-
-                <!-- Track -->
-                <div class="form-group">
-                    <label for="track" th:utext="#{race.track}">
-                        <i class="bi bi-geo-alt-fill"></i> Track
-                    </label>
-                    <div class="input-group">
-                        <input type="text" id="track" name="track" th:field="*{track}"
-                               placeholder="e.g. Circuit de Monaco">
-                        <i class="bi bi-pin-map-fill input-icon"></i>
-                    </div>
-                </div>
-
-                <!-- Location -->
-                <div class="form-group">
-                    <label for="location" th:utext="#{race.location}">
-                        <i class="bi bi-globe2"></i> Location
-                    </label>
-                    <div class="input-group">
-                        <input type="text" id="location" name="location" th:field="*{location}"
-                               placeholder="e.g. Monaco, Germany">
-                        <i class="bi bi-geo-fill input-icon"></i>
-                    </div>
-                </div>
-
-                <!-- Distance -->
-                <div class="form-group full-width center-text">
-                    <label for="distance" th:utext="#{race.distance}">
-                        <i class="bi bi-signpost-2-fill"></i> Distance
-                    </label>
-                    <div class="input-group">
-                        <input type="number" id="distance" name="distance" th:field="*{distance}"
-                               placeholder="e.g. 5.2, 7.0, 20.8" step="0.01">
-                        <span class="input-unit">km</span>
-                    </div>
+    <form id="add-race-form" action="addRace" method="post" th:object="${raceViewModel}" class="racing-form">
+        <div id="error-messages" class="invalid-feedback d-block"></div>
+        <div class="form-grid">
+            <!-- Race Name -->
+            <div class="form-group">
+                <label for="name" th:utext="#{addRace.name}">
+                    <i class="bi bi-trophy-fill"></i> Race Name
+                </label>
+                <div class="input-group">
+                    <input type="text" id="name" name="name" th:field="*{name}"
+                           placeholder="e.g. Grand Prix">
+                    <i class="bi bi-card-heading input-icon"></i>
                 </div>
             </div>
 
-            <!-- Submit Button -->
-            <button type="submit" class="submit-btn" th:utext="#{button.addRace}">
-                <i class="bi bi-plus-circle-fill"></i> Add Race
-            </button>
-        </form>
-    </div>
-    <!-- Footer -->
-    <div th:replace="~{fragments/footer :: footer}"></div>
+            <!-- Date -->
+            <div class="form-group">
+                <label for="date" th:utext="#{race.date}">
+                    <i class="bi bi-calendar-date-fill"></i> Date
+                </label>
+                <div class="input-group">
+                    <input type="date" id="date" name="date" th:field="*{date}">
+                    <i class="bi bi-calendar-check input-icon"></i>
+                </div>
+            </div>
+
+            <!-- Track -->
+            <div class="form-group">
+                <label for="track" th:utext="#{race.track}">
+                    <i class="bi bi-geo-alt-fill"></i> Track
+                </label>
+                <div class="input-group">
+                    <input type="text" id="track" name="track" th:field="*{track}"
+                           placeholder="e.g. Circuit de Monaco">
+                    <i class="bi bi-pin-map-fill input-icon"></i>
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+                <label for="location" th:utext="#{race.location}">
+                    <i class="bi bi-globe2"></i> Location
+                </label>
+                <div class="input-group">
+                    <input type="text" id="location" name="location" th:field="*{location}"
+                           placeholder="e.g. Monaco, Germany">
+                    <i class="bi bi-geo-fill input-icon"></i>
+                </div>
+            </div>
+
+            <!-- Distance -->
+            <div class="form-group full-width center-text">
+                <label for="distance" th:utext="#{race.distance}">
+                    <i class="bi bi-signpost-2-fill"></i> Distance
+                </label>
+                <div class="input-group">
+                    <input type="number" id="distance" name="distance" th:field="*{distance}"
+                           placeholder="e.g. 5.2, 7.0, 20.8" step="0.01">
+                    <span class="input-unit">km</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn" th:utext="#{button.addRace}">
+            <i class="bi bi-plus-circle-fill"></i> Add Race
+        </button>
+    </form>
+</div>
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

@@ -90,7 +90,6 @@
                         </p>
                     </div>
                     <div class="card-footer text-center">
-                        <!-- Show 'Delete' and 'Edit' buttons if user is ADMIN or OWNER -->
                         <button th:if="${canModify}"
                                 id="delete-button"
                                 class="delete-button btn btn-danger btn-lg"
@@ -107,7 +106,8 @@
 
                         <!-- Hidden buttons (unchanged) -->
                         <button id="save-button" class="btn btn-success btn-lg" style="display: none;">Save</button>
-                        <button id="cancel-button" class="btn btn-secondary btn-lg" style="display: none;">Cancel</button>
+                        <button id="cancel-button" class="btn btn-secondary btn-lg" style="display: none;">Cancel
+                        </button>
                     </div>
                 </div>
             </div>
@@ -124,11 +124,11 @@
                         </div>
                         <div class="card-footer text-center">
                             <a th:href="@{/sponsors}" class="btn btn-primary">Sponsor Details</a>
-                            <!-- Show 'Add Sponsor to Car' only for ADMIN role -->
                             <div sec:authorize="isAuthenticated()" th:if="${canModify}" class="mt-4">
                                 <label for="sponsorDropdown" class="form-label fw-bold"></label>
                                 <div class="input-group has-validation">
-                                    <select class="form-select" id="sponsorDropdown" aria-describedby="sponsorSelectionError">
+                                    <select class="form-select" id="sponsorDropdown"
+                                            aria-describedby="sponsorSelectionError">
                                         <option value="" selected disabled>Choose sponsor</option>
                                         <option th:each="sponsor : ${availableSponsors}"
                                                 th:value="${sponsor.id}"

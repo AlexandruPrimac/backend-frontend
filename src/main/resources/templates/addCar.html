@@ -24,89 +24,89 @@
 
     <form id="add-car-form" action="addCar" method="post" th:object="${carViewModel}" class="racing-form">
         <div id="error-messages" class="invalid-feedback d-block"></div>
-            <div class="form-grid">
-                <!-- Brand -->
-                <div class="form-group">
-                    <label for="brand" th:utext="#{car.brand}">
-                        <i class="bi bi-tag-fill"></i> Brand
-                    </label>
-                    <div class="input-group">
-                        <input type="text" id="brand" name="brand" th:field="*{brand}"
-                               placeholder="e.g. Ferrari, Porsche">
-                        <i class="bi bi-building input-icon"></i>
-                    </div>
-                </div>
-
-                <!-- Model -->
-                <div class="form-group">
-                    <label for="model" th:utext="#{car.model}">
-                        <i class="bi bi-card-text"></i> Model
-                    </label>
-                    <div class="input-group">
-                        <input type="text" id="model" name="model" th:field="*{model}"
-                               placeholder="e.g. 488 Pista, 911 GT3">
-                        <i class="bi bi-input-cursor-text input-icon"></i>
-                    </div>
-                </div>
-
-                <!-- Engine Size -->
-                <div class="form-group">
-                    <label for="engine" th:utext="#{car.engine}">
-                        <i class="bi bi-bounding-box-circles input-icon"></i> Engine Size
-                    </label>
-                    <div class="input-group">
-                        <input type="number" id="engine" name="engine" th:field="*{engine}"
-                               placeholder="e.g. 3.9, 4.0, 6.2" step="0.01">
-                        <span class="input-unit">L</span>
-                    </div>
-                </div>
-
-                <!-- Horsepower -->
-                <div class="form-group">
-                    <label for="horsepower" th:utext="#{car.horsepower}">
-                        <i class="bi bi-speedometer input-icon"></i> Horsepower
-                    </label>
-                    <div class="input-group">
-                        <input type="number" id="horsepower" name="horsepower" th:field="*{horsepower}"
-                               placeholder="e.g. 650, 710, 1000">
-                        <span class="input-unit">HP</span>
-                    </div>
-                </div>
-
-                <!-- Year -->
-                <div class="form-group">
-                    <label for="year" th:utext="#{car.year}">
-                        <i class="bi bi-calendar3"></i> Year
-                    </label>
-                    <div class="input-group">
-                        <input type="number" id="year" name="year" th:field="*{year}"
-                               placeholder="e.g. 2020, 2022, 2023">
-                        <i class="bi bi-calendar-check input-icon"></i>
-                    </div>
-                </div>
-
-                <!-- Category -->
-                <div class="form-group">
-                    <label for="category" th:utext="#{car.category}">
-                        <i class="bi bi-trophy input-icon"></i> Category
-                    </label>
-                    <div class="input-group select-group">
-                        <select id="category" name="category" th:field="*{category}">
-                            <option value="" disabled selected>Select category</option>
-                            <option value="F1">Formula 1</option>
-                            <option value="RALLY">Rally</option>
-                            <option value="SPORTS">Sports</option>
-                            <option value="DRAG">Drag</option>
-                        </select>
-                        <i class="bi bi-chevron-down select-arrow"></i>
-                    </div>
+        <div class="form-grid">
+            <!-- Brand -->
+            <div class="form-group">
+                <label for="brand" th:utext="#{car.brand}">
+                    <i class="bi bi-tag-fill"></i> Brand
+                </label>
+                <div class="input-group">
+                    <input type="text" id="brand" name="brand" th:field="*{brand}"
+                           placeholder="e.g. Ferrari, Porsche">
+                    <i class="bi bi-building input-icon"></i>
                 </div>
             </div>
 
-            <!-- Submit Button -->
-            <button type="submit" class="submit-btn" th:utext="#{button.addCar}">
-                <i class="bi bi-plus-circle-fill"></i> Add Car
-            </button>
+            <!-- Model -->
+            <div class="form-group">
+                <label for="model" th:utext="#{car.model}">
+                    <i class="bi bi-card-text"></i> Model
+                </label>
+                <div class="input-group">
+                    <input type="text" id="model" name="model" th:field="*{model}"
+                           placeholder="e.g. 488 Pista, 911 GT3">
+                    <i class="bi bi-input-cursor-text input-icon"></i>
+                </div>
+            </div>
+
+            <!-- Engine Size -->
+            <div class="form-group">
+                <label for="engine" th:utext="#{car.engine}">
+                    <i class="bi bi-bounding-box-circles input-icon"></i> Engine Size
+                </label>
+                <div class="input-group">
+                    <input type="number" id="engine" name="engine" th:field="*{engine}"
+                           placeholder="e.g. 3.9, 4.0, 6.2" step="0.01">
+                    <span class="input-unit">L</span>
+                </div>
+            </div>
+
+            <!-- Horsepower -->
+            <div class="form-group">
+                <label for="horsepower" th:utext="#{car.horsepower}">
+                    <i class="bi bi-speedometer input-icon"></i> Horsepower
+                </label>
+                <div class="input-group">
+                    <input type="number" id="horsepower" name="horsepower" th:field="*{horsepower}"
+                           placeholder="e.g. 650, 710, 1000">
+                    <span class="input-unit">HP</span>
+                </div>
+            </div>
+
+            <!-- Year -->
+            <div class="form-group">
+                <label for="year" th:utext="#{car.year}">
+                    <i class="bi bi-calendar3"></i> Year
+                </label>
+                <div class="input-group">
+                    <input type="number" id="year" name="year" th:field="*{year}"
+                           placeholder="e.g. 2020, 2022, 2023">
+                    <i class="bi bi-calendar-check input-icon"></i>
+                </div>
+            </div>
+
+            <!-- Category -->
+            <div class="form-group">
+                <label for="category" th:utext="#{car.category}">
+                    <i class="bi bi-trophy input-icon"></i> Category
+                </label>
+                <div class="input-group select-group">
+                    <select id="category" name="category" th:field="*{category}">
+                        <option value="" disabled selected>Select category</option>
+                        <option value="F1">Formula 1</option>
+                        <option value="RALLY">Rally</option>
+                        <option value="SPORTS">Sports</option>
+                        <option value="DRAG">Drag</option>
+                    </select>
+                    <i class="bi bi-chevron-down select-arrow"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn" th:utext="#{button.addCar}">
+            <i class="bi bi-plus-circle-fill"></i> Add Car
+        </button>
     </form>
 </div>
 

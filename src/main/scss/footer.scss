@@ -1,4 +1,4 @@
-/* Footer Styles */
+// Footer Styles
 footer {
     position: relative;
     bottom: 0;
@@ -15,13 +15,13 @@ footer {
     transition: all 0.3s ease-in-out;
 }
 
-/* Footer Content */
+// Footer Content
 .footer-content {
     padding: 1.5rem 0;
     text-align: center;
 }
 
-/* Footer Links */
+// Footer Links
 footer a {
     color: #0056b3;
     font-weight: bold;
@@ -34,7 +34,7 @@ footer a:hover {
     text-decoration: underline;
 }
 
-/* Social Icons */
+// Social Icons
 .social-icons {
     margin-top: 1rem;
 }
@@ -51,7 +51,7 @@ footer a:hover {
     transform: scale(1.1);
 }
 
-/* SVG Icons */
+// SVG Icons
 .social-icons svg {
     width: 26px;
     height: 26px;
@@ -62,7 +62,7 @@ footer a:hover {
     fill: #0056b3;
 }
 
-/* Responsive Adjustments */
+// Responsive Adjustments
 @media (max-width: 768px) {
     footer {
         font-size: 0.9rem;

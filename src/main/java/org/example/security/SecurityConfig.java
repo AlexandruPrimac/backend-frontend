@@ -26,16 +26,16 @@ public class SecurityConfig {
                         .maximumSessions(1)
                 )
                 .authorizeHttpRequests(auths -> auths
-                        // Public Endpoints (Guest)
+                        /// Public Endpoints (Guest)
                         .requestMatchers(HttpMethod.GET, "/", "/register", "/cars", "/races", "/sponsors").permitAll()
 
-                        // Add API endpoints for use in seperate client project
+                        /// Add API endpoints for use in seperate client project
                         .requestMatchers("/api/cars/**").permitAll()
 
-                        // Endpoints for authenticated users (User)
+                        /// Endpoints for authenticated users (User)
                         .requestMatchers(HttpMethod.GET, "/car/**", "/race/**", "/user/details").authenticated()
 
-                        // Allow user registration
+                        /// Allow user registration
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/cars/**/add-race").authenticated()
 
@@ -43,7 +43,7 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET, "/addRace").hasRole("ADMIN")
 
-                        // Static Resources (Public)
+                        /// Static Resources (Public)
                         .requestMatchers(
                                 antMatcher("/js/**"),
                                 antMatcher("/css/**"),
@@ -52,7 +52,7 @@ public class SecurityConfig {
                                 antMatcher("/video/**"),
                                 antMatcher("/webjars/**")).permitAll()
 
-                        // Everything else requires authentication
+                        /// Everything else requires authentication
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(
@@ -66,11 +66,12 @@ public class SecurityConfig {
                                         response.sendRedirect("/login");
                                     }
                                 })
-                                // Handling 403 (Forbidden) error
+                                /// Handling 403 (Forbidden) error
                                 .accessDeniedPage("/forbidden")
                 )
                 .httpBasic(httpBasic -> {
-                }) // Enable Basic Authentication
+                })
+                /// Enable Basic Authentication
                 .formLogin(
                         login -> login
                                 .loginPage("/login")

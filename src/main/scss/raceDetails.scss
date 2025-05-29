@@ -1,7 +1,6 @@
-/* General styles for the main container */
 main {
     padding: 30px;
-    background-color: #f8f9fa; /* Light background for contrast */
+    background-color: #f8f9fa;
     padding-top: 100px
 
 }
@@ -11,54 +10,49 @@ body, main {
     padding: 0;
 }
 
-
-/* Hover effect for the card */
 .card:hover {
-    transform: scale(1.05); /* Slightly increase size on hover */
+    transform: scale(1.05);
 }
 
-/* Inline custom CSS */
 .card {
     margin-top: 40px;
     margin-left: 20px;
     margin-right: 20px;
     transition: transform 0.2s;
-    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Optional: shadow for depth */
-
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Card title styles */
+// Card title styles
 .card-title {
-    font-size: 1.5rem; /* Larger font for the title */
-    font-weight: bold; /* Make title bold */
-    color: #343a40; /* Darker text for contrast */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #343a40;
 }
 
-/* Card text styles */
 .card-text {
-    font-size: 1.1rem; /* Slightly larger font for readability */
-    color: #495057; /* Gray text color */
+    font-size: 1.1rem;
+    color: #495057;
 }
 
-/* Styles for the image */
+// Styles for the image
 .card-img-top {
-    border-top-left-radius: 10px; /* Round top left corner */
-    border-top-right-radius: 10px; /* Round top right corner */
-    height: 400px; /* Fixed height for uniformity */
-    object-fit: cover; /* Cover the image area */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 400px;
+    object-fit: cover;
 }
 
 .card img {
-    max-height: 300px; /* Ensures larger images */
+    max-height: 300px; // Ensures larger images
     object-fit: cover;
 }
 .container .row .col-md-4 {
-    max-width: 35%; /* Ensures the cards occupy more space */
+    max-width: 35%;
 }
 @media (max-width: 768px) {
     .container .row .col-md-4 {
-        max-width: 100%; /* Makes cards stack on smaller screens */
+        max-width: 100%;
     }
 }

@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthorizationServiceClass implements AuthorizationService {
-
+    /// Logger
     private final static Logger logger = LoggerFactory.getLogger(AuthorizationServiceClass.class);
 
+    /// Repositories
     private final CarOwnerShipJpaRepo carOwnershipRepository;
-
 
     public AuthorizationServiceClass(CarOwnerShipJpaRepo carOwnershipRepository) {
         this.carOwnershipRepository = carOwnershipRepository;
@@ -27,13 +27,13 @@ public class AuthorizationServiceClass implements AuthorizationService {
             return false;
         }
 
-        // Check if the user has the admin role
+        /// Check if the user has the admin role
         if (isAdmin(user)) {
             logger.info("User is admin, can edit/delete car");
             return true;
         }
 
-        // Check if the user is the owner of the car
+        /// Check if the user is the owner of the car
         return isOwner(user, car);
     }
 

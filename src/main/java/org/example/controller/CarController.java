@@ -21,7 +21,10 @@ import java.util.List;
 @Controller
 public class CarController {
 
+    /// Logger
     private final static Logger logger = LoggerFactory.getLogger(CarController.class);
+
+    /// Services
     private final CarService carService;
     private final RaceService raceService;
     private final SponsorService sponsorService;
@@ -55,7 +58,7 @@ public class CarController {
             logger.error("Unexpected error while fetching cars: {}", ex.getMessage());
             throw new CustomApplicationException("Unable to fetch cars due to an unexpected error.");
         }
-        return "cars"; // This corresponds to the Thymeleaf view (cars.html)
+        return "cars";
     }
 
     @GetMapping("/addCar")
@@ -69,22 +72,21 @@ public class CarController {
         return "addCar";
     }
 
-
     @GetMapping("/car/{id}")
     public String getCarDetails(@PathVariable int id, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
             ApplicationUser user = userService.findUserById(userDetails.getId());
 
-            // Fetch car normally without fetching collections
+            /// Fetch car normally without fetching collections
             Car car = carService.getCarById(id);
 
-            // Initialize races separately
+            /// Initialize races separately
             List<Race> races = carService.getRacesByCarId(id);
 
-            // Initialize sponsors separately
+            /// Initialize sponsors separately
             List<Sponsor> sponsors = carService.getSponsorsByCarId(id);
 
-            // Authorization check
+            /// Authorization check
             boolean canModify = authorizationService.canEditOrDeleteCar(user, car);
             logger.info("Fetched car details: {}", car);
 
@@ -95,7 +97,7 @@ public class CarController {
 
             model.addAttribute("races", races);
 
-            // Filter races not linked to car
+            /// Filter races not linked to car
             List<Race> allRaces = raceService.getAllRaces();
             List<Race> availableRaces = allRaces.stream()
                     .filter(race -> races.stream().noneMatch(r -> r.getId() == race.getId()))
@@ -108,7 +110,7 @@ public class CarController {
 
             model.addAttribute("sponsors", sponsors);
 
-            // Filter sponsors not linked to car
+            /// Filter sponsors not linked to car
             List<Sponsor> allSponsors = sponsorService.getAllSponsors();
             List<Sponsor> availableSponsors = allSponsors.stream()
                     .filter(sponsor -> sponsors.stream().noneMatch(s -> s.getId() == sponsor.getId()))
@@ -130,6 +132,7 @@ public class CarController {
     }
 
 
+    /// Testing Exceptions
     @GetMapping("/testDatabaseException")
     public String testException() {
         throw new DatabaseException("Simulated Database Exception");

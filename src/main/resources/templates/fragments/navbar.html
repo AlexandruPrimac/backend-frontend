@@ -59,14 +59,16 @@
                 <!-- Language switcher -->
                 <ul class="navbar-nav ms-auto me-3">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="languageDropdown" role="button"
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="languageDropdown"
+                           role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-globe me-2"></i>
                             <span th:text="#{page.language}">Language</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
                             <li><a class="dropdown-item" href="?lang=en" th:text="#{language.english}">English</a></li>
-                            <li><a class="dropdown-item" href="?lang=be" th:text="#{language.Netherlands}">Netherlands</a></li>
+                            <li><a class="dropdown-item" href="?lang=be"
+                                   th:text="#{language.Netherlands}">Netherlands</a></li>
                         </ul>
                     </li>
                 </ul>

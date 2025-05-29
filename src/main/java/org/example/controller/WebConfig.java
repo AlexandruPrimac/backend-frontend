@@ -11,9 +11,9 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import java.util.Locale;
 
 @Configuration
-public class    WebConfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
 
-    // Define a SessionLocaleResolver to store the selected locale in th e user's session
+    /// Define a SessionLocaleResolver to store the selected locale in the user's session
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
@@ -21,15 +21,15 @@ public class    WebConfig implements WebMvcConfigurer {
         return sessionLocaleResolver;
     }
 
-    // Create a LocaleChangeInterceptor that listens for 'lang' parameter in the URL
+    /// Create a LocaleChangeInterceptor that listens for 'lang' parameter in the URL
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-        localeChangeInterceptor.setParamName("lang");  // Use 'lang' as the URL parameter for switching languages
+        localeChangeInterceptor.setParamName("lang");  /// Use 'lang' as the URL parameter for switching languages
         return localeChangeInterceptor;
     }
 
-    // Register the LocaleChangeInterceptor with Spring's interceptor registry
+    /// Register the LocaleChangeInterceptor with Spring's interceptor registry
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());

@@ -2,7 +2,6 @@ package org.example.webapi.dto.response;
 
 import org.example.domain.*;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.util.Collections;
@@ -13,9 +12,10 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 @Mapper(componentModel = SPRING)
 public interface CarMapper {
-
+    /// CarDto
     CarDto toCarDto(Car car);
 
+    /// Races
     default CarWithRacesDto toCarWithRacesDto(Car car) {
         return new CarWithRacesDto(
                 car.getId(),
@@ -47,6 +47,7 @@ public interface CarMapper {
                 .collect(Collectors.toList());
     }
 
+    /// Sponsors
     default CarWithSponsorsDto toCarWithSponsorsDto(Car car) {
         return new CarWithSponsorsDto(
                 car.getId(),

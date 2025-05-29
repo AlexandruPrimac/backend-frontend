@@ -16,10 +16,13 @@ import java.util.Set;
 
 @Service
 public class UserServiceClass implements UserService {
-
+    /// Logger
     private final static Logger logger = LoggerFactory.getLogger(UserServiceClass.class);
 
+    /// Password encoder
     private final PasswordEncoder passwordEncoder;
+
+    /// Repositories
     private final UserJpaRepo userRepository;
     private final RoleJpaRepo roleRepository;
 
@@ -31,11 +34,6 @@ public class UserServiceClass implements UserService {
     }
 
     @Override
-    public ApplicationUser getCurrentUser(int id) {
-        return userRepository.getById(id);
-    }
-
-    @Override
     public ApplicationUser add(String firstName, String lastName, String email, String password) {
         ApplicationUser user = new ApplicationUser();
         user.setFirstName(firstName);
@@ -43,7 +41,7 @@ public class UserServiceClass implements UserService {
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
 
-        // Assign default role
+        /// Assign default role when creating a new account
         Role userRole = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new RuntimeException("Default role not found"));
         user.setRoles(Set.of(userRole));

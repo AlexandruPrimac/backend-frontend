@@ -16,7 +16,7 @@ public class RaceViewModel {
     private String track;
 
     private String location;
-    
+
     private double distance;
 
     private String image;

@@ -2,7 +2,7 @@ import '../scss/addRace.scss'
 import axios from 'axios'
 import Joi from 'joi'
 
-import { csrfHeaderName, csrfToken } from './util/csrf.js'
+import {csrfHeaderName, csrfToken} from './util/csrf.js'
 
 const raceSchema = Joi.object({
     name: Joi.string().min(2).required().label('Race name'),
@@ -23,8 +23,8 @@ form.addEventListener('submit', async e => {
     const location = document.querySelector('#location').value
     const distance = document.querySelector('#distance').value
 
-    const formData = { name, date, track, location, distance }
-    const { error } = raceSchema.validate(formData, { abortEarly: false })
+    const formData = {name, date, track, location, distance}
+    const {error} = raceSchema.validate(formData, {abortEarly: false})
     const errorMessage = document.querySelector('#error-messages')
 
     if (error) {
@@ -39,7 +39,7 @@ form.addEventListener('submit', async e => {
     }
 
     try {
-        const jsonBody = { name, date, track, location, distance }
+        const jsonBody = {name, date, track, location, distance}
         console.log('Sending data:', jsonBody)
 
         const response = await axios.post(
@@ -67,6 +67,7 @@ form.addEventListener('submit', async e => {
         }
     } catch (error) {
         console.error('Error during fetch:', error)
+        // Better error handling with Axios
         if (error.response) {
             // The request was made and the server responded with a status code
             console.error('Response data:', error.response.data)

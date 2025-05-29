@@ -1,7 +1,6 @@
-/* General styles for the main container */
 main {
     padding: 30px;
-    background-color: #f8f9fa; /* Light background for contrast */
+    background-color: #f8f9fa;
     padding-top: 100px
 
 }
@@ -11,61 +10,58 @@ body, main {
     padding: 0;
 }
 
-
-/* Styles for the card */
+// Styles for the card
 .card {
     margin-top: 40px;
     margin-left: 20px;
     margin-right: 20px;
     transition: transform 0.2s;
-    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+    background-color: rgba(255, 255, 255, 0.5); // Semi-transparent white
     border-radius: 8px;
-    /*backdrop-filter: blur(10px); !* Optional: blur the background behind the card *!*/
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Optional: shadow for depth */
-
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Hover effect for the card */
+// Hover effect for the card
 .card:hover {
-    transform: scale(1.05); /* Slightly increase size on hover */
+    transform: scale(1.05);
 }
 
-/* Card body styles */
+// Card body styles
 .card-body {
-    padding: 40px; /* Add some padding */
+    padding: 40px;
 }
 
-/* Card title styles */
+// Card title styles */
 .card-title {
-    font-size: 1.5rem; /* Larger font for the title */
-    font-weight: bold; /* Make title bold */
-    color: #343a40; /* Darker text for contrast */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #343a40;
 }
 
-/* Card text styles */
+// Card text styles
 .card-text {
-    font-size: 1.1rem; /* Slightly larger font for readability */
-    color: #495057; /* Gray text color */
+    font-size: 1.1rem;
+    color: #495057;
 }
 
-/* Styles for the image */
+// Styles for the image */
 .card-img-top {
     object-fit: cover;
     height: 200px;
     width: 100%;
 }
 
-/* Inline custom CSS */
+// Inline custom CSS
 .card {
-    min-height: 500px; /* Increases the card height */
-    font-size: 1.2rem; /* Makes the font larger */
+    min-height: 500px;
+    font-size: 1.2rem;
 }
 .card img {
-    max-height: 300px; /* Ensures larger images */
+    max-height: 300px; // Ensures larger images
     object-fit: cover;
 }
 .container .row .col-md-4 {
-    max-width: 35%; /* Ensures the cards occupy more space */
+    max-width: 35%; // Ensures the cards occupy more space
 }
 
 .input-group {

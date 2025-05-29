@@ -2,8 +2,9 @@ import '../scss/addCar.scss'
 import axios from 'axios'
 import Joi from 'joi'
 
-import { csrfHeaderName, csrfToken } from './util/csrf.js'
+import {csrfHeaderName, csrfToken} from './util/csrf.js'
 
+//Joi Schema for the form
 const carSchema = Joi.object({
     brand: Joi.string().min(2).required().label('Brand'),
     model: Joi.string().min(1).required().label('Model'),
@@ -25,9 +26,9 @@ form.addEventListener('submit', async e => {
     const year = document.querySelector('#year').value
     const category = document.querySelector('#category').value
 
-    // 2. Validate before submission
-    const formData = { brand, model, engine, horsePower, year, category }
-    const { error } = carSchema.validate(formData, { abortEarly: false })
+    // Validate before submission
+    const formData = {brand, model, engine, horsePower, year, category}
+    const {error} = carSchema.validate(formData, {abortEarly: false})
     const errorMessage = document.querySelector('#error-messages')
 
     if (error) {
@@ -42,7 +43,7 @@ form.addEventListener('submit', async e => {
     }
 
     try {
-        const jsonBody = { brand, model, engine, horsePower, year, category }
+        const jsonBody = {brand, model, engine, horsePower, year, category}
         console.log('Sending data:', jsonBody)
 
         const response = await axios.post(
@@ -70,6 +71,7 @@ form.addEventListener('submit', async e => {
         }
     } catch (error) {
         console.error('Error during fetch:', error)
+        // Better error handling with Axios
         if (error.response) {
             // The request was made and the server responded with a status code
             console.error('Response data:', error.response.data)

@@ -1,4 +1,4 @@
-import { csrfHeaderName, csrfToken } from './util/csrf.js'
+import {csrfHeaderName, csrfToken} from './util/csrf.js'
 
 const results = document.querySelector('#search-results')
 const allRaces = document.querySelector('#all-races')
@@ -10,13 +10,13 @@ document.querySelector('#location').addEventListener('keyup', async (e) => {
     if (location === '') {
         results.innerHTML = ''
 
-        // Show all races container with fade-in animation
+        // Show all races containerr with fade-in animation
         allRaces.style.display = 'flex'
         allRaces.style.opacity = '0'
         allRaces.animate(
             [
-                { opacity: 0 },
-                { opacity: 1 }
+                {opacity: 0},
+                {opacity: 1}
             ],
             {
                 duration: 500,
@@ -51,8 +51,8 @@ document.querySelector('#location').addEventListener('keyup', async (e) => {
                 requestAnimationFrame(() => {
                     noResults.animate(
                         [
-                            { opacity: 0, transform: 'scale(0.95)' },
-                            { opacity: 1, transform: 'scale(1)' }
+                            {opacity: 0, transform: 'scale(0.95)'},
+                            {opacity: 1, transform: 'scale(1)'}
                         ],
                         {
                             duration: 500,
@@ -87,8 +87,8 @@ document.querySelector('#location').addEventListener('keyup', async (e) => {
                     requestAnimationFrame(() => {
                         card.animate(
                             [
-                                { opacity: 0, transform: 'translateY(20px)' },
-                                { opacity: 1, transform: 'translateY(0)' }
+                                {opacity: 0, transform: 'translateY(20px)'},
+                                {opacity: 1, transform: 'translateY(0)'}
                             ],
                             {
                                 duration: 400,
@@ -103,8 +103,8 @@ document.querySelector('#location').addEventListener('keyup', async (e) => {
 
                 cardContainer.animate(
                     [
-                        { opacity: 0, transform: 'translateY(20px)' },
-                        { opacity: 1, transform: 'translateY(0)' }
+                        {opacity: 0, transform: 'translateY(20px)'},
+                        {opacity: 1, transform: 'translateY(0)'}
                     ],
                     {
                         duration: 600,
@@ -118,8 +118,8 @@ document.querySelector('#location').addEventListener('keyup', async (e) => {
         if (allRaces.style.display !== 'none') {
             const fadeOutAnim = allRaces.animate(
                 [
-                    { opacity: 1 },
-                    { opacity: 0 }
+                    {opacity: 1},
+                    {opacity: 0}
                 ],
                 {
                     duration: 300,

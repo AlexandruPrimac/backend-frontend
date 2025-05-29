@@ -18,7 +18,7 @@ public class CustomUserDetails extends User {
 
     public CustomUserDetails(int id, String email, String firstName, String lastName,
                              String password, Collection<? extends GrantedAuthority> authorities) {
-        super(email, password, authorities); // 'email' is used as the username for authentication
+        super(email, password, authorities); /// The email is used as the username for authentication (login)
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

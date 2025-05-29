@@ -22,7 +22,7 @@ public class CarViewModel {
     private CarCategory category;
 
     private String image;
-    
+
     public CarViewModel(Car car) {
         this.brand = car.getBrand();
         this.model = car.getModel();
@@ -35,5 +35,4 @@ public class CarViewModel {
 
     public CarViewModel() {
     }
-
 }

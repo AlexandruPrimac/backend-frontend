@@ -1,8 +1,8 @@
 import '../scss/races.scss'
 import axios from 'axios'
 
-import { animate } from 'animejs'
-import { csrfHeaderName, csrfToken } from './util/csrf.js'
+import {animate} from 'animejs'
+import {csrfHeaderName, csrfToken} from './util/csrf.js'
 
 document.addEventListener('DOMContentLoaded', () => {
     const deleteButton = document.getElementById('delete-button')
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 const raceCard = document.getElementById('race-card')
                 animate(raceCard, {
-                    backgroundColor: [ '#d4edda', '#ffffff' ],
+                    backgroundColor: ['#d4edda', '#ffffff'],
                     duration: 1200,
                     ease: 'ease-in-out'
                 })

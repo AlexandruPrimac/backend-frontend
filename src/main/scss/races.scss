@@ -1,4 +1,4 @@
-// Variables
+// Theme Variables
 $primary-color: #007bff;
 $primary-hover: #0056b3;
 $text-color: #333;
@@ -37,7 +37,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Filter form styles */
+// Filter form styles
 .filter-container {
     margin: 20px auto;
     max-width: 800px;
@@ -69,7 +69,7 @@ h1 {
 }
 
 .filter-icon {
-    color: $primary-hover; // Racing red to match theme
+    color: $primary-hover;
     font-size: 1.2rem;
     margin-right: 10px;
     opacity: 0.8;
@@ -91,7 +91,7 @@ h1 {
 }
 
 .filter-button {
-    background: $primary-hover; // Racing red
+    background: $primary-hover;
     color: $bg-light;
     border: none;
     border-radius: 50%;
@@ -113,7 +113,7 @@ h1 {
     }
 }
 
-/* Responsive adjustments */
+// Responsive adjustments
 @media (max-width: 768px) {
     .filter-group {
         padding: 5px 10px;

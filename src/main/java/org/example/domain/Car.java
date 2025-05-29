@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "cars")
 public class Car {
 
-    // Attributes
+    /// Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -38,13 +38,13 @@ public class Car {
     private int year;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)// Store as String in the database
+    @Column(nullable = false) /// Store as String in the database
     private CarCategory category;
 
     @Column(name = "image")
     private String image;
 
-    // Relationships
+    /// Relationships
     @OneToMany(mappedBy = "car", fetch = FetchType.LAZY , cascade = {CascadeType.PERSIST}, orphanRemoval = true)
     private List<CarRaces> races = new ArrayList<>();
 
@@ -52,7 +52,7 @@ public class Car {
     private List<CarSponsors> sponsors = new ArrayList<>();
 
 
-    // Constructors
+    /// Constructors
     public Car(int id, String brand, String model, double engine, int horsepower, int year, CarCategory category, String image) {
         this(brand, model, engine, horsepower, year, category, image);
         this.id = id;
@@ -88,7 +88,4 @@ public class Car {
                 this.getCategory()
         );
     }
-
-
-
 }

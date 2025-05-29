@@ -15,7 +15,7 @@ public class Role {
     private int id;
 
     @Column(nullable = false, unique = true)
-    private String name;  // Example: "ROLE_ADMIN", "ROLE_USER"
+    private String name;  /// "ROLE_ADMIN", "ROLE_USER"
 
     @ManyToMany(mappedBy = "roles")
     private Set<ApplicationUser> users;
@@ -24,7 +24,7 @@ public class Role {
     @Override
     public String toString() {
         if (name.startsWith("ROLE_")) {
-            return name.substring(5);  // Removes "ROLE_" prefix
+            return name.substring(5);  /// Removes "ROLE_" prefix for easier comparison in the code
         }
         return name;
     }

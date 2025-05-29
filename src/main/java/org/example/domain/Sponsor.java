@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "sponsors")
 public class Sponsor {
 
-    // Attributes
+    /// Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -30,12 +30,11 @@ public class Sponsor {
     @Column(name = "image")
     private String image;
 
-    // Many-to-Many with Car
+    /// Many-to-Many with Car relationship
     @OneToMany(mappedBy = "sponsor", fetch = FetchType.LAZY)
     private List<CarSponsors> cars = new ArrayList<>();
-    ;
 
-    // Constructor
+    /// Constructor
     public Sponsor(int id, String name, String industry, int foundingYear, String image) {
         this.id = id;
         this.name = name;

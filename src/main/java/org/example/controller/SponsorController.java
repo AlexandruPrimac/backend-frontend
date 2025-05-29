@@ -15,8 +15,10 @@ import java.util.List;
 
 @Controller
 public class SponsorController {
-
+    /// Logger
     private final static Logger logger = LoggerFactory.getLogger(SponsorController.class);
+
+    /// Services
     private final SponsorService sponsorService;
 
     @Autowired
@@ -31,15 +33,16 @@ public class SponsorController {
             List<Sponsor> sponsors = sponsorService.getAllSponsors();
             logger.info("Found {} sponsors", sponsors.size());
             model.addAttribute("sponsors", sponsors);
+
         } catch (DatabaseException ex) {
             logger.error("Database exception while fetching all sponsors: {}", ex.getMessage());
             throw ex;
+
         } catch (Exception ex) {
             logger.error("Unexpected exception while fetching sponsors: {}", ex.getMessage());
             throw new CustomApplicationException("Failed to fetch sponsors.");
         }
+
         return "sponsors";
     }
-
-
 }

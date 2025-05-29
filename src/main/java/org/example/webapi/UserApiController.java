@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/users")
 public class UserApiController {
-
+    /// Services
     private final UserService userService;
 
+    /// Mappers
     private final UserMapper userMapper;
 
     public UserApiController(UserService userService, UserMapper userMapper) {
@@ -29,6 +30,7 @@ public class UserApiController {
     @PostMapping
     public ResponseEntity<UserDto> addUser(@Valid @RequestBody final AddUserDto userDto) {
         final ApplicationUser user = userService.add(userDto.firstName(), userDto.lastName(), userDto.email(), userDto.password());
-        return ResponseEntity.status(HttpStatus.CREATED).body(userMapper.toDto(user));  // 201 response with created resource
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(userMapper.toDto(user));
     }
 }

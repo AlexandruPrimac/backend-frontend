@@ -10,9 +10,6 @@ import java.util.Optional;
 
 public interface SponsorJpaRepo extends JpaRepository<Sponsor, Integer> {
 
-    @Query("SELECT s FROM Sponsor s LEFT JOIN FETCH s.cars WHERE s.id = :id")
-    Optional<Sponsor> findByIdWithDetails(@Param("id") int id);
-
     @Query("SELECT s FROM Sponsor s WHERE LOWER(s.name) LIKE LOWER(:name)")
     List<Sponsor> filterSponsorsByName(String name);
 }

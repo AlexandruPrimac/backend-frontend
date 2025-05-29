@@ -13,7 +13,7 @@ public class LoginController {
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
-            // Log out the current user
+            /// Log out the current user when it goes to the login page
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
         return "login";

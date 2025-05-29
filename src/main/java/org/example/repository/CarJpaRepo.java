@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-
 public interface CarJpaRepo extends JpaRepository<Car, Integer> {
 
     @Query("SELECT DISTINCT c FROM Car c LEFT JOIN FETCH c.races cr LEFT JOIN FETCH cr.race WHERE c.id = :id")

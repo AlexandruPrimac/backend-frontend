@@ -1,7 +1,7 @@
 import '../scss/cars.scss'
-import { animate } from 'animejs'
+import {animate} from 'animejs'
 import axios from 'axios'
-import { csrfHeaderName, csrfToken } from './util/csrf.js'
+import {csrfHeaderName, csrfToken} from './util/csrf.js'
 
 const deleteButton = document.getElementById('delete-button')
 
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         carCategory.removeAttribute('disabled')
 
-        // Show Save & Cancel, Hide Edit
+        // Show Save and Cancel, Hide Edit
         editButton.style.display = 'none'
         saveButton.style.display = 'inline-block'
         cancelButton.style.display = 'inline-block'
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 const carCard = document.getElementById('car-card')
                 animate(carCard, {
-                    backgroundColor: [ '#d4edda', '#ffffff' ],
+                    backgroundColor: ['#d4edda', '#ffffff'],
                     duration: 1200,
                     ease: 'ease-in-out'
                 })
@@ -137,13 +137,13 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 })
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const addRaceBtn = document.getElementById('addRaceBtn')
     const raceDropdown = document.getElementById('raceDropdown')
     const raceSelectionError = document.getElementById('raceSelectionError')
 
     if (addRaceBtn) {
-        addRaceBtn.addEventListener('click', async function() {
+        addRaceBtn.addEventListener('click', async function () {
             const carId = this.dataset.carId
             const raceId = raceDropdown.value
 
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
 
         // Reset validation when selection changes
-        raceDropdown.addEventListener('change', function() {
+        raceDropdown.addEventListener('change', function () {
             if (this.classList.contains('is-invalid')) {
                 this.classList.remove('is-invalid')
                 raceSelectionError.style.display = 'none'
@@ -200,13 +200,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 })
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const addSponsorBtn = document.getElementById('addSponsorBtn')
     const sponsorDropdown = document.getElementById('sponsorDropdown')
     const sponsorSelectionError = document.getElementById('sponsorSelectionError')
 
     if (addSponsorBtn) {
-        addSponsorBtn.addEventListener('click', async function() {
+        addSponsorBtn.addEventListener('click', async function () {
             const carId = this.dataset.carId
             const sponsorId = sponsorDropdown.value
 
@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
 
         // Reset validation when selection changes
-        sponsorDropdown.addEventListener('change', function() {
+        sponsorDropdown.addEventListener('change', function () {
             if (this.classList.contains('is-invalid')) {
                 this.classList.remove('is-invalid')
                 sponsorSelectionError.style.display = 'none'

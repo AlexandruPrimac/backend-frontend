@@ -38,11 +38,11 @@ public class CarControllerTest {
     void setUp() {
         testHelper.cleanUp();
 
-        // Prepare users for security context
+        /// Prepare users for security context
         testHelper.createNormalUser();
         testHelper.createAdmin();
 
-        // Prepare test data in DB
+        /// Prepare test data in DB
         car = testHelper.createCar();
         race = testHelper.createRace();
         sponsor = testHelper.createSponsor();

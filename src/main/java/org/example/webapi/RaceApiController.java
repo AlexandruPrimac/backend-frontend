@@ -18,8 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/races")
 public class RaceApiController {
-
+    /// Services
     private final RaceService raceService;
+
+    /// Mappers
     private final RaceMapper raceMapper;
 
     public RaceApiController(RaceService raceService, RaceMapper raceMapper) {
@@ -27,10 +29,10 @@ public class RaceApiController {
         this.raceMapper = raceMapper;
     }
 
-    //Filter races by location
     @GetMapping
     public ResponseEntity<List<RaceDto>> filter(@RequestParam("location") final String location) {
         final List<RaceDto> race = raceService.filterRacesDinamically(location).stream().map(raceMapper::toRaceDto).toList();
+
         return ResponseEntity.ok(race);
     }
 
@@ -38,16 +40,18 @@ public class RaceApiController {
     public ResponseEntity<Void> remove(@PathVariable int id) {
         try {
             raceService.deleteRace(id);
-            return ResponseEntity.noContent().build();  // 204 response when deleted
+            return ResponseEntity.noContent().build();
+
         } catch (CustomApplicationException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // 404 response if not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @PostMapping
     public ResponseEntity<RaceDto> addRace(@Valid @RequestBody final AddRaceDto raceDto) {
         final Race race = raceService.add(raceDto.name(), raceDto.date(), raceDto.track(), raceDto.location(), raceDto.distance());
-        return ResponseEntity.status(HttpStatus.CREATED).body(raceMapper.toRaceDto(race));  // 201 response with created resource
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(raceMapper.toRaceDto(race));  /// 201 response with created resource
     }
 
     @PatchMapping("{id}")
@@ -55,11 +59,11 @@ public class RaceApiController {
         try {
             Race updateRace = raceService.patch(id, patchRace.name(), patchRace.date(), patchRace.track(), patchRace.location(), patchRace.distance());
             return ResponseEntity.ok(raceMapper.toRaceDto(updateRace));
+
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
-
 }

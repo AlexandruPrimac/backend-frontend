@@ -8,7 +8,8 @@ document.querySelector('.password-toggle').addEventListener('click', function(e)
     passwordInput.setAttribute('type', type)
     this.classList.toggle('fa-eye')
     this.classList.toggle('fa-eye-slash')
-}) // Form validation
+})
+// Form validation
 ;(() => {
     'use strict'
     const forms = document.querySelectorAll('.needs-validation')
