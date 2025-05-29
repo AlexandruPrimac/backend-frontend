@@ -322,6 +322,12 @@ Verify Tests in CarServiceUnitTest:
 Test Name	                        'verify' Used?	            Notes
 shouldRemoveCarSuccessfully	              Yes            Verifies car deletions
 ```
+Continuous integration pipeline:
+
+https://gitlab.com/kdg-ti/programming-5/projects-24-25/acs201/alexandru.primac/spring-backend/-/pipelines/1843348805/builds
+
+![img_2.png](img_2.png)
+
 ---
 ## Week 12 NPM Gradle Integration
 In week 12 I integrated npm and webpack following the 13-step process.
