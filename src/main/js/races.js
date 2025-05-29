@@ -1,6 +1,7 @@
 import '../scss/races.scss'
 import axios from 'axios'
 
+import { animate } from 'animejs'
 import { csrfHeaderName, csrfToken } from './util/csrf.js'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -111,16 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 const raceCard = document.getElementById('race-card')
-                raceCard.animate(
-                    [
-                        { backgroundColor: '#d4edda' },
-                        { backgroundColor: '#ffffff' }
-                    ],
-                    {
-                        duration: 1200,
-                        easing: 'ease-in-out'
-                    }
-                )
+                animate(raceCard, {
+                    backgroundColor: [ '#d4edda', '#ffffff' ],
+                    duration: 1200,
+                    ease: 'ease-in-out'
+                })
                 inputs.forEach(input => input.setAttribute('disabled', 'true')) // Disable inputs
                 editButton.style.display = 'inline-block'
                 saveButton.style.display = 'none'

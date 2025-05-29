@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.domain.ApplicationUser;
 import org.example.domain.Role;
+import org.example.repository.RoleJpaRepo;
 import org.example.repository.UserJpaRepo;
 import org.example.service.Interfaces.UserService;
 import org.slf4j.Logger;
@@ -20,13 +21,14 @@ public class UserServiceClass implements UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserJpaRepo userRepository;
+    private final RoleJpaRepo roleRepository;
 
     @Autowired
-    public UserServiceClass(UserJpaRepo userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceClass(UserJpaRepo userRepository, PasswordEncoder passwordEncoder, RoleJpaRepo roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
-
 
     @Override
     public ApplicationUser getCurrentUser(int id) {
@@ -36,12 +38,19 @@ public class UserServiceClass implements UserService {
     @Override
     public ApplicationUser add(String firstName, String lastName, String email, String password) {
         ApplicationUser user = new ApplicationUser();
-        logger.info("Adding user: {}", user);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
-        return userRepository.save(user);
+
+        // Assign default role
+        Role userRole = roleRepository.findByName("ROLE_USER")
+                .orElseThrow(() -> new RuntimeException("Default role not found"));
+        user.setRoles(Set.of(userRole));
+
+        ApplicationUser savedUser = userRepository.save(user);
+        logger.info("Added user: {}", savedUser);
+        return savedUser;
     }
 
     @Override

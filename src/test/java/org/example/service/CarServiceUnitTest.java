@@ -23,6 +23,7 @@ class CarServiceUnitTest {
     private CarJpaRepo carRepository;
     private RaceJpaRepo raceRepository;
     private CarRacesJpaRepo carRacesRepository;
+    private SponsorJpaRepo sponsorJpaRepo;
     private CarSponsorsJpaRepo carSponsorsRepository;
     private UserJpaRepo userRepository;
     private CarOwnerShipJpaRepo carOwnerShipRepository;
@@ -36,7 +37,7 @@ class CarServiceUnitTest {
         userRepository = mock(UserJpaRepo.class);
         carOwnerShipRepository = mock(CarOwnerShipJpaRepo.class);
 
-        sut = new CarServiceClass(carRepository, raceRepository, carRacesRepository, carSponsorsRepository, userRepository, carOwnerShipRepository);
+        sut = new CarServiceClass(carRepository, raceRepository, carRacesRepository, sponsorJpaRepo, carSponsorsRepository, userRepository, carOwnerShipRepository);
     }
 
     @Test

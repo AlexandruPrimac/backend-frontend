@@ -1,4 +1,5 @@
 import '../scss/cars.scss'
+import { animate } from 'animejs'
 import axios from 'axios'
 import { csrfHeaderName, csrfToken } from './util/csrf.js'
 
@@ -115,16 +116,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 const carCard = document.getElementById('car-card')
-                carCard.animate(
-                    [
-                        { backgroundColor: '#d4edda' },
-                        { backgroundColor: '#ffffff' }
-                    ],
-                    {
-                        duration: 1200,
-                        easing: 'ease-in-out'
-                    }
-                )
+                animate(carCard, {
+                    backgroundColor: [ '#d4edda', '#ffffff' ],
+                    duration: 1200,
+                    ease: 'ease-in-out'
+                })
                 inputs.forEach(input => input.setAttribute('disabled', 'true')) // Disable inputs
                 carCategory.setAttribute('disabled', 'true') // Disable category input
                 editButton.style.display = 'inline-block'
@@ -139,4 +135,130 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Something went wrong. Please try again.')
         }
     })
+})
+
+document.addEventListener('DOMContentLoaded', function() {
+    const addRaceBtn = document.getElementById('addRaceBtn')
+    const raceDropdown = document.getElementById('raceDropdown')
+    const raceSelectionError = document.getElementById('raceSelectionError')
+
+    if (addRaceBtn) {
+        addRaceBtn.addEventListener('click', async function() {
+            const carId = this.dataset.carId
+            const raceId = raceDropdown.value
+
+            if (!raceId) {
+                raceDropdown.classList.add('is-invalid')
+                raceSelectionError.style.display = 'block'
+                return
+            }
+
+            try {
+                const response = await fetch(`/api/cars/${carId}/add-race?raceId=${raceId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Accept': 'application/json',
+                        [csrfHeaderName]: csrfToken,
+                        'Content-Type': 'application/json'
+                    }
+                })
+
+                if (!response.ok) {
+                    throw new Error('Failed to add race')
+                }
+
+                // Show success message
+                showNotification('Race added successfully!', 'success')
+
+                // Refresh after a short delay
+                setTimeout(() => location.reload(), 1500)
+            } catch (error) {
+                console.error('Error adding race:', error)
+                showNotification('Failed to add race', 'danger')
+            }
+        })
+
+        // Reset validation when selection changes
+        raceDropdown.addEventListener('change', function() {
+            if (this.classList.contains('is-invalid')) {
+                this.classList.remove('is-invalid')
+                raceSelectionError.style.display = 'none'
+            }
+        })
+    }
+
+    function showNotification(message, type) {
+        const notification = document.createElement('div')
+        notification.className = `alert alert-${type} fixed-notification`
+        notification.textContent = message
+        document.body.appendChild(notification)
+
+        setTimeout(() => {
+            notification.classList.add('fade-out')
+            setTimeout(() => notification.remove(), 300)
+        }, 2000)
+    }
+})
+
+document.addEventListener('DOMContentLoaded', function() {
+    const addSponsorBtn = document.getElementById('addSponsorBtn')
+    const sponsorDropdown = document.getElementById('sponsorDropdown')
+    const sponsorSelectionError = document.getElementById('sponsorSelectionError')
+
+    if (addSponsorBtn) {
+        addSponsorBtn.addEventListener('click', async function() {
+            const carId = this.dataset.carId
+            const sponsorId = sponsorDropdown.value
+
+            if (!sponsorId) {
+                sponsorDropdown.classList.add('is-invalid')
+                sponsorSelectionError.style.display = 'block'
+                return
+            }
+
+            try {
+                const response = await fetch(`/api/cars/${carId}/add-sponsor?sponsorId=${sponsorId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Accept': 'application/json',
+                        [csrfHeaderName]: csrfToken,
+                        'Content-Type': 'application/json'
+                    }
+                })
+
+                if (!response.ok) {
+                    throw new Error('Failed to add sponsor')
+                }
+
+                // Show success message
+                showNotification('Sponsor added successfully!', 'success')
+
+                // Refresh after a short delay
+                setTimeout(() => location.reload(), 1500)
+            } catch (error) {
+                console.error('Error adding sponsor:', error)
+                showNotification('Failed to add sponsor', 'danger')
+            }
+        })
+
+        // Reset validation when selection changes
+        sponsorDropdown.addEventListener('change', function() {
+            if (this.classList.contains('is-invalid')) {
+                this.classList.remove('is-invalid')
+                sponsorSelectionError.style.display = 'none'
+            }
+        })
+    }
+
+    function showNotification(message, type) {
+        const notification = document.createElement('div')
+        notification.className = `alert alert-${type} fixed-notification`
+        notification.textContent = message
+        document.body.appendChild(notification)
+
+        setTimeout(() => {
+            notification.classList.add('fade-out')
+            setTimeout(() => notification.remove(), 300)
+        }, 2000)
+    }
 })

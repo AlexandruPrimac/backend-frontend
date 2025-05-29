@@ -1,4 +1,5 @@
 import '../scss/sponsors.scss'
+import { animate } from 'animejs'
 import axios from 'axios'
 import { csrfHeaderName, csrfToken } from './util/csrf.js'
 
@@ -30,20 +31,19 @@ deleteButton.forEach(deleteButton => {
             if (response.status === 204) {
                 const cardCol = deleteButton.closest('.col')
                 if (cardCol) {
-                    // Animate fade-out + shrink effect
-                    cardCol.animate(
-                        [
-                            { opacity: 1, transform: 'scale(1)', height: `${cardCol.offsetHeight}px` },
-                            { opacity: 0, transform: 'scale(0.95)', height: '0px' }
-                        ],
-                        {
-                            duration: 400,
-                            easing: 'ease-out',
-                            fill: 'forwards'
+                    cardCol.style.height = `${cardCol.offsetHeight}px`
+                    cardCol.style.overflow = 'hidden'
+
+                    animate(cardCol, {
+                        opacity: [ 1, 0 ],
+                        scale: [ 1, 0.95 ],
+                        height: [ cardCol.offsetHeight + 'px', '0px' ],
+                        duration: 400,
+                        easing: 'easeOutQuad',
+                        complete: () => {
+                            cardCol.remove()
                         }
-                    ).onfinish = () => {
-                        cardCol.remove()
-                    }
+                    })
                 }
             } else {
                 alert('Sponsor not found or could not be deleted.')

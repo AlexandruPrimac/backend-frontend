@@ -8,13 +8,8 @@
     <link rel="icon" type="image/png" th:href="@{/favicon/Fav32.png}" sizes="32x32" />
     <link rel="stylesheet" href="/css/bundle-site.css" />
     <link rel="stylesheet" href="/css/bundle-login.css" />
-    <!-- Bootstrap Icons CSS -->
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
-    />
     <script src="/js/bundle-site.js" defer></script>
-    <script src="/js/bundle-register.js"></script>
+    <script src="/js/bundle-register.js" defer></script>
 </head>
 <body class="d-flex align-items-center justify-content-center py-4">
 <main class="login-card bg-white">
@@ -31,7 +26,7 @@
     </div>
 
     <div class="p-4 p-md-5">
-        <form th:action="@{/register}" method="POST" class="needs-validation" novalidate>
+        <form action="addUser" method="post" class="needs-validation" novalidate>
             <div class="row g-3">
                 <div class="col-md-6">
                     <label for="firstName" class="form-label">First Name</label>
@@ -87,7 +82,7 @@
                                 name="password"
                                 type="password"
                                 class="form-control form-control-lg"
-                                placeholder="••••••••"
+                                placeholder="password"
                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                 required
                         />

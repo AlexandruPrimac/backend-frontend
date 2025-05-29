@@ -10,6 +10,8 @@ import org.example.webapi.dto.request.AddCarDto;
 import org.example.webapi.dto.request.PatchCarDto;
 import org.example.webapi.dto.response.CarDto;
 import org.example.webapi.dto.response.CarMapper;
+import org.example.webapi.dto.response.CarWithRacesDto;
+import org.example.webapi.dto.response.CarWithSponsorsDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -79,21 +81,25 @@ public class CarApiController {
     }
 
     @PatchMapping("{id}/add-race")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<CarDto> addRaceToCar(@PathVariable int id, @RequestParam int raceId) {
+    public ResponseEntity<CarWithRacesDto> addRaceToCar(@PathVariable int id, @RequestParam int raceId) {
         try {
-            // Add race to car via the service
             Car updatedCar = carService.addRaceToCar(id, raceId);
-
-            // Convert the updated Car entity to DTO
-            CarDto updatedCarDto = carMapper.toCarDto(updatedCar);
-
-            // Return the updated car with race added
+            CarWithRacesDto updatedCarDto = carMapper.toCarWithRacesDto(updatedCar);
             return ResponseEntity.ok(updatedCarDto);
         } catch (CustomApplicationException ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
 
+    @PatchMapping("{id}/add-sponsor")
+    public ResponseEntity<CarWithSponsorsDto> addSponsorToCar(@PathVariable int id, @RequestParam int sponsorId) {
+        try {
+            Car updatedCar = carService.addSponsorToCar(id, sponsorId);
+            CarWithSponsorsDto updatedCarDto = carMapper.toCarWithSponsorsDto(updatedCar);
+            return ResponseEntity.ok(updatedCarDto);
+        } catch (CustomApplicationException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
 }

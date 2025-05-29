@@ -28,6 +28,8 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
 
     private final CarRacesJpaRepo carRacesRepository;
 
+    private final SponsorJpaRepo sponsorRepository;
+
     private final CarSponsorsJpaRepo carSponsorsRepository;
 
     private final UserJpaRepo userRepository;
@@ -38,10 +40,11 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
     private EntityManager entityManager;
 
     @Autowired
-    public CarServiceClass(CarJpaRepo carRepository, RaceJpaRepo raceRepository, CarRacesJpaRepo carRacesRepository, CarSponsorsJpaRepo carSponsorsRepository, UserJpaRepo userRepository, CarOwnerShipJpaRepo carOwnerShipJpaRepo) {
+    public CarServiceClass(CarJpaRepo carRepository, RaceJpaRepo raceRepository, CarRacesJpaRepo carRacesRepository, SponsorJpaRepo sponsorRepository, CarSponsorsJpaRepo carSponsorsRepository, UserJpaRepo userRepository, CarOwnerShipJpaRepo carOwnerShipJpaRepo) {
         this.carRepository = carRepository;
         this.raceRepository = raceRepository;
         this.carRacesRepository = carRacesRepository;
+        this.sponsorRepository = sponsorRepository;
         this.carSponsorsRepository = carSponsorsRepository;
         this.userRepository = userRepository;
         this.carOwnerShipJpaRepo = carOwnerShipJpaRepo;
@@ -192,7 +195,7 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
 
     @Override
     public Car addRaceToCar(int carId, int raceId) {
-        Car car = carRepository.findById(carId)
+        Car car = carRepository.findByIdWithRaces(carId)
                 .orElseThrow(() -> new CustomApplicationException("Car not found with id " + carId));
 
         Race race = raceRepository.findById(raceId)
@@ -208,6 +211,30 @@ public class CarServiceClass implements org.example.service.Interfaces.CarServic
             car.getRaces().add(carRace);
 
             entityManager.persist(carRace);
+            entityManager.flush();
+        }
+
+        return carRepository.save(car);
+    }
+
+    @Override
+    public Car addSponsorToCar(int carId, int sponsorId) {
+        Car car = carRepository.findByIdWithSponsors(carId)
+                .orElseThrow(() -> new CustomApplicationException("Car not found with id " + carId));
+
+        Sponsor sponsor = sponsorRepository.findById(sponsorId)
+                .orElseThrow(() -> new CustomApplicationException("Sponsor not found with id " + sponsorId));
+
+        boolean isSponsorLinked = car.getSponsors().stream()
+                .anyMatch(cs -> cs.getSponsor().getId() == sponsorId);
+
+        if (!isSponsorLinked) {
+            CarSponsors carSponsors = new CarSponsors();
+            carSponsors.setCar(car);
+            carSponsors.setSponsor(sponsor);
+            car.getSponsors().add(carSponsors);
+
+            entityManager.persist(carSponsors);
             entityManager.flush();
         }
 

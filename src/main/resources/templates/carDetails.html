@@ -33,11 +33,24 @@
                         </div>
                         <div class="card-footer text-center">
                             <a th:href="@{/races}" class="btn btn-primary bottom-0">View Race Details</a>
-                            <br><br>
-                            <!-- Show 'Add Race to Car' only for users with ADMIN role -->
-                            <button sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-warning add-race-button"
-                                    data-car-id="${car.id}">Add Race to Car
-                            </button>
+                            <div sec:authorize="isAuthenticated()" th:if="${canModify}" class="mt-4">
+                                <label for="raceDropdown" class="form-label fw-bold"></label>
+                                <div class="input-group has-validation">
+                                    <select class="form-select" id="raceDropdown" aria-describedby="raceSelectionError">
+                                        <option value="" selected disabled>Choose race</option>
+                                        <option th:each="race : ${availableRaces}"
+                                                th:value="${race.id}"
+                                                th:text="${race.name}">
+                                        </option>
+                                    </select>
+                                    <button class="btn btn-warning" id="addRaceBtn" th:attr="data-car-id=${car.id}">
+                                        <i class="bi bi-plus-circle me-1"></i> Add Race
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback" id="raceSelectionError" style="display: none;">
+                                    Please select a valid race.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,11 +124,25 @@
                         </div>
                         <div class="card-footer text-center">
                             <a th:href="@{/sponsors}" class="btn btn-primary">Sponsor Details</a>
-                            <br><br>
                             <!-- Show 'Add Sponsor to Car' only for ADMIN role -->
-                            <button sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-warning add-sponsor-button"
-                                    data-sponsor-id="${sponsor.id}">Add Sponsor to Car
-                            </button>
+                            <div sec:authorize="isAuthenticated()" th:if="${canModify}" class="mt-4">
+                                <label for="sponsorDropdown" class="form-label fw-bold"></label>
+                                <div class="input-group has-validation">
+                                    <select class="form-select" id="sponsorDropdown" aria-describedby="sponsorSelectionError">
+                                        <option value="" selected disabled>Choose sponsor</option>
+                                        <option th:each="sponsor : ${availableSponsors}"
+                                                th:value="${sponsor.id}"
+                                                th:text="${sponsor.name}">
+                                        </option>
+                                    </select>
+                                    <button class="btn btn-warning" id="addSponsorBtn" th:attr="data-car-id=${car.id}">
+                                        <i class="bi bi-plus-circle me-1"></i> Add Sponsor
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback" id="sponsorSelectionError" style="display: none;">
+                                    Please select a valid sponsor.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

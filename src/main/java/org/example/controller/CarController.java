@@ -5,9 +5,7 @@ import org.example.exception.CustomApplicationException;
 import org.example.exception.DatabaseException;
 import org.example.presentation.CarViewModel;
 import org.example.security.CustomUserDetails;
-import org.example.service.Interfaces.AuthorizationService;
-import org.example.service.Interfaces.CarService;
-import org.example.service.Interfaces.UserService;
+import org.example.service.Interfaces.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +23,16 @@ public class CarController {
 
     private final static Logger logger = LoggerFactory.getLogger(CarController.class);
     private final CarService carService;
+    private final RaceService raceService;
+    private final SponsorService sponsorService;
     private final AuthorizationService authorizationService;
     private final UserService userService;
 
     @Autowired
-    public CarController(CarService carService, AuthorizationService authorizationService, UserService userService) {
+    public CarController(CarService carService, RaceService raceService, SponsorService sponsorService, AuthorizationService authorizationService, UserService userService) {
         this.carService = carService;
+        this.raceService = raceService;
+        this.sponsorService = sponsorService;
         this.authorizationService = authorizationService;
         this.userService = userService;
     }
@@ -72,29 +74,50 @@ public class CarController {
     public String getCarDetails(@PathVariable int id, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
             ApplicationUser user = userService.findUserById(userDetails.getId());
+
+            // Fetch car normally without fetching collections
             Car car = carService.getCarById(id);
+
+            // Initialize races separately
+            List<Race> races = carService.getRacesByCarId(id);
+
+            // Initialize sponsors separately
+            List<Sponsor> sponsors = carService.getSponsorsByCarId(id);
+
+            // Authorization check
             boolean canModify = authorizationService.canEditOrDeleteCar(user, car);
             logger.info("Fetched car details: {}", car);
+
             List<CarCategory> categories = Arrays.asList(CarCategory.values());
             model.addAttribute("car", car);
             model.addAttribute("categories", categories);
             model.addAttribute("canModify", canModify);
 
-            List<Race> races = carService.getRacesByCarId(id);
-            logger.info("Fetched races for car ID {}: {}", id, races);
             model.addAttribute("races", races);
 
-            // Filter races that the car is not participating in
-            List<Race> availableRaces = races.stream()
-                    .filter(race -> car.getRaces().stream().noneMatch(cr -> cr.getRace().getId() == race.getId()))
+            // Filter races not linked to car
+            List<Race> allRaces = raceService.getAllRaces();
+            List<Race> availableRaces = allRaces.stream()
+                    .filter(race -> races.stream().noneMatch(r -> r.getId() == race.getId()))
                     .toList();
 
-            model.addAttribute("car", car);
+            logger.info("Available races count: {}", availableRaces.size());
+            logger.info("Available races: {}", availableRaces);
+
             model.addAttribute("availableRaces", availableRaces);
 
-            List<Sponsor> sponsors = carService.getSponsorsByCarId(id);
-            logger.info("Fetched sponsors for car ID {}: {}", id, sponsors);
             model.addAttribute("sponsors", sponsors);
+
+            // Filter sponsors not linked to car
+            List<Sponsor> allSponsors = sponsorService.getAllSponsors();
+            List<Sponsor> availableSponsors = allSponsors.stream()
+                    .filter(sponsor -> sponsors.stream().noneMatch(s -> s.getId() == sponsor.getId()))
+                    .toList();
+
+            logger.info("Available sponsors count: {}", availableSponsors.size());
+            logger.info("Available sponsors: {}", availableSponsors);
+
+            model.addAttribute("availableSponsors", availableSponsors);
 
         } catch (DatabaseException ex) {
             logger.error("Database exception while fetching car details: {}", ex.getMessage());

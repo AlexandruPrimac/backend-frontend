@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/users', {
                 method: 'POST',
                 headers: {
+                    'Accept': 'application/json',
                     [csrfHeaderName]: csrfToken,
                     'Content-Type': 'application/json'
                 },

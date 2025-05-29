@@ -28,4 +28,6 @@ public interface CarService {
     Car patch(int id, String brand, String model, double engine, int horsepower, int year, CarCategory category);
 
     Car addRaceToCar(int carId, int raceId);
+
+    Car addSponsorToCar(int carId, int sponsorId);
 }
