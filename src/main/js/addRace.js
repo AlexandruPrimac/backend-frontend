@@ -1,4 +1,5 @@
 import '../scss/addRace.scss'
+import axios from 'axios'
 import Joi from 'joi'
 
 import { csrfHeaderName, csrfToken } from './util/csrf.js'
@@ -37,34 +38,48 @@ form.addEventListener('submit', async e => {
         errorMessage.innerHTML = ''
     }
 
-    const jsonBody = JSON.stringify({ name, date, track, location, distance })
-
-    console.log('Sending data:', jsonBody)
-
     try {
-        const response = await fetch('http://localhost:8080/api/races', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                [csrfHeaderName]: csrfToken,
-                'Accept': 'application/json'
-            },
-            body: jsonBody
-        })
+        const jsonBody = { name, date, track, location, distance }
+        console.log('Sending data:', jsonBody)
+
+        const response = await axios.post(
+            'http://localhost:8080/api/races',
+            jsonBody,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    [csrfHeaderName]: csrfToken,
+                    'Accept': 'application/json'
+                }
+            }
+        )
 
         console.log('Response status:', response.status)
 
         if (response.status === 201) {
-            const race = await response.json()
+            const race = await response.data
             alert(`Congrats, your race got created. It has ID #${race.id}`)
             window.location = `/race/${race.id}`
         } else {
-            const errorMsg = await response.text()
+            const errorMsg = await response.data
             console.error('Server error:', errorMsg)
             alert('Something went wrong: ' + errorMsg)
         }
     } catch (error) {
         console.error('Error during fetch:', error)
-        alert('Failed to connect to the server')
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            console.error('Response data:', error.response.data)
+            console.error('Response status:', error.response.status)
+            alert('Server error: ' + (error.response.data.message || JSON.stringify(error.response.data)))
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error('No response received:', error.request)
+            alert('No response from server. Is it running?')
+        } else {
+            // Something happened in setting up the request
+            console.error('Request setup error:', error.message)
+            alert('Request error: ' + error.message)
+        }
     }
 })

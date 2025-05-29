@@ -1,5 +1,5 @@
 import '../scss/cars.scss'
-
+import axios from 'axios'
 import { csrfHeaderName, csrfToken } from './util/csrf.js'
 
 const deleteButton = document.getElementById('delete-button')
@@ -19,8 +19,7 @@ deleteButton.addEventListener('click', async e => {
     }
 
     try {
-        const response = await fetch(`/api/cars/${carId}`, {
-            method: 'DELETE',
+        const response = await axios.delete(`/api/cars/${carId}`, {
             headers: {
                 [csrfHeaderName]: csrfToken,
                 'Content-Type': 'application/json'
@@ -35,7 +34,21 @@ deleteButton.addEventListener('click', async e => {
         }
     } catch (error) {
         console.error('Error deleting car:', error)
-        alert('Something went wrong. Please try again.')
+        // Better error handling with Axios
+        if (error.response) {
+            // Server responded with a status code outside 2xx
+            console.error('Response data:', error.response.data)
+            console.error('Response status:', error.response.status)
+            alert('Server error: ' + (error.response.data.message || 'Failed to delete car.'))
+        } else if (error.request) {
+            // No response received
+            console.error('No response received:', error.request)
+            alert('No response from server. Please check your connection.')
+        } else {
+            // Request setup error
+            console.error('Request error:', error.message)
+            alert('Request error: ' + error.message)
+        }
     }
 })
 

@@ -1,5 +1,5 @@
 import '../scss/sponsors.scss'
-
+import axios from 'axios'
 import { csrfHeaderName, csrfToken } from './util/csrf.js'
 
 const deleteButton = document.querySelectorAll('.remove-sponsor-button')
@@ -20,8 +20,7 @@ deleteButton.forEach(deleteButton => {
         }
 
         try {
-            const response = await fetch(`/api/sponsors/${sponsorId}`, {
-                method: 'DELETE',
+            const response = await axios.delete(`/api/sponsors/${sponsorId}`, {
                 headers: {
                     [csrfHeaderName]: csrfToken,
                     'Content-Type': 'application/json'
@@ -51,7 +50,21 @@ deleteButton.forEach(deleteButton => {
             }
         } catch (error) {
             console.error('Error deleting sponsor:', error)
-            alert('Something went wrong. Please try again.')
+            // Better error handling with Axios
+            if (error.response) {
+                // Server responded with a status code outside 2xx
+                console.error('Response data:', error.response.data)
+                console.error('Response status:', error.response.status)
+                alert('Server error: ' + (error.response.data.message || 'Failed to delete sponsor.'))
+            } else if (error.request) {
+                // No response received
+                console.error('No response received:', error.request)
+                alert('No response from server. Please check your connection.')
+            } else {
+                // Request setup error
+                console.error('Request error:', error.message)
+                alert('Request error: ' + error.message)
+            }
         }
     })
 })

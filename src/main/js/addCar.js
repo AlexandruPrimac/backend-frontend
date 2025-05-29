@@ -1,4 +1,5 @@
 import '../scss/addCar.scss'
+import axios from 'axios'
 import Joi from 'joi'
 
 import { csrfHeaderName, csrfToken } from './util/csrf.js'
@@ -40,34 +41,48 @@ form.addEventListener('submit', async e => {
         errorMessage.innerHTML = ''
     }
 
-    const jsonBody = JSON.stringify({ brand, model, engine, horsePower, year, category })
-
-    console.log('Sending data:', jsonBody)
-
     try {
-        const response = await fetch('http://localhost:8080/api/cars', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                [csrfHeaderName]: csrfToken,
-                'Content-Type': 'application/json'
-            },
-            body: jsonBody
-        })
+        const jsonBody = { brand, model, engine, horsePower, year, category }
+        console.log('Sending data:', jsonBody)
+
+        const response = await axios.post(
+            'http://localhost:8080/api/cars',
+            jsonBody,
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    [csrfHeaderName]: csrfToken,
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
 
         console.log('Response status:', response.status)
 
         if (response.status === 201) {
-            const car = await response.json()
+            const car = await response.data
             alert(`Congrats, your car got created. It has ID #${car.id}`)
             window.location = `/car/${car.id}`
         } else {
-            const errorMsg = await response.text()
+            const errorMsg = await response.data
             console.error('Server error:', errorMsg)
             alert('Something went wrong: ' + errorMsg)
         }
     } catch (error) {
         console.error('Error during fetch:', error)
-        alert('Failed to connect to the server')
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            console.error('Response data:', error.response.data)
+            console.error('Response status:', error.response.status)
+            alert('Server error: ' + (error.response.data.message || JSON.stringify(error.response.data)))
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error('No response received:', error.request)
+            alert('No response from server. Is it running?')
+        } else {
+            // Something happened in setting up the request
+            console.error('Request setup error:', error.message)
+            alert('Request error: ' + error.message)
+        }
     }
 })

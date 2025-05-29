@@ -1,4 +1,5 @@
 import '../scss/races.scss'
+import axios from 'axios'
 
 import { csrfHeaderName, csrfToken } from './util/csrf.js'
 
@@ -24,8 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch(`/api/races/${raceId}`, {
-                method: 'DELETE',
+            const response = await axios.delete(`/api/races/${raceId}`, {
                 headers: {
                     [csrfHeaderName]: csrfToken,
                     'Content-Type': 'application/json'
@@ -40,7 +40,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error('Error deleting race:', error)
-            alert('Something went wrong. Please try again.')
+            // Better error handling with Axios
+            if (error.response) {
+                // Server responded with a status code outside 2xx
+                console.error('Response data:', error.response.data)
+                console.error('Response status:', error.response.status)
+                alert('Server error: ' + (error.response.data.message || 'Failed to delete race.'))
+            } else if (error.request) {
+                // No response received
+                console.error('No response received:', error.request)
+                alert('No response from server. Please check your connection.')
+            } else {
+                // Request setup error
+                console.error('Request error:', error.message)
+                alert('Request error: ' + error.message)
+            }
         }
     })
 
