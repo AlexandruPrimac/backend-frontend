@@ -368,18 +368,26 @@ sponsors.js
 ```bash
 git clone https://gitlab.com/AlexandruPrimac/programmingalexandruprimac-client.git
 ```
-2. Install Dependencies
+2. Run the docker compose.yaml file and open docker application.
+
+
+3. Add the PostgreSQL data source.
+![img_3.png](img_3.png)
+User and password: **spring**
+
+
+4. Install Dependencies
 ```bash
 npm install
 ```
 ```bash
 npm run build
 ```
-3. Compile code, run tests, and packages of the project:
+5. Compile code, run tests, and packages of the project:
 ```bash
 ./gradlew build
 ```
-3. Run all tests separately
+6. Run all tests separately
 ```bash
 ./gradlew test
 ```
