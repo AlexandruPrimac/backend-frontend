@@ -45,7 +45,7 @@ public class Car {
     private String image;
 
     /// Relationships
-    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY , cascade = {CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
     private List<CarRaces> races = new ArrayList<>();
 
     @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)

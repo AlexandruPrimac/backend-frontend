@@ -64,7 +64,7 @@ public class RaceServiceClass implements org.example.service.Interfaces.RaceServ
                 .setParameter("race", race)
                 .executeUpdate();
 
-        // Now delete the race
+        /// Now delete the race
         raceRepository.deleteById(id);
     }
 

@@ -366,13 +366,17 @@ sponsors.js
 ### Steps:
 1. Clone the repository:
 ```bash
-git clone https://gitlab.com/AlexandruPrimac/programmingalexandruprimac-client.git
+git clone https://gitlab.com/kdg-ti/programming-5/projects-24-25/acs201/alexandru.primac/spring-backend.git
 ```
 2. Run the docker compose.yaml file and open docker application.
 
 
 3. Add the PostgreSQL data source.
+
+
 ![img_3.png](img_3.png)
+
+
 User and password: **spring**
 
 
