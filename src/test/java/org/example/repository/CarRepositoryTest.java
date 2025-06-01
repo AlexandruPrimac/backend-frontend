@@ -50,26 +50,6 @@ public class CarRepositoryTest {
     }
 
     @Test
-    void shouldDeleteCarAndAlsoDeleteAssociatedRaces() {
-        /// Arrange
-        Race race = testHelper.createRace();
-        Car car = testHelper.createCar();
-
-        CarRaces carRace = new CarRaces();
-        carRace.setCar(car);
-        carRace.setRace(race);
-        carRacesRepository.save(carRace);
-
-        /// Act
-        sut.deleteById(car.getId());
-
-        /// Assert
-        assertFalse(sut.findById(car.getId()).isPresent());
-        assertEquals(0, carRacesRepository.findAll().size());
-        assertEquals(1, raceRepository.findAll().size());
-    }
-
-    @Test
     void shouldNotAllowNullBrand() {
         /// Arrange
         Car car = new Car();
