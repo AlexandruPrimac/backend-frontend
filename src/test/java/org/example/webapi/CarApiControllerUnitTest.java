@@ -29,6 +29,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @ActiveProfiles("test")
 class CarApiControllerUnitTest {
+
     @Autowired
     private CarApiController sut;
 
