@@ -3,13 +3,7 @@
 ## Author
 **Name:** Alexandru Primac
 
-**Student ID:** 0159060-77
-
-**email:** alexandru.primac@student.kdg.be
-
-**Class:** ACS201
-
-**Academic Year:** 2025
+**Academic Year:** 2024-2025
 
 ---
 
